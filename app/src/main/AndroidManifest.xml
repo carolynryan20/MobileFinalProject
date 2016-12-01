@@ -22,7 +22,10 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".FriendsActivity"
+            android:label="@string/title_activity_friends"></activity>
     </application>
 
 </manifest>
