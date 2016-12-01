@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import hu.ait.android.mobilefinalproject.R;
@@ -38,4 +39,10 @@ public class ClumpFragment extends Fragment {
         return root;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        TextView tv = (TextView) root.findViewById(R.id.tvTemporary);
+        tv.setText("WOWO");
+    }
 }
