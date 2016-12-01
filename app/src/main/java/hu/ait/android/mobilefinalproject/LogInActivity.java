@@ -85,11 +85,11 @@ public class LogInActivity extends BaseActivity {
 //        ).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
 //            @Override
 //            public void onComplete(@NonNull Task<AuthResult> task) {
-//                hideProgressDialog();
+                hideProgressDialog();
 //
 //                if (task.isSuccessful()){
 //                    //open new activity
-//                    startActivity(new Intent(LogInActivity.this, MainActivity.class));
+                    startActivity(new Intent(LogInActivity.this, MainActivity.class));
 //                    finish();
 //                } else {
 //                    Toast.makeText(LogInActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
