@@ -22,7 +22,7 @@ import hu.ait.android.mobilefinalproject.model.User;
  * Created by Carolyn on 12/1/16.
  */
 
-public class ClumpsRecyclerAdapter extends RecyclerView.Adapter<ClumpsRecyclerAdapter.ViewHolder> {
+public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvClumpName;
@@ -42,7 +42,7 @@ public class ClumpsRecyclerAdapter extends RecyclerView.Adapter<ClumpsRecyclerAd
     private Context context;
     private int lastPosition = -1;
 
-    public ClumpsRecyclerAdapter(Context context, User myUser) {
+    public ClumpRecyclerAdapter(Context context, User myUser) {
         //this.clumpList = myUser.getClumps();
         List<Clump> clumpp = Arrays.asList(
                 new Clump("Roommates"),
@@ -101,7 +101,6 @@ public class ClumpsRecyclerAdapter extends RecyclerView.Adapter<ClumpsRecyclerAd
             lastPosition = position;
         }
     }
-
 
     @Override
     public int getItemCount() {

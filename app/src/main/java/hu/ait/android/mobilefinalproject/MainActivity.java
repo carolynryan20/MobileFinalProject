@@ -3,6 +3,8 @@ package hu.ait.android.mobilefinalproject;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,8 +15,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import hu.ait.android.mobilefinalproject.adapter.ClumpRecyclerAdapter;
+import hu.ait.android.mobilefinalproject.model.User;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+
+    private RecyclerView recyclerView;
+    private ClumpRecyclerAdapter clumpRecyclerAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
