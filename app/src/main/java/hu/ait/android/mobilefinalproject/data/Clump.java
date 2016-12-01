@@ -5,4 +5,17 @@ package hu.ait.android.mobilefinalproject.data;
  */
 
 public class Clump {
+    private String name;
+
+    public Clump(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
