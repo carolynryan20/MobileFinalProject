@@ -19,6 +19,7 @@ import android.view.MenuItem;
 
 import hu.ait.android.mobilefinalproject.adapter.CanRespondToCVClumpClick;
 import hu.ait.android.mobilefinalproject.fragments.ClumpFragment;
+import hu.ait.android.mobilefinalproject.fragments.FriendsFragment;
 import hu.ait.android.mobilefinalproject.fragments.MainClumpFragment.OnFragmentInteractionListener;
 import hu.ait.android.mobilefinalproject.fragments.MainClumpFragment;
 
@@ -26,7 +27,9 @@ import android.support.v4.app.Fragment;
 
 
 public class NavDrawerActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnFragmentInteractionListener, CanRespondToCVClumpClick {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        OnFragmentInteractionListener,
+        CanRespondToCVClumpClick {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +112,7 @@ public class NavDrawerActivity extends AppCompatActivity
             showFragmentByTag(MainClumpFragment.TAG);
             // Handle the camera action
         } else if (id == R.id.nav_friends) {
-//            showFragmentByTag(FriendsFragment.TAG);
+            showFragmentByTag(FriendsFragment.TAG);
         } else if (id == R.id.nav_user) {
 //            showFragmentByTag(UserFragment.TAG);
         }
@@ -132,9 +135,9 @@ public class NavDrawerActivity extends AppCompatActivity
         if (fragment == null) {
             if (tag.equals(MainClumpFragment.TAG)){
                 fragment = new MainClumpFragment();
-            } // else if (tag.equals(FriendsFragment.TAG)){
-//                fragment = new FriendsFragment();
-//            } else if (tag.equals(UserFragment.TAG)){
+            }  else if (tag.equals(FriendsFragment.TAG)){
+                fragment = new FriendsFragment();
+            } // else if (tag.equals(UserFragment.TAG)){
 //                fragment = new UserFragment():
 //            }
         }
