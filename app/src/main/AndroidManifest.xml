@@ -16,13 +16,12 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".LoginActivity"
-<<<<<<< HEAD
             android:theme="@style/LoginAppTheme">
-=======
-            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
->>>>>>> 4a734810675cdfebb50513c7513181d52f93b172
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity
@@ -33,27 +32,18 @@
             android:name=".AccountActivity"
             android:label="@string/title_activity_account">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
         </activity>
 
         <activity
             android:name=".FriendsActivity"
-<<<<<<< HEAD
-            android:label="@string/title_activity_friends"></activity>
-
-=======
             android:label="@string/title_activity_friends"
             android:theme="@style/AppTheme.NoActionBar" />
+
+
         <activity
             android:name=".NavDrawerActivity"
             android:label="@string/title_activity_nav_drawer"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
->>>>>>> 4a734810675cdfebb50513c7513181d52f93b172
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
