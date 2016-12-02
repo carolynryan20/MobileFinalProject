@@ -18,8 +18,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import hu.ait.android.mobilefinalproject.adapter.CanRespondToCVClumpClick;
+
 import hu.ait.android.mobilefinalproject.fragments.FriendsFragment;
 import hu.ait.android.mobilefinalproject.fragments.ClumpSummaryFragment;
+
 
 import android.support.v4.app.Fragment;
 
@@ -28,6 +30,7 @@ public class NavDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         ClumpSummaryFragment.OnFragmentInteractionListener, CanRespondToCVClumpClick,
         FriendsFragment.OnFragmentInteractionListener {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +116,7 @@ public class NavDrawerActivity extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.nav_friends) {
             showFragmentByTag(FriendsFragment.TAG);
+
         } //else if (id == R.id.nav_user) {
 //            showFragmentByTag(UserFragment.TAG);
 //        }
