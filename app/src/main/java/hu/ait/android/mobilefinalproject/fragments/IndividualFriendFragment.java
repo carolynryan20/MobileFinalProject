@@ -34,7 +34,5 @@ public class IndividualFriendFragment extends Fragment {
                         .setAction("Action", null).show();
             }
         });
-
-
     }
 }
