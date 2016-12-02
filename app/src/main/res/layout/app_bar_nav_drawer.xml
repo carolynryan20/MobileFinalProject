@@ -24,7 +24,7 @@
     <include layout="@layout/content_nav_drawer" />
 
     <FrameLayout
-        android:id="@+id/layoutContainer"
+        android:id="@+id/flContent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>

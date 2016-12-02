@@ -16,22 +16,14 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/LoginAppTheme"/>
+            android:theme="@style/LoginAppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-
-
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+
         <activity
             android:name=".AccountActivity"
             android:label="@string/title_activity_account">
@@ -41,14 +33,13 @@
         <activity
             android:name=".FriendsActivity"
 
-            android:label="@string/title_activity_friends"/>
-
+            android:label="@string/title_activity_friends" />
 
 
         <activity
             android:name=".NavDrawerActivity"
             android:label="@string/title_activity_nav_drawer"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
