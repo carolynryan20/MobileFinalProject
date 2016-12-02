@@ -6,5 +6,12 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
     <string name="title_activity_friends">FriendsActivity</string>
+
+    <string name="title_activity_account">AccountActivity</string>
+    <string name="owed"><i>owed: </i></string>
+    <string name="debt"><i>debt: </i></string>
+    <string name="friends"><i>friends: </i></string>
+
 </resources>

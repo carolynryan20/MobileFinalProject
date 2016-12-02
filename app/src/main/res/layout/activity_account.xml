@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_account"
     android:layout_width="match_parent"
@@ -8,6 +8,96 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="hu.ait.android.mobilefinalproject.AccountActivity">
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/accountIcon"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_menu_slideshow"/>
+
+    <TextView
+        android:id="@+id/tvUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="user"/>
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+        
+        <TextView
+            android:id="@+id/tvUserMoneyOwed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#2dbdd4"
+            android:text="@string/owed"/>
+
+        <TextView
+            android:id="@+id/tvUserMoneyOwedAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="$100"/>
+        
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvUserMoneyDebt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#fc0d00"
+            android:text="@string/debt"/>
+
+        <TextView
+            android:id="@+id/tvUserMoneyDebtAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="$25"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvUserFriendsAmount"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:text="5 friends"/>
+
+    <TextView
+        android:id="@+id/tvEditPassword"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:text="change password"/>
+
+    <TextView
+        android:id="@+id/tvEditIcon"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:text="change icon"/>
+
+    <TextView
+        android:id="@+id/tvLogout"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:text="Logout"/>
+
+
+</LinearLayout>
