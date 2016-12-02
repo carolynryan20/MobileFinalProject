@@ -10,26 +10,47 @@
         android:layout_height="wrap_content"
         android:text="Summary" />
 
-    <TextView
-        android:id="@+id/tvTemp"
-        android:gravity="center_horizontal"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="22sp" />
+        android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/ivWeatherIcon"
-        android:gravity="center_horizontal"
-        android:contentDescription="weathericon!"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:scaleType="fitXY" />
+        <ImageView
+            android:id="@+id/ivDepts"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:gravity="center_horizontal"
+            android:scaleType="fitXY"
+            android:src="@android:drawable/btn_star"/>
 
-    <TextView
-        android:id="@+id/tvDescription"
-        android:gravity="center_horizontal"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/tvDepts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textSize="22sp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="22sp"/>
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/ivOwed"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:gravity="center_horizontal"
+            android:scaleType="fitXY"
+            android:src="@android:drawable/btn_star"/>
+
+        <TextView
+            android:id="@+id/tvOwed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textSize="22sp" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import hu.ait.android.mobilefinalproject.R;
 
@@ -20,6 +21,7 @@ public class SummaryFragment extends Fragment {
     public static final String TAG = "SummaryFragment";
 
     private View root;
+    private TextView tvDepts;
 
     @Nullable
     @Override
@@ -35,7 +37,8 @@ public class SummaryFragment extends Fragment {
     }
 
     private void setTVs() {
-
+        tvDepts = (TextView) root.findViewById(R.id.tvDepts);
+        tvDepts.setText("HEYYO");
     }
 
 
