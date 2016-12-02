@@ -1,5 +1,6 @@
 package hu.ait.android.mobilefinalproject;
 
+
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import hu.ait.android.mobilefinalproject.fragments.ClumpFragment;
+import hu.ait.android.mobilefinalproject.fragments.MainClumpFragment;
+import hu.ait.android.mobilefinalproject.fragments.SummaryFragment;
+
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+
 
 public class NavDrawerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,6 +50,8 @@ public class NavDrawerActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        showFragmentByTag(SummaryFragment.TAG);
     }
 
     @Override
@@ -82,7 +94,10 @@ public class NavDrawerActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
+            showFragmentByTag(MainClumpFragment.TAG);
+            Toast.makeText(this, "Open Main clicked", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_gallery) {
+            showFragmentByTag(ClumpFragment.TAG);
 
         } else if (id == R.id.nav_slideshow) {
 
@@ -97,5 +112,31 @@ public class NavDrawerActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+    private void showFragmentByTag(String tag) {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
+        if (fragment == null) {
+            if (tag.equals(MainClumpFragment.TAG)) {
+                fragment = new MainClumpFragment();
+                fragment.onCreateView(getLayoutInflater(), null, null);
+
+            } else if (tag.equals(ClumpFragment.TAG)){
+                fragment = new ClumpFragment();
+                fragment.onCreateView(getLayoutInflater(), null, null);
+
+            }
+            else if (tag.equals(SummaryFragment.TAG)){
+                fragment = new SummaryFragment();
+                fragment.onCreateView(getLayoutInflater(), null, null);
+
+            }
+        }
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        transaction.replace(R.id.layoutContainer, fragment, tag);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }
