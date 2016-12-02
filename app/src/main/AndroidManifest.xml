@@ -16,15 +16,9 @@
 
         <activity
             android:name=".LoginActivity"
-<<<<<<< HEAD
-            android:theme="@style/LoginAppTheme">
-=======
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
->>>>>>> 4a734810675cdfebb50513c7513181d52f93b172
+            android:theme="@style/LoginAppTheme"/>
 
-        </activity>
+
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
@@ -43,13 +37,11 @@
 
         <activity
             android:name=".FriendsActivity"
-<<<<<<< HEAD
-            android:label="@string/title_activity_friends"></activity>
 
-=======
-            android:label="@string/title_activity_friends"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
->>>>>>> 4a734810675cdfebb50513c7513181d52f93b172
+            android:label="@string/title_activity_friends">
+
+        </activity>
+
     </application>
 
 </manifest>
