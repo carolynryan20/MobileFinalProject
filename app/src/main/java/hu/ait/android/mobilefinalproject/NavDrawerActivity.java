@@ -1,9 +1,11 @@
 package hu.ait.android.mobilefinalproject;
 
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,19 +18,12 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import hu.ait.android.mobilefinalproject.fragments.ClumpFragment;
-import hu.ait.android.mobilefinalproject.fragments.MainClumpFragment;
-import hu.ait.android.mobilefinalproject.fragments.SummaryFragment;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 
 public class NavDrawerActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ClumpFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +31,18 @@ public class NavDrawerActivity extends AppCompatActivity
         setContentView(R.layout.activity_nav_drawer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Fragment fragment = null;
+        Class fragmentClass = null;
+        fragmentClass = ClumpFragment.class;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -54,9 +61,6 @@ public class NavDrawerActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        showFragmentByTag(SummaryFragment.TAG);
-
     }
 
     @Override
@@ -72,7 +76,7 @@ public class NavDrawerActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.nav_drawer, menu);
+        getMenuInflater().inflate(R.menu.activity_nav_drawer_drawer, menu);
         return true;
     }
 
@@ -97,13 +101,14 @@ public class NavDrawerActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        Fragment fragment = null;
+        Class fragmentClass = null;
         if (id == R.id.nav_camera) {
-            // Handle the camera action
-            showFragmentByTag(MainClumpFragment.TAG);
-            Toast.makeText(this, "Open Main clicked", Toast.LENGTH_SHORT).show();
+//            fragmentClass = ClumpFragment.class;
+            Toast.makeText(this, "Try to open ClumpFragment", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_gallery) {
-            showFragmentByTag(ClumpFragment.TAG);
-
+//            fragmentClass = ClumpFragment.class;
+            Toast.makeText(this, "Try to open SummyFragment", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
@@ -114,34 +119,26 @@ public class NavDrawerActivity extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+//        try {
+//            fragment = (Fragment) fragmentClass.newInstance();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+//
+//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
-    private void showFragmentByTag(String tag) {
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
-        if (fragment == null) {
-            if (tag.equals(MainClumpFragment.TAG)) {
-                fragment = new MainClumpFragment();
-                fragment.onCreateView(getLayoutInflater(), null, null);
-
-            } else if (tag.equals(ClumpFragment.TAG)){
-                fragment = new ClumpFragment();
-                fragment.onCreateView(getLayoutInflater(), null, null);
-
-            }
-            else if (tag.equals(SummaryFragment.TAG)){
-                fragment = new SummaryFragment();
-                fragment.onCreateView(getLayoutInflater(), null, null);
-
-            }
-        }
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-        transaction.replace(R.id.layoutContainer, fragment, tag);
-        transaction.addToBackStack(null);
-        transaction.commit();
     }
+
+//    @Override
+//    public void onFragmentInteraction(Uri uri) {
+//
+//    }
 }

@@ -10,7 +10,6 @@
     <string name="title_activity_friends">FriendsActivity</string>
 
 
-
     <string name="title_activity_account">AccountActivity</string>
     <string name="owed"><b>owed: </b></string>
     <string name="debt"><b>debt: </b></string>
@@ -21,4 +20,7 @@
     <string name="username"><b>username</b></string>
     <string name="location"><b>location: </b></string>
     <string name="title_activity_nav_drawer">NavDrawerActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
