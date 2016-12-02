@@ -1,5 +1,4 @@
-<snippet>
-  <content><![CDATA[
+
 # Mobile Final Project
 TODO: Write a project description
 An app that makes finance among friends easier. 
@@ -19,6 +18,3 @@ TODO: Write history
 Sam Sheppe, Morgan Rozman, and Carolyn Ryan
 ## License
 TODO: Write license
-]]></content>
-  <tabTrigger>readme</tabTrigger>
-</snippet>
