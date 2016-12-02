@@ -80,7 +80,7 @@ public class LoginActivity extends BaseActivity {
 //
 //                if (task.isSuccessful()){
 //                    //open new activity
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    startActivity(new Intent(LoginActivity.this, NavDrawerActivity.class));
 //                    finish();
 //                } else {
 //                    Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
