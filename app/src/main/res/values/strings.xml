@@ -10,7 +10,6 @@
     <string name="title_activity_friends">FriendsActivity</string>
 
 
-
     <string name="title_activity_account">AccountActivity</string>
     <string name="owed"><b>owed: </b></string>
     <string name="debt"><b>debt: </b></string>
