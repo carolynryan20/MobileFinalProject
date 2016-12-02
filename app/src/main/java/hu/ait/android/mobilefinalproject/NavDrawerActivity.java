@@ -18,15 +18,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import hu.ait.android.mobilefinalproject.adapter.CanRespondToCVClumpClick;
-import hu.ait.android.mobilefinalproject.fragments.ClumpFragment;
-import hu.ait.android.mobilefinalproject.fragments.MainClumpFragment.OnFragmentInteractionListener;
-import hu.ait.android.mobilefinalproject.fragments.MainClumpFragment;
+import hu.ait.android.mobilefinalproject.fragments.FriendsFragment;
+import hu.ait.android.mobilefinalproject.fragments.ClumpSummaryFragment;
 
 import android.support.v4.app.Fragment;
 
 
 public class NavDrawerActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnFragmentInteractionListener, CanRespondToCVClumpClick {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        ClumpSummaryFragment.OnFragmentInteractionListener, CanRespondToCVClumpClick,
+        FriendsFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,18 +35,18 @@ public class NavDrawerActivity extends AppCompatActivity
         setContentView(R.layout.activity_nav_drawer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        Fragment fragment = null;
-        Class fragmentClass = null;
-        fragmentClass = ClumpFragment.class;
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//
+//        Fragment fragment = null;
+//        Class fragmentClass = null;
+//        fragmentClass = ClumpFragment.class;
+//        try {
+//            fragment = (Fragment) fragmentClass.newInstance();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+//        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +65,8 @@ public class NavDrawerActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        showFragmentByTag(ClumpSummaryFragment.TAG);
     }
 
     @Override
@@ -106,13 +109,13 @@ public class NavDrawerActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_clump) {
-            showFragmentByTag(MainClumpFragment.TAG);
+            showFragmentByTag(ClumpSummaryFragment.TAG);
             // Handle the camera action
         } else if (id == R.id.nav_friends) {
-//            showFragmentByTag(FriendsFragment.TAG);
-        } else if (id == R.id.nav_user) {
+            showFragmentByTag(FriendsFragment.TAG);
+        } //else if (id == R.id.nav_user) {
 //            showFragmentByTag(UserFragment.TAG);
-        }
+//        }
 //
 //        } else if (id == R.id.nav_manage) {
 //
@@ -120,7 +123,6 @@ public class NavDrawerActivity extends AppCompatActivity
 //
 //        } else if (id == R.id.nav_send) {
 //    }
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -130,11 +132,11 @@ public class NavDrawerActivity extends AppCompatActivity
     private void showFragmentByTag(String tag) {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
         if (fragment == null) {
-            if (tag.equals(MainClumpFragment.TAG)){
-                fragment = new MainClumpFragment();
-            } // else if (tag.equals(FriendsFragment.TAG)){
-//                fragment = new FriendsFragment();
-//            } else if (tag.equals(UserFragment.TAG)){
+            if (tag.equals(ClumpSummaryFragment.TAG)){
+                fragment = new ClumpSummaryFragment();
+            } else if (tag.equals(FriendsFragment.TAG)){
+                fragment = new FriendsFragment();
+            }// else if (tag.equals(UserFragment.TAG)){
 //                fragment = new UserFragment():
 //            }
         }

@@ -5,15 +5,15 @@
         <item
             android:id="@+id/nav_clump"
             android:icon="@drawable/ic_clump"
-            android:title="Import" />
+            android:title="Clump" />
         <item
             android:id="@+id/nav_friends"
             android:icon="@drawable/ic_friends"
-            android:title="Gallery" />
+            android:title="Friends" />
         <item
             android:id="@+id/nav_user"
             android:icon="@drawable/ic_user"
-            android:title="Slideshow" />
+            android:title="User" />
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"

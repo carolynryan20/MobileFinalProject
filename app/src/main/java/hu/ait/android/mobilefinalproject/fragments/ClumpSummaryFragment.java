@@ -17,12 +17,12 @@ import hu.ait.android.mobilefinalproject.R;
 import hu.ait.android.mobilefinalproject.adapter.ClumpRecyclerAdapter;
 import hu.ait.android.mobilefinalproject.adapter.MainPagerAdapter;
 
-public class MainClumpFragment extends Fragment {
+public class ClumpSummaryFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ClumpRecyclerAdapter clumpRecyclerAdapter;
 
-    public static final String TAG = "MainClumpFragment";
+    public static final String TAG = "ClumpSummaryFragment";
     private View root;
     private OnFragmentInteractionListener mListener;
 
