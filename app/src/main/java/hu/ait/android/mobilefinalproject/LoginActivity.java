@@ -74,28 +74,28 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick(R.id.btnLogin)
     void loginClick() {
-        if (!isFormValid()) {
-            return;
-        }
-
-        showProgressDialog();
-        firebaseAuth.signInWithEmailAndPassword(
-                etEmail.getText().toString(),
-                etPassword.getText().toString()
-        ).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                hideProgressDialog();
-
-                if (task.isSuccessful()) {
-                    //open new activity
+//        if (!isFormValid()) {
+//            return;
+//        }
+//
+//        showProgressDialog();
+//        firebaseAuth.signInWithEmailAndPassword(
+//                etEmail.getText().toString(),
+//                etPassword.getText().toString()
+//        ).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//            @Override
+//            public void onComplete(@NonNull Task<AuthResult> task) {
+//                hideProgressDialog();
+//
+//                if (task.isSuccessful()) {
+//                    //open new activity
                     startActivity(new Intent(LoginActivity.this, NavDrawerActivity.class));
-                    finish();
-                } else {
-                    Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//                    finish();
+//                } else {
+//                    Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 
     }
 

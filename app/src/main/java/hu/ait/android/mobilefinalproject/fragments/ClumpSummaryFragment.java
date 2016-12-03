@@ -33,7 +33,7 @@ public class ClumpSummaryFragment extends Fragment {
         root = inflater.inflate(R.layout.fragment_clump_summary, container, false);
 
         ViewPager pager = (ViewPager) root.findViewById(R.id.pager);
-        pager.setAdapter(new MainPagerAdapter(this.getFragmentManager(), getContext()));
+        pager.setAdapter(new MainPagerAdapter(this.getChildFragmentManager(), getContext()));
 
         return root;
     }

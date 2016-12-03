@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import hu.ait.android.mobilefinalproject.fragments.ClumpFragment;
 import hu.ait.android.mobilefinalproject.fragments.SummaryFragment;
@@ -20,9 +21,11 @@ import hu.ait.android.mobilefinalproject.fragments.SummaryFragment;
 public class MainPagerAdapter extends FragmentPagerAdapter {
 
     Context context;
+    FragmentManager fm;
 
     public MainPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
+        this.fm = fm;
         this.context = context;
     }
 
