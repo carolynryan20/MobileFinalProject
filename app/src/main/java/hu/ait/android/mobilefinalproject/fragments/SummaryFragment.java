@@ -8,7 +8,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import hu.ait.android.mobilefinalproject.R;
 
@@ -22,6 +24,8 @@ public class SummaryFragment extends Fragment {
 
     private View root;
     private TextView tvDepts;
+    private TextView tvOwed;
+    private Button btnSeeFriends;
 
     @Nullable
     @Override
@@ -38,7 +42,16 @@ public class SummaryFragment extends Fragment {
 
     private void setTVs() {
         tvDepts = (TextView) root.findViewById(R.id.tvDepts);
-        tvDepts.setText("HEYYO");
+        tvDepts.setText("$500");
+        tvOwed = (TextView) root.findViewById(R.id.tvOwed);
+        tvOwed.setText("$5");
+        btnSeeFriends = (Button) root.findViewById(R.id.btnSeeFriends);
+        btnSeeFriends.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "You are not able to see friends yet :( \nThis may be because you don't have any. \nLoser.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 

@@ -4,10 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,7 +13,6 @@ import android.view.ViewGroup;
 
 import hu.ait.android.mobilefinalproject.R;
 import hu.ait.android.mobilefinalproject.adapter.FriendRecyclerAdapter;
-import hu.ait.android.mobilefinalproject.adapter.MainPagerAdapter;
 
 
 public class FriendsFragment extends Fragment {
@@ -86,7 +82,7 @@ public class FriendsFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-        recyclerView = (RecyclerView) root.findViewById(R.id.recyclerItem);
+        recyclerView = (RecyclerView) root.findViewById(R.id.recyclerFriends);
         recyclerView.setHasFixedSize(true);
         final LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
