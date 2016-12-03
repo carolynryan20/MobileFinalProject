@@ -10,10 +10,10 @@
 
     <style name="LoginAppTheme" parent="AppTheme">
         <item name="android:windowBackground">@android:color/holo_blue_dark</item>
-        <item name="colorAccent">@android:color/white</item>
-        <item name="colorControlNormal">@android:color/white</item>
-        <item name="android:textColorHint">@android:color/white</item>
-        <item name="android:editTextColor">@android:color/white</item>
+        <item name="colorAccent">#1D3557</item>
+        <item name="colorControlNormal">#1D3557</item>
+        <item name="android:textColorHint">#1D3557</item>
+        <item name="android:editTextColor">#1D3557</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
