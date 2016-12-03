@@ -35,8 +35,8 @@ public class FriendsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_friends, container, false);
 
-        ViewPager pager = (ViewPager) root.findViewById(R.id.pager);
-        pager.setAdapter(new MainPagerAdapter(this.getFragmentManager(), getContext()));
+//        ViewPager pager = (ViewPager) root.findViewById(R.id.pager);
+//        pager.setAdapter(new MainPagerAdapter(this.getFragmentManager(), getContext()));
 
         return root;
     }
@@ -45,14 +45,14 @@ public class FriendsFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event
