@@ -11,6 +11,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -44,13 +45,17 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
 
     public ClumpRecyclerAdapter(Context context, User myUser) {
         //this.clumpList = myUser.getClumps();
+        this.clumpList = new ArrayList<>();
         List<Clump> clumpp = Arrays.asList(
                 new Clump("Roommates"),
                 new Clump("AIT"),
                 new Clump("Rome Trip")
         );
 
-        this.clumpList.addAll(clumpp);
+        for (Clump clump : clumpp) {
+            addClump(clump);
+        }
+
         this.context = context;
 
         checkActivityImplementsResponseInterface();
