@@ -49,7 +49,9 @@ public class SummaryFragment extends Fragment {
         btnSeeFriends.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "You are not able to see friends yet :( \nThis may be because you don't have any. \nLoser.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "You are not able to see friends yet :( \n" +
+                        "This may be because you don't have any. \n" +
+                        "Loser.", Toast.LENGTH_LONG).show();
             }
         });
     }
