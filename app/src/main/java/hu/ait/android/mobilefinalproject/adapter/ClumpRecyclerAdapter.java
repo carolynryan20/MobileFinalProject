@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import hu.ait.android.mobilefinalproject.R;
-import hu.ait.android.mobilefinalproject.data.Clump;
+import hu.ait.android.mobilefinalproject.model.Clump;
 import hu.ait.android.mobilefinalproject.model.User;
 
 /**
@@ -24,6 +24,11 @@ import hu.ait.android.mobilefinalproject.model.User;
  */
 
 public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdapter.ViewHolder> {
+
+    private List<Clump> clumpList;
+    private CanRespondToCVClumpClick canRespondToCVClumpClick;
+    private Context context;
+    private int lastPosition = -1;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvClumpName;
@@ -38,28 +43,24 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
         }
     }
 
-    private List<Clump> clumpList;
-    private CanRespondToCVClumpClick canRespondToCVClumpClick;
-    private Context context;
-    private int lastPosition = -1;
-
     public ClumpRecyclerAdapter(Context context, User myUser) {
         //this.clumpList = myUser.getClumps();
         this.clumpList = new ArrayList<>();
-        List<Clump> clumpp = Arrays.asList(
-                new Clump("Roommates"),
-                new Clump("AIT"),
-                new Clump("Rome Trip")
-        );
+//        List<Clump> clumpp = Arrays.asList(
+//                new Clump("Roommates"),
+//                new Clump("AIT"),
+//                new Clump("Rome Trip")
+//        );
+//
+//        for (Clump clump : clumpp) {
+//            addClump(clump);
+//        }
 
-        for (Clump clump : clumpp) {
-            addClump(clump);
-        }
+        clumpList.add(new Clump("Title", "Description", 100));
 
         this.context = context;
 
         checkActivityImplementsResponseInterface();
-
     }
 
     private void checkActivityImplementsResponseInterface() {
@@ -80,62 +81,62 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
-        viewHolder.tvClumpName.setText(clumpList.get(position).getName());
+        viewHolder.tvClumpName.setText(clumpList.get(position).getTitle());
 
-        viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                removeClump(viewHolder.getAdapterPosition());
-            }
-        });
-        viewHolder.cvClump.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                canRespondToCVClumpClick.respondToCVClumpClick((clumpList.get(viewHolder.getAdapterPosition()).getName()));
-            }
-        });
-
-        setAnimation(viewHolder.itemView, viewHolder.getAdapterPosition());
+//        viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                removeClump(viewHolder.getAdapterPosition());
+//            }
+//        });
+//        viewHolder.cvClump.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                canRespondToCVClumpClick.respondToCVClumpClick((clumpList.get(viewHolder.getAdapterPosition()).getTitle()));
+//            }
+//        });
+//
+//        setAnimation(viewHolder.itemView, viewHolder.getAdapterPosition());
     }
 
-    private void setAnimation(View viewToAnimate, int position) {
-        // If the bound view wasn't previously displayed on screen, it's animated
-        if (position > lastPosition) {
-            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
-            viewToAnimate.startAnimation(animation);
-            lastPosition = position;
-        }
-    }
-
+//    private void setAnimation(View viewToAnimate, int position) {
+//        // If the bound view wasn't previously displayed on screen, it's animated
+//        if (position > lastPosition) {
+//            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+//            viewToAnimate.startAnimation(animation);
+//            lastPosition = position;
+//        }
+//    }
+//
     @Override
     public int getItemCount() {
         return clumpList.size();
     }
-
-    public void addClump(Clump clump) {
-        clumpList.add(0, clump);
-        // refresh the whole list
-        notifyDataSetChanged();
-        // refresh only one position
-        notifyItemInserted(0);
-    }
-
-    public void removeClump(int index) {
-        // remove it from the DB
-        // remove it from the list
-        clumpList.remove(index);
-        notifyDataSetChanged();
-    }
-
-    public void removeAllClumps() {
-        while (! clumpList.isEmpty()) {
-            clumpList.remove(0);
-            notifyItemRemoved(0);
-        }
-    }
-
-    public Clump getCity(int i) {
-        return clumpList.get(i);
-    }
+//
+//    public void addClump(Clump clump) {
+//        clumpList.add(0, clump);
+//        // refresh the whole list
+//        notifyDataSetChanged();
+//        // refresh only one position
+//        notifyItemInserted(0);
+//    }
+//
+//    public void removeClump(int index) {
+//        // remove it from the DB
+//        // remove it from the list
+//        clumpList.remove(index);
+//        notifyDataSetChanged();
+//    }
+//
+//    public void removeAllClumps() {
+//        while (! clumpList.isEmpty()) {
+//            clumpList.remove(0);
+//            notifyItemRemoved(0);
+//        }
+//    }
+//
+//    public Clump getCity(int i) {
+//        return clumpList.get(i);
+//    }
 
 }

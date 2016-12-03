@@ -82,14 +82,24 @@ public class ClumpFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-        recyclerView = (RecyclerView) root.findViewById(R.id.recyclerClump);
-        recyclerView.setHasFixedSize(true);
-        final LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(mLayoutManager);
+//        recyclerView = (RecyclerView) root.findViewById(R.id.recyclerClump);
+//        recyclerView.setHasFixedSize(true);
+//        final LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+//        recyclerView.setLayoutManager(mLayoutManager);
+//
+//        clumpRecyclerAdapter = new ClumpRecyclerAdapter(getContext(), new User("me", "also me"));
+//
+//        recyclerView.setAdapter(clumpRecyclerAdapter);
 
-        clumpRecyclerAdapter = new ClumpRecyclerAdapter(getContext(), new User("me", "also me"));
+        clumpRecyclerAdapter = new ClumpRecyclerAdapter(getContext(), new User("User", "user"));
+        RecyclerView recyclerViewPlaces = (RecyclerView) root.findViewById(
+                R.id.recyclerClump);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        recyclerViewPlaces.setLayoutManager(layoutManager);
+        recyclerViewPlaces.setAdapter(clumpRecyclerAdapter);
 
-        recyclerView.setAdapter(clumpRecyclerAdapter);
     }
 
 }
