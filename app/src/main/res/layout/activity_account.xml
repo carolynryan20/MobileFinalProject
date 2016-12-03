@@ -4,192 +4,202 @@
     android:id="@+id/activity_account"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F1FAEE"
     android:orientation="vertical"
     android:weightSum="20"
-    android:background="#F1FAEE"
+    android:fadeScrollbars="true"
     tools:context="hu.ait.android.mobilefinalproject.AccountActivity">
 
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/rectangle_background_account_top"
-        android:layout_weight="5">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/accountIcon"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="20dp"
-            android:clickable="true"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/ic_menu_slideshow"/>
-
-        <TextView
-            android:id="@+id/tvUsername"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:textSize="30sp"
-            android:text="@string/username"/>
-    </LinearLayout>
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:background="@drawable/rectangle_background_account_top"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/accountIcon"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_menu_slideshow" />
+
+                <TextView
+                    android:id="@+id/tvUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="@string/username"
+                    android:textSize="30sp" />
+            </LinearLayout>
 
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="30dp">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/tvUserMoneyOwed"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="23sp"
-                android:text="@string/owed"/>
+                android:layout_marginTop="30dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvUserMoneyOwed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/owed"
+                        android:textSize="23sp" />
 
 
-            <TextView
-                android:id="@+id/tvUserMoneyOwedAmount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="23sp"
-                android:text="$100"/>
+                    <TextView
+                        android:id="@+id/tvUserMoneyOwedAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="$100"
+                        android:textSize="23sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvUserMoneyDebt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/debt"
+                        android:textSize="23sp" />
+
+
+                    <TextView
+                        android:id="@+id/tvUserMoneyDebtAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="$25"
+                        android:textSize="23sp" />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvUserLocationPrompt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/location"
+                        android:textSize="23sp" />
+
+                    <TextView
+                        android:id="@+id/tvUserLocation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Budapest"
+                        android:textSize="23sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2" />
+
+                <TextView
+                    android:id="@+id/tvUserFriendsAmount"
+                    android:layout_width="300dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rectangle_background_account_items"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="5 friends"
+                    android:textSize="20sp" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2" />
+
+                <TextView
+                    android:id="@+id/tvEditPassword"
+                    android:layout_width="300dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:background="@drawable/rectangle_background_account_items"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="change password"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/tvEditIcon"
+                    android:layout_width="300dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rectangle_background_account_items"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="change icon"
+                    android:textSize="20sp" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2" />
+
+                <TextView
+                    android:id="@+id/tvLogout"
+                    android:layout_width="300dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rectangle_background_account_items"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="Logout"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/tvUserMoneyDebt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="23sp"
-                android:text="@string/debt"/>
-
-
-            <TextView
-                android:id="@+id/tvUserMoneyDebtAmount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="23sp"
-                android:text="$25"/>
-
-        </LinearLayout>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"/>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/tvUserLocationPrompt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="23sp"
-                android:text="@string/location"/>
-
-            <TextView
-                android:id="@+id/tvUserLocation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="23sp"
-                android:text="Budapest"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"/>
-
-        <TextView
-            android:id="@+id/tvUserFriendsAmount"
-            android:layout_width="300dp"
-            android:layout_height="35dp"
-            android:background="@drawable/rectangle_background_account_items"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:layout_marginTop="15dp"
-            android:gravity="center"
-            android:layout_gravity="center_horizontal"
-            android:textSize="20sp"
-            android:text="5 friends"/>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"/>
-
-        <TextView
-            android:id="@+id/tvEditPassword"
-            android:layout_gravity="center_horizontal"
-            android:clickable="true"
-            android:textSize="20sp"
-            android:layout_width="300dp"
-            android:layout_height="35dp"
-            android:background="@drawable/rectangle_background_account_items"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="change password"/>
-
-        <TextView
-            android:id="@+id/tvEditIcon"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="300dp"
-            android:layout_height="35dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/rectangle_background_account_items"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:text="change icon"/>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"/>
-
-        <TextView
-            android:id="@+id/tvLogout"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:layout_width="300dp"
-            android:layout_height="35dp"
-            android:background="@drawable/rectangle_background_account_items"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:textSize="20sp"
-            android:layout_marginTop="20dp"
-            android:text="Logout"/>
-
-    </LinearLayout>
-
+    </ScrollView>
 
 
 </LinearLayout>
