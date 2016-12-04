@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -69,33 +71,42 @@ public class LoginActivity extends BaseActivity {
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
+
+                })
+                .addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        hideProgressDialog();
+                        Toast.makeText(LoginActivity.this, "Wasn't able to make new user from input", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
                 });
     }
 
     @OnClick(R.id.btnLogin)
     void loginClick() {
-//        if (!isFormValid()) {
-//            return;
-//        }
-//
-//        showProgressDialog();
-//        firebaseAuth.signInWithEmailAndPassword(
-//                etEmail.getText().toString(),
-//                etPassword.getText().toString()
-//        ).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//            @Override
-//            public void onComplete(@NonNull Task<AuthResult> task) {
-//                hideProgressDialog();
-//
-//                if (task.isSuccessful()) {
-//                    //open new activity
+        if (!isFormValid()) {
+            return;
+        }
+
+        showProgressDialog();
+        firebaseAuth.signInWithEmailAndPassword(
+                etEmail.getText().toString(),
+                etPassword.getText().toString()
+        ).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                hideProgressDialog();
+
+                if (task.isSuccessful()) {
+                    //open new activity
                     startActivity(new Intent(LoginActivity.this, NavDrawerActivity.class));
-//                    finish();
-//                } else {
-//                    Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
+                    finish();
+                } else {
+                    Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 
