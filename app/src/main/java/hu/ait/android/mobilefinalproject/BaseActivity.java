@@ -10,6 +10,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.Map;
 
 
@@ -39,4 +41,18 @@ public class BaseActivity extends AppCompatActivity {
             progressDialog.dismiss();
         }
     }
+
+    // Firebase Stuff
+    public String getUid() {
+        return FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
+
+    public String getUserName() {
+        return FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+    }
+
+    public String getUserEmail() {
+        return FirebaseAuth.getInstance().getCurrentUser().getEmail();
+    }
+
 }

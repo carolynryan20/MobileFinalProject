@@ -1,19 +1,24 @@
 package hu.ait.android.mobilefinalproject.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import hu.ait.android.mobilefinalproject.R;
 import hu.ait.android.mobilefinalproject.adapter.ClumpRecyclerAdapter;
-import hu.ait.android.mobilefinalproject.adapter.MainPagerAdapter;
+import hu.ait.android.mobilefinalproject.model.Clump;
 import hu.ait.android.mobilefinalproject.model.User;
 
 /**
@@ -24,7 +29,7 @@ import hu.ait.android.mobilefinalproject.model.User;
  * Use the {@link ClumpFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ClumpFragment extends Fragment {
+public class ClumpFragment extends BaseFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -78,6 +83,26 @@ public class ClumpFragment extends Fragment {
 
         setupRecyclerView();
 
+        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fabClumpFragment);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                // Create a new Clump with the username as the title
+                String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid())
+                        .child("clumps").push().getKey();
+                Clump newPost = new Clump(getUid(), getUserName(), "descrip", 100);
+
+                FirebaseDatabase.getInstance().getReference().child("users").child(getUid())
+                        .child("clumps").child(key).setValue(newPost);
+
+                Toast.makeText(getContext(), "Clump created", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
         return root;
     }
 
@@ -87,9 +112,43 @@ public class ClumpFragment extends Fragment {
         final LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
 
-        clumpRecyclerAdapter = new ClumpRecyclerAdapter(getContext(), new User("me", "also me"));
+        clumpRecyclerAdapter = new ClumpRecyclerAdapter(getContext(), getUid());
 
         recyclerView.setAdapter(clumpRecyclerAdapter);
     }
+
+    private void initPostListener() {
+        // update list
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users")
+                .child(getUid()).child("clumps");
+        ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Clump newClump = dataSnapshot.getValue(Clump.class);
+                clumpRecyclerAdapter.addClump(newClump, dataSnapshot.getKey());
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                //clumpRecyclerAdapter.removeClumpB(dataSnapshot.getKey());
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 
 }

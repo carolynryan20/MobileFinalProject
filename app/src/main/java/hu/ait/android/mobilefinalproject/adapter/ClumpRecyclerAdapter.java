@@ -11,6 +11,9 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,9 +29,12 @@ import hu.ait.android.mobilefinalproject.model.User;
 public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdapter.ViewHolder> {
 
     private List<Clump> clumpList;
+    private List<String> clumpKeys;
+    private String uid;
     private CanRespondToCVClumpClick canRespondToCVClumpClick;
     private Context context;
     private int lastPosition = -1;
+    private DatabaseReference clumpsRef;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView tvClumpName;
@@ -43,9 +49,11 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
         }
     }
 
-    public ClumpRecyclerAdapter(Context context, User myUser) {
+    public ClumpRecyclerAdapter(Context context, String uid) {
         //this.clumpList = myUser.getClumps();
         this.clumpList = new ArrayList<>();
+        this.clumpKeys = new ArrayList<String>();
+        this.uid = uid;
 //        List<Clump> clumpp = Arrays.asList(
 //                new Clump("Roommates"),
 //                new Clump("AIT"),
@@ -56,9 +64,12 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
 //            addClump(clump);
 //        }
 
-        clumpList.add(new Clump("Title", "Description", 100));
+        clumpList.add(new Clump("uid here", "Title", "Description", 100));
 
         this.context = context;
+
+        clumpsRef = FirebaseDatabase.getInstance().getReference("users")
+                .getRef().child(uid).child("clumps");
 
         checkActivityImplementsResponseInterface();
     }
@@ -113,30 +124,31 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
         return clumpList.size();
     }
 //
-//    public void addClump(Clump clump) {
-//        clumpList.add(0, clump);
-//        // refresh the whole list
-//        notifyDataSetChanged();
-//        // refresh only one position
-//        notifyItemInserted(0);
-//    }
-//
-//    public void removeClump(int index) {
-//        // remove it from the DB
-//        // remove it from the list
-//        clumpList.remove(index);
-//        notifyDataSetChanged();
-//    }
-//
-//    public void removeAllClumps() {
-//        while (! clumpList.isEmpty()) {
-//            clumpList.remove(0);
-//            notifyItemRemoved(0);
-//        }
-//    }
-//
-//    public Clump getCity(int i) {
-//        return clumpList.get(i);
-//    }
+    public void addClump(Clump clump, String key) {
+        clumpList.add(0, clump);
+        clumpKeys.add(0,key);
+        // refresh the whole list
+        notifyDataSetChanged();
+        // refresh only one position
+        notifyItemInserted(0);
+    }
+
+    public void removeClump(int index) {
+        // remove it from the DB
+        // remove it from the list
+        clumpList.remove(index);
+        notifyDataSetChanged();
+    }
+
+    public void removeAllClumps() {
+        while (! clumpList.isEmpty()) {
+            clumpList.remove(0);
+            notifyItemRemoved(0);
+        }
+    }
+
+    public Clump getCity(int i) {
+        return clumpList.get(i);
+    }
 
 }
