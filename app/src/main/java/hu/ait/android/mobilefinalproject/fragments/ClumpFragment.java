@@ -102,6 +102,8 @@ public class ClumpFragment extends BaseFragment {
             }
         });
 
+        initPostListener();
+
 
         return root;
     }

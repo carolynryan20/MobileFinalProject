@@ -15,6 +15,9 @@ public class Clump {
     private String description;
     private float totalAmount;
 
+    public Clump() {
+    }
+
     public Clump(String uid, String title, String description, float totalAmount) {
         this.uid = uid;
         this.title = title;

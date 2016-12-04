@@ -63,13 +63,12 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
 //        for (Clump clump : clumpp) {
 //            addClump(clump);
 //        }
-
         clumpList.add(new Clump("uid here", "Title", "Description", 100));
 
         this.context = context;
 
-        clumpsRef = FirebaseDatabase.getInstance().getReference("users")
-                .getRef().child(uid).child("clumps");
+//        clumpsRef = FirebaseDatabase.getInstance().getReference("users")
+//                .getRef().child(uid).child("clumps");
 
         checkActivityImplementsResponseInterface();
     }
@@ -92,7 +91,9 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
-        viewHolder.tvClumpName.setText(clumpList.get(position).getTitle());
+        final Clump tmpPost = clumpList.get(position);
+        //viewHolder.tvClumpName.setText(clumpList.get(position).getTitle());
+        viewHolder.tvClumpName.setText(tmpPost.getTitle());
 
 //        viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
 //            @Override

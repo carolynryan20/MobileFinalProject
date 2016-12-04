@@ -41,18 +41,4 @@ public class BaseActivity extends AppCompatActivity {
             progressDialog.dismiss();
         }
     }
-
-    // Firebase Stuff
-    public String getUid() {
-        return FirebaseAuth.getInstance().getCurrentUser().getUid();
-    }
-
-    public String getUserName() {
-        return FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-    }
-
-    public String getUserEmail() {
-        return FirebaseAuth.getInstance().getCurrentUser().getEmail();
-    }
-
 }
