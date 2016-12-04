@@ -52,14 +52,17 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
     public ClumpRecyclerAdapter(Context context, String uid) {
         //this.clumpList = myUser.getClumps();
         this.clumpList = new ArrayList<>();
-        this.clumpKeys = new ArrayList<String>();
+        this.clumpKeys = new ArrayList<>();
         this.uid = uid;
+<<<<<<< Updated upstream
         clumpList.add(new Clump("uid here", "Title", "Description", 100));
+=======
+>>>>>>> Stashed changes
 
         this.context = context;
 
-//        clumpsRef = FirebaseDatabase.getInstance().getReference("users")
-//                .getRef().child(uid).child("clumps");
+        clumpsRef = FirebaseDatabase.getInstance().getReference("users")
+                .getRef().child(uid).child("clumps");
 
         checkActivityImplementsResponseInterface();
     }
@@ -86,12 +89,12 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
         //viewHolder.tvClumpName.setText(clumpList.get(position).getTitle());
         viewHolder.tvClumpName.setText(tmpPost.getTitle());
 
-//        viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                removeClump(viewHolder.getAdapterPosition());
-//            }
-//        });
+        viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeClump(viewHolder.getAdapterPosition());
+            }
+        });
 //        viewHolder.cvClump.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -118,7 +121,7 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
 //
     public void addClump(Clump clump, String key) {
         clumpList.add(0, clump);
-        clumpKeys.add(0,key);
+        clumpKeys.add(0, key);
         // refresh the whole list
         notifyDataSetChanged();
         // refresh only one position
@@ -126,10 +129,14 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
     }
 
     public void removeClump(int index) {
-        // remove it from the DB
-        // remove it from the list
-        clumpList.remove(index);
-        notifyDataSetChanged();
+        // remove it from the DB TODO: 12/4/16
+        clumpsRef.child(clumpKeys.get(index)).removeValue();
+
+        if (index != -1) {
+            clumpList.remove(index);
+            clumpKeys.remove(index);
+            notifyItemRemoved(index);
+        }
     }
 
     public void removeAllClumps() {

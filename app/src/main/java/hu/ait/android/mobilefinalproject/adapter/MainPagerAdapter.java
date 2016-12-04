@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import hu.ait.android.mobilefinalproject.fragments.ClumpFragment;
 import hu.ait.android.mobilefinalproject.fragments.SummaryFragment;
+import hu.ait.android.mobilefinalproject.model.Clump;
 
 /**
  * MainPagerAdapter.java
@@ -20,8 +21,10 @@ import hu.ait.android.mobilefinalproject.fragments.SummaryFragment;
 
 public class MainPagerAdapter extends FragmentPagerAdapter {
 
-    Context context;
-    FragmentManager fm;
+    private Context context;
+    private FragmentManager fm;
+    private Fragment clumpFragment;
+
 
     public MainPagerAdapter(FragmentManager fm, Context context) {
         super(fm);
@@ -43,7 +46,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
                 fragment = new ClumpFragment();
                 break;
         }
-
+        if (fragment instanceof ClumpFragment) clumpFragment = fragment;
         return fragment;
     }
 
@@ -61,5 +64,9 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return 2;
+    }
+
+    public Fragment getFragment() {
+        return clumpFragment;
     }
 }

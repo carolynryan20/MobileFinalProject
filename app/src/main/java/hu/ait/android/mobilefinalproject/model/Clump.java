@@ -3,19 +3,31 @@ package hu.ait.android.mobilefinalproject.model;
 import com.google.firebase.database.Exclude;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import hu.ait.android.mobilefinalproject.data.Friend;
 
 /**
  * Created by Morgan on 12/3/2016.
  */
 public class Clump {
 
+    private List<Friend> friendList;
+    private short type;
+    private String name;
     private String uid;
     private String title;
     private String description;
     private float totalAmount;
 
     public Clump() {
+    }
+
+    public Clump(String name, short type, List<Friend> friendList) {
+        this.name = name;
+        this.type = type;
+        this.friendList = friendList;
     }
 
     public Clump(String uid, String title, String description, float totalAmount) {
