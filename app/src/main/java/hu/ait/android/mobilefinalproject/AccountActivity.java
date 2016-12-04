@@ -25,7 +25,7 @@ public class AccountActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_account);
+        setContentView(R.layout.fragment_user);
 
 
         ButterKnife.bind(this);

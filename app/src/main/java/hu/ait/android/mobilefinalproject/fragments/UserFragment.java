@@ -30,7 +30,7 @@ public class UserFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.activity_account, container, false);
+        root = inflater.inflate(R.layout.fragment_user, container, false);
 
 //        ViewPager pager = (ViewPager) root.findViewById(R.id.pager);
 //        pager.setAdapter(new MainPagerAdapter(this.getFragmentManager(), getContext()));
