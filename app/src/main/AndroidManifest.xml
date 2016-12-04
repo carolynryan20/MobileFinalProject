@@ -14,10 +14,12 @@
         <activity
             android:name=".BaseActivity"
             android:label="@string/title_activity_base"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/LoginAppTheme">
+            android:theme="@style/LoginAppTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,20 +29,22 @@
 
         <activity
             android:name=".AccountActivity"
-            android:label="@string/title_activity_account">
+            android:label="@string/title_activity_account"
+            android:screenOrientation="portrait">
 
         </activity>
 
         <activity
             android:name=".FriendsActivity"
-
-            android:label="@string/title_activity_friends" />
+            android:label="@string/title_activity_friends"
+            android:screenOrientation="portrait"/>
 
 
         <activity
             android:name=".NavDrawerActivity"
             android:label="@string/title_activity_nav_drawer"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
