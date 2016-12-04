@@ -23,7 +23,7 @@ public class FriendsActivity extends Activity {
         final LinearLayoutManager mLayoutManager =
                 new LinearLayoutManager(this);
         recyclerFriend.setLayoutManager(mLayoutManager);
-        friendRecyclerAdapter = new FriendRecyclerAdapter();
+        friendRecyclerAdapter = new FriendRecyclerAdapter(getBaseContext());
 
         recyclerFriend.setAdapter(friendRecyclerAdapter);
     }

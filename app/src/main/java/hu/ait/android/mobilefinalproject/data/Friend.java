@@ -10,6 +10,9 @@ public class Friend {
     private float debt;
     private float owed;
 
+    public Friend() { 
+    }
+
     public Friend(String username, float debt, float owed) {
         this.username = username;
         this.debt = debt;

@@ -54,15 +54,6 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
         this.clumpList = new ArrayList<>();
         this.clumpKeys = new ArrayList<String>();
         this.uid = uid;
-//        List<Clump> clumpp = Arrays.asList(
-//                new Clump("Roommates"),
-//                new Clump("AIT"),
-//                new Clump("Rome Trip")
-//        );
-//
-//        for (Clump clump : clumpp) {
-//            addClump(clump);
-//        }
         clumpList.add(new Clump("uid here", "Title", "Description", 100));
 
         this.context = context;

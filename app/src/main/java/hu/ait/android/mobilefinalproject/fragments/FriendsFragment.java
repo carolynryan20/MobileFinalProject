@@ -4,18 +4,28 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import hu.ait.android.mobilefinalproject.R;
 import hu.ait.android.mobilefinalproject.adapter.FriendRecyclerAdapter;
+import hu.ait.android.mobilefinalproject.data.Friend;
+import hu.ait.android.mobilefinalproject.model.Clump;
 
 
-public class FriendsFragment extends Fragment {
+public class FriendsFragment extends BaseFragment {
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -33,7 +43,60 @@ public class FriendsFragment extends Fragment {
         root = inflater.inflate(R.layout.fragment_friends, container, false);
 //        setupRecyclerView();
 
+        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fabFriends);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                // Create a new Clump with the username as the title
+                String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid())
+                        .child("friends").push().getKey();
+                Friend newPost = new Friend("ryanc2", 100, 200);
+
+                FirebaseDatabase.getInstance().getReference().child("users").child(getUid())
+                        .child("friends").child(key).setValue(newPost);
+
+                Toast.makeText(getContext(), "Friend added", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        initPostListener();
+
         return root;
+    }
+
+    private void initPostListener() {
+        // update list
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users")
+                .child(getUid()).child("friends");
+        ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Friend newFriend = dataSnapshot.getValue(Friend.class);
+                friendRecyclerAdapter.addFriend(newFriend, dataSnapshot.getKey());
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                //clumpRecyclerAdapter.removeClumpB(dataSnapshot.getKey());
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -87,7 +150,7 @@ public class FriendsFragment extends Fragment {
         final LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
 
-        friendRecyclerAdapter = new FriendRecyclerAdapter();
+        friendRecyclerAdapter = new FriendRecyclerAdapter(getContext());
 
         recyclerView.setAdapter(friendRecyclerAdapter);
     }
