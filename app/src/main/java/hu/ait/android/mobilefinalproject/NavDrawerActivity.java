@@ -22,12 +22,16 @@ import hu.ait.android.mobilefinalproject.adapter.CanRespondToCVClumpClick;
 import hu.ait.android.mobilefinalproject.fragments.FriendsFragment;
 import hu.ait.android.mobilefinalproject.fragments.ClumpSummaryFragment;
 import hu.ait.android.mobilefinalproject.fragments.UserFragment;
+import hu.ait.android.mobilefinalproject.model.Clump;
 
 
 import android.support.v4.app.Fragment;
+import android.widget.Toast;
+
+import com.google.firebase.database.FirebaseDatabase;
 
 
-public class NavDrawerActivity extends AppCompatActivity
+public class NavDrawerActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         ClumpSummaryFragment.OnFragmentInteractionListener, CanRespondToCVClumpClick,
         FriendsFragment.OnFragmentInteractionListener,
@@ -53,14 +57,24 @@ public class NavDrawerActivity extends AppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
 //        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+////                        .setAction("Action", null).show();
+//                // Create a new Clump with the username as the title
+//                String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid())
+//                        .child("clumps").push().getKey();
+//                Clump newPost = new Clump(getUid(), getUserName(), "descrip", 100);
+//
+//                FirebaseDatabase.getInstance().getReference().child("users").child(getUid())
+//                        .child("clumps").child(key).setValue(newPost);
+//
+//                Toast.makeText(NavDrawerActivity.this, "Clump created", Toast.LENGTH_SHORT).show();
+//
+//            }
+//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
