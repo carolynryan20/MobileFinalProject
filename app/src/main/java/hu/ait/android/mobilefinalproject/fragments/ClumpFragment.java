@@ -154,9 +154,9 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
         Clump newPost = new Clump(getUid(), getUserName(), "descrip", 100);
         clumpRecyclerAdapter.addClump(newPost, getUid());
 
-        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();
-
-        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").child(key).setValue(newPost);
+//        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();
+//
+//        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").child(key).setValue(newPost);
 
         Toast.makeText(getContext(), "Clump created", Toast.LENGTH_SHORT).show();
     }

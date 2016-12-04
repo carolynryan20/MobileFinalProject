@@ -122,7 +122,7 @@ public class AddClumpDialogFragment extends DialogFragment {
             short clumpType = (short)spinnerClumpType.getBaseline();
             Friend friend = (Friend) lvFriendsToAdd.getSelectedItem();
             List<Friend> friendList = new ArrayList<>();
-            friendList.add(friend);
+            //friendList.add(friend);
 
             addClumpFragmentAnswer.addClump(clumpName, clumpType, friendList);
             dismiss();
