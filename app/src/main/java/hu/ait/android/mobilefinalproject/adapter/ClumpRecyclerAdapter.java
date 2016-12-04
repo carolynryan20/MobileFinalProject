@@ -54,10 +54,6 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
         this.clumpList = new ArrayList<>();
         this.clumpKeys = new ArrayList<>();
         this.uid = uid;
-//<<<<<<< Updated upstream
-//        clumpList.add(new Clump("uid here", "Title", "Description", 100));
-//=======
-//>>>>>>> Stashed changes
 
         this.context = context;
 
