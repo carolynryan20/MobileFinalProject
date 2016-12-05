@@ -159,6 +159,8 @@ public class FriendsFragment extends BaseFragment {
 
         lLayout = new GridLayoutManager(getContext(), 2);
         RecyclerView rview = (RecyclerView) root.findViewById(R.id.recyclerFriends);
+//        lLayout.setReverseLayout(true);
+//        lLayout.setStackFromEnd(true);
         rview.setHasFixedSize(true);
         rview.setLayoutManager(lLayout);
 

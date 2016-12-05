@@ -53,7 +53,7 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAd
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.friend_row, null);
+                R.layout.friend_row, parent, false);
         ViewHolder rcv = new ViewHolder(layoutView);
         return rcv;
     }
