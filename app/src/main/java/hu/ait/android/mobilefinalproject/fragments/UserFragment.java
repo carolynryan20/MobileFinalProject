@@ -1,5 +1,6 @@
 package hu.ait.android.mobilefinalproject.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,7 +9,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import hu.ait.android.mobilefinalproject.NavDrawerActivity;
 import hu.ait.android.mobilefinalproject.R;
 
 /**
@@ -17,9 +24,11 @@ import hu.ait.android.mobilefinalproject.R;
 
 public class UserFragment extends Fragment {
 
+
 //    // TODO: Rename and change types of parameters
 //    private String mParam1;
 //    private String mParam2;
+
 
     public static final String TAG = "UserFragment";
     private View root;
@@ -33,7 +42,24 @@ public class UserFragment extends Fragment {
 //        ViewPager pager = (ViewPager) root.findViewById(R.id.pager);
 //        pager.setAdapter(new MainPagerAdapter(this.getFragmentManager(), getContext()));
 
+        TextView tvUserFriendsAmount = (TextView) root.findViewById(R.id.tvUserFriendsAmount);
+        tvUserFriendsAmount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((NavDrawerActivity)getActivity()).showFragmentByTag(FriendsFragment.TAG);
+//                Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+//        @OnClick(R.id.tvUserFriendsAmount)
+//        void showFriendsFragment(){
+//            ((NavDrawerActivity)getActivity()).showFragmentByTag(FriendsFragment.TAG);
+//            Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
+//        }
+//
         return root;
+
+
     }
 
     @Override
@@ -78,5 +104,7 @@ public class UserFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 
 }

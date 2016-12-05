@@ -86,6 +86,7 @@ public class NavDrawerActivity extends BaseActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getMenu().getItem(0).setChecked(true);
 
         showFragmentByTag(ClumpSummaryFragment.TAG);
     }
@@ -151,7 +152,7 @@ public class NavDrawerActivity extends BaseActivity
         return true;
     }
 
-    private void showFragmentByTag(String tag) {
+    public void showFragmentByTag(String tag) {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
         if (fragment == null) {
             if (tag.equals(ClumpSummaryFragment.TAG)){
@@ -180,4 +181,6 @@ public class NavDrawerActivity extends BaseActivity
     public void respondToCVClumpClick(String cityName) {
         showFragmentByTag(SingleClumpFragment.TAG);
     }
+
+
 }
