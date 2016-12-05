@@ -12,6 +12,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.Dictionary;
 
 import hu.ait.android.mobilefinalproject.R;
@@ -39,19 +45,21 @@ public class SingleClumpFragment extends BaseFragment {
         root = inflater.inflate(R.layout.fragment_single_clump_details, container, false);
         setupRecyclerView();
 
+
+
         FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fabClumpFragment);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                // Create a new Clump with the username as the title
-//                openAddInteractionFragment();
-                Dictionary dict1 = null;
-                Dictionary dict2 = null;
-                clumpInteractionsRecyclerAdapter.addInteraction(new Transaction("Demo", 1, "username", dict2), "DemoKey");
-                Toast.makeText(getActivity(), "Adding transactions (maybe)", Toast.LENGTH_SHORT).show();
+                String key = FirebaseDatabase.getInstance().getReference("users")
+                        .getRef().child(getUid()).child("clumps").child("transactions")
+                        .push().getKey();
 
+                Dictionary<String, Float> dict1 = null;
+                Transaction newTransaction = new Transaction("Demo Title", 1, "UserWhoPaid", dict1);
+                FirebaseDatabase.getInstance().getReference().child("posts").child(key).setValue(newTransaction);
+
+                Toast.makeText(getActivity(), "Post created", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -84,13 +92,46 @@ public class SingleClumpFragment extends BaseFragment {
     }
 
     private void setupRecyclerView() {
-        recyclerView = (RecyclerView) root.findViewById(R.id.recyclerClumpInteractions);
-        recyclerView.setHasFixedSize(true);
-        final LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-
         clumpInteractionsRecyclerAdapter = new ClumpInteractionsRecyclerAdapter(getContext(), getUid());
-
+        RecyclerView recyclerView = (RecyclerView) root.findViewById(
+                R.id.recyclerClumpInteractions);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(clumpInteractionsRecyclerAdapter);
+
+        initPostsListener();
+    }
+
+    private void initPostsListener() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("posts");
+        ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Transaction newTransaction = dataSnapshot.getValue(Transaction.class);
+                clumpInteractionsRecyclerAdapter.addInteraction(newTransaction, dataSnapshot.getKey());
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                clumpInteractionsRecyclerAdapter.removeInteractionByKey(dataSnapshot.getKey());
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

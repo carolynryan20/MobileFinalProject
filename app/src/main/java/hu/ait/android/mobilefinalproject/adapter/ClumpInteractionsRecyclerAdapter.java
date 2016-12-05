@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ import hu.ait.android.mobilefinalproject.model.Transaction;
 
 public class ClumpInteractionsRecyclerAdapter extends RecyclerView.Adapter<ClumpInteractionsRecyclerAdapter.ViewHolder> {
     private List<Transaction> transactionList;
-    private List<String> interactionKey;
+    private List<String> transactionKey;
 //    private CanRespondToCVClumpClick canRespondToCVClumpClick;
     private Context context;
     private int lastPosition = -1;
@@ -36,13 +37,13 @@ public class ClumpInteractionsRecyclerAdapter extends RecyclerView.Adapter<Clump
     public ClumpInteractionsRecyclerAdapter(Context context, String uid) {
         //this.clumpList = myUser.getClumps();
         this.transactionList = new ArrayList<>();
-        this.interactionKey = new ArrayList<>();
+        this.transactionKey = new ArrayList<>();
 
         this.context = context;
 
         // TODO: 12/5/16 Where to store interactions firebase
-        //interactionsRef = FirebaseDatabase.getInstance().getReference("users")
-          //      .getRef().child(uid).child("clumps");
+        interactionsRef = FirebaseDatabase.getInstance().getReference("users")
+                .getRef().child(uid).child("clumps").child("transactions");
 
         checkActivityImplementsResponseInterface();
     }
@@ -102,7 +103,7 @@ public class ClumpInteractionsRecyclerAdapter extends RecyclerView.Adapter<Clump
 
     public void addInteraction(Transaction transaction, String key) {
         transactionList.add(0, transaction);
-        interactionKey.add(0, key);
+        transactionKey.add(0, key);
         // refresh the whole list
         notifyDataSetChanged();
         // refresh only one position
@@ -111,11 +112,20 @@ public class ClumpInteractionsRecyclerAdapter extends RecyclerView.Adapter<Clump
 
     public void removeInteraction(int index) {
         // remove it from the DB TODO: 12/4/16
-        interactionsRef.child(interactionKey.get(index)).removeValue();
+        interactionsRef.child(transactionKey.get(index)).removeValue();
 
         if (index != -1) {
             transactionList.remove(index);
-            interactionKey.remove(index);
+            transactionKey.remove(index);
+            notifyItemRemoved(index);
+        }
+    }
+
+    public void removeInteractionByKey(String key) {
+        int index = transactionKey.indexOf(key);
+        if (index != -1) {
+            transactionList.remove(index);
+            transactionKey.remove(index);
             notifyItemRemoved(index);
         }
     }
