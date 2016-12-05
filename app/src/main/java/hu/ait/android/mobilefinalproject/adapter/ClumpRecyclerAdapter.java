@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.database.DatabaseReference;
@@ -43,6 +44,7 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
         public ImageButton btnDelete;
         public ImageButton btnEdit;
         public CardView cvClump;
+        public ImageView ivClumpIcon;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -50,6 +52,7 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
             btnDelete = (ImageButton) itemView.findViewById(R.id.btnDelete);
             btnEdit = (ImageButton) itemView.findViewById(R.id.btnEdit);
             cvClump = (CardView) itemView.findViewById(R.id.cvClump);
+            ivClumpIcon = (ImageView) itemView.findViewById(R.id.ivClumpIcon);
         }
     }
 
@@ -86,9 +89,10 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
-        final Clump tmpPost = clumpList.get(position);
-        //viewHolder.tvClumpName.setText(clumpList.get(position).getTitle());
-        viewHolder.tvClumpName.setText(tmpPost.getTitle());
+        final Clump tmpClump = clumpList.get(position);
+        viewHolder.tvClumpName.setText(tmpClump.getTitle());
+        viewHolder.ivClumpIcon.setImageResource(tmpClump.getType().getIconId());
+
 
         viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +104,7 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
         viewHolder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showEditDialog(tmpPost, viewHolder.getAdapterPosition());
+                showEditDialog(tmpClump, viewHolder.getAdapterPosition());
             }
         });
 

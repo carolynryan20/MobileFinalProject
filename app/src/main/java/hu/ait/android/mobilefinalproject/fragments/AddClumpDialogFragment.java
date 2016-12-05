@@ -10,6 +10,7 @@ import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -89,6 +90,7 @@ public class AddClumpDialogFragment extends DialogFragment {
         etClumpName = (EditText) dialogLayout.findViewById(R.id.etClumpTitle);
         lvFriendsToAdd = (ListView) dialogLayout.findViewById(R.id.lvFriendsToAdd);
         spinnerClumpType = (Spinner) dialogLayout.findViewById(R.id.spinnerClumpType);
+        setSpinnerChoices();
         etWhoPaid = (EditText) dialogLayout.findViewById(R.id.etWhoPaid);
 
         if (itemIsEditItem()) {
@@ -131,6 +133,12 @@ public class AddClumpDialogFragment extends DialogFragment {
         }
     }
 
+    private void setSpinnerChoices() {
+        String[] items = new String[]{"Food", "Drinks", "Rent", "Travel", "Other"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, items);
+        spinnerClumpType.setAdapter(adapter);
+    }
+
     private void handleAddClumpButtonClick() {
         if (TextUtils.isEmpty(etClumpName.getText())) {
             etClumpName.setError("Required");
@@ -140,8 +148,8 @@ public class AddClumpDialogFragment extends DialogFragment {
             //Todo get actual info from dialog
             String clumpName = etClumpName.getText().toString();
             String userWhoPaid = etWhoPaid.getText().toString();
-            int clumpType = spinnerClumpType.getBaseline();
             Dictionary<String, Float> emptyDick = null;
+            Clump.ClumpType clumpType = Clump.ClumpType.fromInt(spinnerClumpType.getSelectedItemPosition());
             Clump toAdd = new Clump(clumpName, clumpType, userWhoPaid, emptyDick);
 
             if (itemIsEditItem()) {

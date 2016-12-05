@@ -119,7 +119,7 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
         Bundle bundle = new Bundle();
         bundle.putString(CLUMP_TITLE, clump.getTitle());
         bundle.putString(WHO_PAID, clump.getOwedUser());
-        bundle.putInt(TYPE, clump.getType());
+        bundle.putInt(TYPE, clump.getType().getValue());
         bundle.putBoolean(IS_EDIT, true);
         bundle.putInt(EDIT_INDEX, position);
         addClumpDialogFragment.setArguments(bundle);
