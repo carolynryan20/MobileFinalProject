@@ -1,5 +1,6 @@
 package hu.ait.android.mobilefinalproject.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -16,20 +17,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.List;
+
 import hu.ait.android.mobilefinalproject.R;
 import hu.ait.android.mobilefinalproject.adapter.ClumpRecyclerAdapter;
+import hu.ait.android.mobilefinalproject.data.Friend;
 import hu.ait.android.mobilefinalproject.model.Clump;
 import hu.ait.android.mobilefinalproject.model.User;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ClumpFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ClumpFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class ClumpFragment extends BaseFragment {
+
+public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswer{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -90,14 +87,7 @@ public class ClumpFragment extends BaseFragment {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
                 // Create a new Clump with the username as the title
-                String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid())
-                        .child("clumps").push().getKey();
-                Clump newPost = new Clump(getUid(), getUserName(), "descrip", 100);
-
-                FirebaseDatabase.getInstance().getReference().child("users").child(getUid())
-                        .child("clumps").child(key).setValue(newPost);
-
-                Toast.makeText(getContext(), "Clump created", Toast.LENGTH_SHORT).show();
+                openAddClumpFragment();
 
             }
         });
@@ -106,6 +96,11 @@ public class ClumpFragment extends BaseFragment {
 
 
         return root;
+    }
+
+    private void openAddClumpFragment() {
+        AddClumpDialogFragment addClumpDialogFragment = new AddClumpDialogFragment();
+        addClumpDialogFragment.show(getFragmentManager(), AddClumpDialogFragment.TAG);
     }
 
     private void setupRecyclerView() {
@@ -153,4 +148,15 @@ public class ClumpFragment extends BaseFragment {
     }
 
 
+    @Override
+    public void addClump(String clumpName, short clumpType, List<String> friendList) {
+        Clump newPost = new Clump(clumpName, clumpType, friendList);
+        clumpRecyclerAdapter.addClump(newPost, getUid());
+
+//        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();
+//
+//        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").child(key).setValue(newPost);
+
+        Toast.makeText(getContext(), "Clump created", Toast.LENGTH_SHORT).show();
+    }
 }

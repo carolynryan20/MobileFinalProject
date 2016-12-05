@@ -52,14 +52,13 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
     public ClumpRecyclerAdapter(Context context, String uid) {
         //this.clumpList = myUser.getClumps();
         this.clumpList = new ArrayList<>();
-        this.clumpKeys = new ArrayList<String>();
+        this.clumpKeys = new ArrayList<>();
         this.uid = uid;
-        clumpList.add(new Clump("uid here", "Title", "Description", 100));
 
         this.context = context;
 
-//        clumpsRef = FirebaseDatabase.getInstance().getReference("users")
-//                .getRef().child(uid).child("clumps");
+        clumpsRef = FirebaseDatabase.getInstance().getReference("users")
+                .getRef().child(uid).child("clumps");
 
         checkActivityImplementsResponseInterface();
     }
@@ -84,41 +83,42 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
     public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
         final Clump tmpPost = clumpList.get(position);
         //viewHolder.tvClumpName.setText(clumpList.get(position).getTitle());
-        viewHolder.tvClumpName.setText(tmpPost.getTitle());
+        viewHolder.tvClumpName.setText(tmpPost.getName());
 
-//        viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                removeClump(viewHolder.getAdapterPosition());
-//            }
-//        });
-//        viewHolder.cvClump.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                canRespondToCVClumpClick.respondToCVClumpClick((clumpList.get(viewHolder.getAdapterPosition()).getTitle()));
-//            }
-//        });
-//
-//        setAnimation(viewHolder.itemView, viewHolder.getAdapterPosition());
+        viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeClump(viewHolder.getAdapterPosition());
+            }
+        });
+
+        viewHolder.cvClump.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                canRespondToCVClumpClick.respondToCVClumpClick((clumpList.get(viewHolder.getAdapterPosition()).getName()));
+            }
+        });
+
+        setAnimation(viewHolder.itemView, viewHolder.getAdapterPosition());
     }
 
-//    private void setAnimation(View viewToAnimate, int position) {
-//        // If the bound view wasn't previously displayed on screen, it's animated
-//        if (position > lastPosition) {
-//            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
-//            viewToAnimate.startAnimation(animation);
-//            lastPosition = position;
-//        }
-//    }
-//
+    private void setAnimation(View viewToAnimate, int position) {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition) {
+            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
+    }
+
     @Override
     public int getItemCount() {
         return clumpList.size();
     }
-//
+
     public void addClump(Clump clump, String key) {
         clumpList.add(0, clump);
-        clumpKeys.add(0,key);
+        clumpKeys.add(0, key);
         // refresh the whole list
         notifyDataSetChanged();
         // refresh only one position
@@ -126,10 +126,14 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
     }
 
     public void removeClump(int index) {
-        // remove it from the DB
-        // remove it from the list
-        clumpList.remove(index);
-        notifyDataSetChanged();
+        // remove it from the DB TODO: 12/4/16
+        clumpsRef.child(clumpKeys.get(index)).removeValue();
+
+        if (index != -1) {
+            clumpList.remove(index);
+            clumpKeys.remove(index);
+            notifyItemRemoved(index);
+        }
     }
 
     public void removeAllClumps() {
