@@ -80,7 +80,7 @@ public class ClumpSummaryFragment extends Fragment implements AddClumpFragmentAn
     }
 
     @Override
-    public void addClump(String clumpName, short clumpType, List<Friend> friendList) {
+    public void addClump(String clumpName, short clumpType, List<String> friendList) {
         MainPagerAdapter mainPagerAdapter = (MainPagerAdapter) pager.getAdapter();
         ClumpFragment ca = (ClumpFragment) mainPagerAdapter.getFragment();
         ca.addClump(clumpName, clumpType, friendList);

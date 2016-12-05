@@ -83,7 +83,7 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
     public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
         final Clump tmpPost = clumpList.get(position);
         //viewHolder.tvClumpName.setText(clumpList.get(position).getTitle());
-        viewHolder.tvClumpName.setText(tmpPost.getTitle());
+        viewHolder.tvClumpName.setText(tmpPost.getName());
 
         viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,30 +91,31 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
                 removeClump(viewHolder.getAdapterPosition());
             }
         });
-//        viewHolder.cvClump.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                canRespondToCVClumpClick.respondToCVClumpClick((clumpList.get(viewHolder.getAdapterPosition()).getTitle()));
-//            }
-//        });
-//
-//        setAnimation(viewHolder.itemView, viewHolder.getAdapterPosition());
+
+        viewHolder.cvClump.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                canRespondToCVClumpClick.respondToCVClumpClick((clumpList.get(viewHolder.getAdapterPosition()).getName()));
+            }
+        });
+
+        setAnimation(viewHolder.itemView, viewHolder.getAdapterPosition());
     }
 
-//    private void setAnimation(View viewToAnimate, int position) {
-//        // If the bound view wasn't previously displayed on screen, it's animated
-//        if (position > lastPosition) {
-//            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
-//            viewToAnimate.startAnimation(animation);
-//            lastPosition = position;
-//        }
-//    }
-//
+    private void setAnimation(View viewToAnimate, int position) {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        if (position > lastPosition) {
+            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+            viewToAnimate.startAnimation(animation);
+            lastPosition = position;
+        }
+    }
+
     @Override
     public int getItemCount() {
         return clumpList.size();
     }
-//
+
     public void addClump(Clump clump, String key) {
         clumpList.add(0, clump);
         clumpKeys.add(0, key);

@@ -100,7 +100,6 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
 
     private void openAddClumpFragment() {
         AddClumpDialogFragment addClumpDialogFragment = new AddClumpDialogFragment();
-//        getFragmentManager().beginTransaction().add(this, TAG).commit();
         addClumpDialogFragment.show(getFragmentManager(), AddClumpDialogFragment.TAG);
     }
 
@@ -150,8 +149,8 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
 
 
     @Override
-    public void addClump(String clumpName, short clumpType, List<Friend> friendList) {
-        Clump newPost = new Clump(getUid(), getUserName(), "descrip", 100);
+    public void addClump(String clumpName, short clumpType, List<String> friendList) {
+        Clump newPost = new Clump(clumpName, clumpType, friendList);
         clumpRecyclerAdapter.addClump(newPost, getUid());
 
 //        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();

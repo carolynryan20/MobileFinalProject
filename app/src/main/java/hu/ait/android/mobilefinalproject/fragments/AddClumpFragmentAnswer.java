@@ -9,5 +9,5 @@ import hu.ait.android.mobilefinalproject.data.Friend;
  */
 
 public interface AddClumpFragmentAnswer {
-    public void addClump(String clumpName, short clumpType, List<Friend> friendList);
+    public void addClump(String clumpName, short clumpType, List<String> friendList);
 }

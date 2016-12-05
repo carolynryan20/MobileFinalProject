@@ -21,6 +21,8 @@ import hu.ait.android.mobilefinalproject.adapter.CanRespondToCVClumpClick;
 
 import hu.ait.android.mobilefinalproject.fragments.FriendsFragment;
 import hu.ait.android.mobilefinalproject.fragments.ClumpSummaryFragment;
+import hu.ait.android.mobilefinalproject.fragments.FriendsInClumpFragment;
+import hu.ait.android.mobilefinalproject.fragments.SingleClumpFragment;
 import hu.ait.android.mobilefinalproject.fragments.UserFragment;
 import hu.ait.android.mobilefinalproject.model.Clump;
 
@@ -158,6 +160,8 @@ public class NavDrawerActivity extends BaseActivity
                 fragment = new FriendsFragment();
             } else if (tag.equals(UserFragment.TAG)){
                 fragment = new UserFragment();
+            } else if (tag.equals(SingleClumpFragment.TAG)) {
+                fragment = new SingleClumpFragment();
             }
         }
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -174,6 +178,6 @@ public class NavDrawerActivity extends BaseActivity
 
     @Override
     public void respondToCVClumpClick(String cityName) {
-
+        showFragmentByTag(SingleClumpFragment.TAG);
     }
 }

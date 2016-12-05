@@ -121,7 +121,7 @@ public class AddClumpDialogFragment extends DialogFragment {
             String clumpName = etClumpName.getText().toString();
             short clumpType = (short)spinnerClumpType.getBaseline();
             Friend friend = (Friend) lvFriendsToAdd.getSelectedItem();
-            List<Friend> friendList = new ArrayList<>();
+            List<String> friendList = new ArrayList<>();
             //friendList.add(friend);
 
             addClumpFragmentAnswer.addClump(clumpName, clumpType, friendList);

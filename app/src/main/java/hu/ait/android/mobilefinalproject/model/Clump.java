@@ -13,70 +13,51 @@ import hu.ait.android.mobilefinalproject.data.Friend;
  */
 public class Clump {
 
-    private List<Friend> friendList;
-    private short type;
+    //private List<Friend> friendList;
+    private List<String> members;
+    private int type;
     private String name;
-    private String uid;
-    private String title;
-    private String description;
-    private float totalAmount;
 
     public Clump() {
     }
 
-    public Clump(String name, short type, List<Friend> friendList) {
+    public Clump(String name, short type, List<String> friendList) {
         this.name = name;
         this.type = type;
-        this.friendList = friendList;
+        this.members = friendList;
     }
 
-    public Clump(String uid, String title, String description, float totalAmount) {
-        this.uid = uid;
-        this.title = title;
-        this.description = description;
-        this.totalAmount = totalAmount;
+    public List<String> getMembersList() {
+        return members;
+    }
+
+    public void setFriendList(List<String> membersList) {
+        this.members = membersList;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("uid", uid);
-        result.put("title", title);
-        result.put("description", description);
-        result.put("totalAmount", totalAmount);
+        result.put("name", name);
+        result.put("icon", type);
+        result.put("friendsList", members);
 
         return result;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public float getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(float totalAmount) {
-        this.totalAmount = totalAmount;
     }
 }
