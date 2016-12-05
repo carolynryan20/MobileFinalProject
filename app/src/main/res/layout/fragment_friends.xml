@@ -3,16 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#54c62e"
+    android:background="@color/lightGreen"
     android:padding="0dp"
     android:layout_margin="0dp"
     tools:context="hu.ait.android.mobilefinalproject.fragments.FriendsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerFriends"

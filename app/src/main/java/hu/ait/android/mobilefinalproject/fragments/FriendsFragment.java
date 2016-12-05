@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -18,6 +19,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.List;
 
 import hu.ait.android.mobilefinalproject.R;
 import hu.ait.android.mobilefinalproject.adapter.FriendRecyclerAdapter;
@@ -36,6 +39,7 @@ public class FriendsFragment extends BaseFragment {
     public static final String TAG = "FriendsFragment";
     private View root;
     private FriendsFragment.OnFragmentInteractionListener mListener;
+    private GridLayoutManager lLayout;
 
     @Nullable
     @Override
@@ -146,11 +150,21 @@ public class FriendsFragment extends BaseFragment {
 
     private void setupRecyclerView() {
         recyclerView = (RecyclerView) root.findViewById(R.id.recyclerFriends);
-        recyclerView.setHasFixedSize(true);
-        final LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(mLayoutManager);
+//        recyclerView.setHasFixedSize(true);
+//        final LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+//        recyclerView.setLayoutManager(mLayoutManager);
+//
+//        friendRecyclerAdapter = new FriendRecyclerAdapter(getContext());
+
+
+        lLayout = new GridLayoutManager(getContext(), 2);
+        RecyclerView rview = (RecyclerView) root.findViewById(R.id.recyclerFriends);
+        rview.setHasFixedSize(true);
+        rview.setLayoutManager(lLayout);
 
         friendRecyclerAdapter = new FriendRecyclerAdapter(getContext());
+
+        //List<Friend> rowListItem = friendRecyclerAdapter.getFriends();
 
         recyclerView.setAdapter(friendRecyclerAdapter);
     }
