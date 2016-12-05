@@ -20,6 +20,7 @@ import java.util.List;
 
 import hu.ait.android.mobilefinalproject.R;
 import hu.ait.android.mobilefinalproject.data.Friend;
+import hu.ait.android.mobilefinalproject.model.Clump;
 
 /**
  * Created by Carolyn on 12/4/16.
@@ -31,6 +32,7 @@ public class AddClumpDialogFragment extends DialogFragment {
 
     private AddClumpFragmentAnswer addClumpFragmentAnswer = null;
     private EditText etClumpName;
+    private EditText etAmtPaid;
     private ListView lvFriendsToAdd;
     private Spinner spinnerClumpType;
     private Context context;
@@ -41,13 +43,12 @@ public class AddClumpDialogFragment extends DialogFragment {
         this.context = context;
         super.onAttach(context);
 
-        addClumpFragmentAnswer = (ClumpSummaryFragment) getParentFragment();
-        //checkParentImplementsAddClumpFragmentAnswer(clumpFragment);
+        addClumpFragmentAnswer = (ClumpFragment)getTargetFragment();
     }
 
-    private void checkParentImplementsAddClumpFragmentAnswer(ClumpSummaryFragment clumpFragment) {
-        if (context instanceof AddClumpFragmentAnswer) {
-            addClumpFragmentAnswer = (AddClumpFragmentAnswer) clumpFragment;
+    private void checkParentImplementsAddClumpFragmentAnswer() {
+        if (getFragmentManager().findFragmentByTag(ClumpFragment.TAG) instanceof AddClumpFragmentAnswer) {
+            addClumpFragmentAnswer = (ClumpFragment) getFragmentManager().findFragmentByTag(ClumpFragment.TAG);
         } else {
             throw new RuntimeException("Not implementing addClumpFragmentAnswer");
         }
@@ -73,9 +74,10 @@ public class AddClumpDialogFragment extends DialogFragment {
     }
 
     private void setPositiveButton(AlertDialog.Builder alertDialogBuilder, View dialogLayout) {
-        etClumpName = (EditText) dialogLayout.findViewById(R.id.etClumpName);
+        etClumpName = (EditText) dialogLayout.findViewById(R.id.etClumpTitle);
         lvFriendsToAdd = (ListView) dialogLayout.findViewById(R.id.lvFriendsToAdd);
         spinnerClumpType = (Spinner) dialogLayout.findViewById(R.id.spinnerClumpType);
+        etAmtPaid = (EditText) dialogLayout.findViewById(R.id.etAmtPaid);
 
         alertDialogBuilder.setPositiveButton("Add clump", new DialogInterface.OnClickListener() {
             @Override
@@ -116,6 +118,8 @@ public class AddClumpDialogFragment extends DialogFragment {
     private void handleAddClumpButtonClick() {
         if (TextUtils.isEmpty(etClumpName.getText())) {
             etClumpName.setError("Required");
+        } else if (TextUtils.isEmpty(etAmtPaid.getText())){
+            etAmtPaid.setError("Required");
         } else {
             //Todo get actual info from dialog
             String clumpName = etClumpName.getText().toString();
@@ -124,7 +128,8 @@ public class AddClumpDialogFragment extends DialogFragment {
             List<String> friendList = new ArrayList<>();
             //friendList.add(friend);
 
-            addClumpFragmentAnswer.addClump(clumpName, clumpType, friendList);
+            Clump toAdd = new Clump();
+            addClumpFragmentAnswer.addClump(toAdd);
             dismiss();
         }
     }

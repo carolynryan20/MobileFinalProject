@@ -2,37 +2,44 @@ package hu.ait.android.mobilefinalproject.model;
 
 import com.google.firebase.database.Exclude;
 
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import hu.ait.android.mobilefinalproject.data.Friend;
 
 /**
  * Created by Morgan on 12/3/2016.
  */
 public class Clump {
-
-    //private List<Friend> friendList;
-    private List<String> members;
+    private String title;
     private int type;
-    private String name;
+    private String owedUser;
+    private Dictionary<String, Float> debtUsers;
 
     public Clump() {
     }
 
-    public Clump(String name, short type, List<String> friendList) {
-        this.name = name;
+    public Clump(String title, int type, String owedUser, Dictionary<String, Float> debtUsers) {
+        this.title = title;
         this.type = type;
-        this.members = friendList;
+        this.owedUser = owedUser;
+        this.debtUsers = debtUsers;
     }
 
-    public List<String> getMembersList() {
-        return members;
+    public String getOwedUser() {
+        return owedUser;
     }
 
-    public void setFriendList(List<String> membersList) {
-        this.members = membersList;
+    public void setOwedUser(String owedUser) {
+        this.owedUser = owedUser;
+    }
+
+    public Dictionary<String, Float> getDebtUsers() {
+        return debtUsers;
+    }
+
+    public void setDebtUsers(Dictionary<String, Float> debtUsers) {
+        this.debtUsers = debtUsers;
     }
 
     public int getType() {
@@ -43,20 +50,21 @@ public class Clump {
         this.type = type;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("name", name);
+        result.put("title", title);
         result.put("icon", type);
-        result.put("friendsList", members);
+        result.put("owedUser", owedUser);
+        result.put("debtUsers", debtUsers);
 
         return result;
     }

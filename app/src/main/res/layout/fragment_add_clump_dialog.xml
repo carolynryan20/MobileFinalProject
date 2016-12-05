@@ -4,10 +4,22 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/etClumpName"
+        android:id="@+id/etClumpTitle"
         android:hint="Clump Name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <Spinner
+        android:id="@+id/spinnerClumpType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></Spinner>
+
+    <EditText
+        android:id="@+id/etAmtPaid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="How Much Was Paid"
+        android:inputType="numberDecimal"/>
 
     <ListView
         android:id="@+id/lvFriendsToAdd"
@@ -15,9 +27,5 @@
         android:layout_height="wrap_content">
     </ListView>
 
-    <Spinner
-        android:id="@+id/spinnerClumpType"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></Spinner>
 
 </LinearLayout>

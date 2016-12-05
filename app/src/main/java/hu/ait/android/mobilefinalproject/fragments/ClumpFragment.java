@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Dictionary;
 import java.util.List;
 
 import hu.ait.android.mobilefinalproject.R;
@@ -100,6 +101,7 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
 
     private void openAddClumpFragment() {
         AddClumpDialogFragment addClumpDialogFragment = new AddClumpDialogFragment();
+        addClumpDialogFragment.setTargetFragment(this, 1);
         addClumpDialogFragment.show(getFragmentManager(), AddClumpDialogFragment.TAG);
     }
 
@@ -149,14 +151,10 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
 
 
     @Override
-    public void addClump(String clumpName, short clumpType, List<String> friendList) {
-        Clump newPost = new Clump(clumpName, clumpType, friendList);
-        clumpRecyclerAdapter.addClump(newPost, getUid());
-
+    public void addClump(Clump clump) {
+        clumpRecyclerAdapter.addClump(clump, getUid());
 //        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();
-//
 //        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").child(key).setValue(newPost);
-
         Toast.makeText(getContext(), "Clump created", Toast.LENGTH_SHORT).show();
     }
 }

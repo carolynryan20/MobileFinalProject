@@ -15,12 +15,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import hu.ait.android.mobilefinalproject.R;
 import hu.ait.android.mobilefinalproject.model.Clump;
-import hu.ait.android.mobilefinalproject.model.User;
 
 /**
  * Created by Carolyn on 12/1/16.
@@ -83,7 +81,7 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
     public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
         final Clump tmpPost = clumpList.get(position);
         //viewHolder.tvClumpName.setText(clumpList.get(position).getTitle());
-        viewHolder.tvClumpName.setText(tmpPost.getName());
+        viewHolder.tvClumpName.setText(tmpPost.getTitle());
 
         viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +93,7 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
         viewHolder.cvClump.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                canRespondToCVClumpClick.respondToCVClumpClick((clumpList.get(viewHolder.getAdapterPosition()).getName()));
+                canRespondToCVClumpClick.respondToCVClumpClick((clumpList.get(viewHolder.getAdapterPosition()).getTitle()));
             }
         });
 

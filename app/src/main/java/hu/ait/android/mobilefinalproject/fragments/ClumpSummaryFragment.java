@@ -22,7 +22,7 @@ import hu.ait.android.mobilefinalproject.adapter.MainPagerAdapter;
 import hu.ait.android.mobilefinalproject.data.Friend;
 import hu.ait.android.mobilefinalproject.model.Clump;
 
-public class ClumpSummaryFragment extends Fragment implements AddClumpFragmentAnswer{
+public class ClumpSummaryFragment extends Fragment {
 
     public static final String TAG = "ClumpSummaryFragment";
     private View root;
@@ -77,13 +77,6 @@ public class ClumpSummaryFragment extends Fragment implements AddClumpFragmentAn
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    @Override
-    public void addClump(String clumpName, short clumpType, List<String> friendList) {
-        MainPagerAdapter mainPagerAdapter = (MainPagerAdapter) pager.getAdapter();
-        ClumpFragment ca = (ClumpFragment) mainPagerAdapter.getFragment();
-        ca.addClump(clumpName, clumpType, friendList);
     }
 
     /**
