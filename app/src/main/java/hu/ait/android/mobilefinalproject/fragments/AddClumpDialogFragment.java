@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import hu.ait.android.mobilefinalproject.R;
 import hu.ait.android.mobilefinalproject.data.Friend;
@@ -149,12 +150,16 @@ public class AddClumpDialogFragment extends DialogFragment {
             //Todo get actual info from dialog
             String clumpName = etClumpName.getText().toString();
             String userWhoPaid = etWhoPaid.getText().toString();
-            HashMap<String, Float> emptyDick = new HashMap<>();
-            emptyDick.put("Mo", (float) 32.6);
-            emptyDick.put("Sam", (float) 67.8);
+
+            Map<String, Float> emptyMap = null;
+            Map<String, Float> myMap = new HashMap<>();
+            myMap.put("Mo", (float) 32.6);
+            myMap.put("Sam", (float) 67.8);
+            myMap.put("friend1", (float) 100.0);
+            myMap.put("exampleuser", (float) 27.5);
 
             Clump.ClumpType clumpType = Clump.ClumpType.fromInt(spinnerClumpType.getSelectedItemPosition());
-            Clump toAdd = new Clump(clumpName, clumpType, userWhoPaid, emptyDick);
+            Clump toAdd = new Clump(clumpName, clumpType, userWhoPaid, myMap);
 
             if (itemIsEditItem()) {
                 addClumpFragmentAnswer.addEditClump(toAdd, (int)getArguments().get("EDIT_INDEX"));

@@ -103,12 +103,15 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
 
     private void initPostListener() {
         // update list
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users")
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users")
                 .child(getUid()).child("clumps");
+
+        //final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("clumps");
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Clump newClump = dataSnapshot.getValue(Clump.class);
+                //ref.child(dataSnapshot.getKey()).setValue(newClump);
                 clumpRecyclerAdapter.addClump(newClump, dataSnapshot.getKey());
             }
 
@@ -137,6 +140,8 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
 
     @Override
     public void addClump(Clump clump) {
+        //clumpRecyclerAdapter.addClump(clump, getUid());
+
         String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();
         FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").child(key).setValue(clump);
         Toast.makeText(getContext(), "Clump created", Toast.LENGTH_SHORT).show();
