@@ -152,7 +152,6 @@ public class AddClumpDialogFragment extends DialogFragment {
             String userWhoPaid = etWhoPaid.getText().toString();
             Clump.ClumpType clumpType = Clump.ClumpType.fromInt(spinnerClumpType.getSelectedItemPosition());
 
-
             Map<String, Float> myMap = new HashMap<>();
             myMap.put("Mo", (float) 32.6);
             myMap.put("Sam", (float) 67.8);
