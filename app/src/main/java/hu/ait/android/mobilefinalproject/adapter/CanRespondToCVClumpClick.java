@@ -1,5 +1,7 @@
 package hu.ait.android.mobilefinalproject.adapter;
 
+import hu.ait.android.mobilefinalproject.model.Clump;
+
 /**
  * CanRespondToCVClumpClick.java
  *
@@ -9,5 +11,5 @@ package hu.ait.android.mobilefinalproject.adapter;
  * An interface to ensure that the given class can be used by our CityRecyclerAdapter
  */
 public interface CanRespondToCVClumpClick {
-    public void respondToCVClumpClick(String cityName);
+    public void respondToCVClumpClick(Clump clump);
 }

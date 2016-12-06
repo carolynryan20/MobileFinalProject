@@ -18,6 +18,7 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
 
 import hu.ait.android.mobilefinalproject.R;
@@ -148,7 +149,10 @@ public class AddClumpDialogFragment extends DialogFragment {
             //Todo get actual info from dialog
             String clumpName = etClumpName.getText().toString();
             String userWhoPaid = etWhoPaid.getText().toString();
-            Dictionary<String, Float> emptyDick = null;
+            HashMap<String, Float> emptyDick = new HashMap<>();
+            emptyDick.put("Mo", (float) 32.6);
+            emptyDick.put("Sam", (float) 67.8);
+
             Clump.ClumpType clumpType = Clump.ClumpType.fromInt(spinnerClumpType.getSelectedItemPosition());
             Clump toAdd = new Clump(clumpName, clumpType, userWhoPaid, emptyDick);
 

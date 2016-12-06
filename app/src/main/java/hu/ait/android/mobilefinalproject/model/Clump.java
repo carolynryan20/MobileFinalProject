@@ -16,12 +16,12 @@ public class Clump {
     private String title;
     private ClumpType type;
     private String owedUser;
-    private Dictionary<String, Float> debtUsers;
+    private HashMap<String, Float> debtUsers;
 
     public Clump() {
     }
 
-    public Clump(String title, ClumpType type, String owedUser, Dictionary<String, Float> debtUsers) {
+    public Clump(String title, ClumpType type, String owedUser, HashMap<String, Float> debtUsers) {
         this.title = title;
         this.type = type;
         this.owedUser = owedUser;
@@ -36,11 +36,11 @@ public class Clump {
         this.owedUser = owedUser;
     }
 
-    public Dictionary<String, Float> getDebtUsers() {
+    public HashMap<String, Float> getDebtUsers() {
         return debtUsers;
     }
 
-    public void setDebtUsers(Dictionary<String, Float> debtUsers) {
+    public void setDebtUsers(HashMap<String, Float> debtUsers) {
         this.debtUsers = debtUsers;
     }
 

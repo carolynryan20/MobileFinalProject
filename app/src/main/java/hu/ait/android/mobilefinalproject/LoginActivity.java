@@ -62,7 +62,7 @@ public class LoginActivity extends BaseActivity {
                             fbUser.updateProfile(new UserProfileChangeRequest.Builder().
                                     setDisplayName(usernameFromEmail(fbUser.getEmail())).build());
 
-                            User user = new User(usernameFromEmail(fbUser.getEmail()), fbUser.getEmail());
+                            User user = new User(fbUser.getEmail(), usernameFromEmail(fbUser.getEmail()));
                             databaseReference.child("users").child(fbUser.getUid()).setValue(user);
 
                             Toast.makeText(LoginActivity.this, "User created", Toast.LENGTH_SHORT).show();

@@ -3,6 +3,7 @@ package hu.ait.android.mobilefinalproject;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
@@ -31,6 +32,9 @@ import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.io.Serializable;
+import java.util.Dictionary;
 
 
 public class NavDrawerActivity extends BaseActivity
@@ -90,7 +94,7 @@ public class NavDrawerActivity extends BaseActivity
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(true);
 
-        showFragmentByTag(ClumpSummaryFragment.TAG);
+        showFragmentByTag(ClumpSummaryFragment.TAG, null);
     }
 
     @Override
@@ -133,13 +137,13 @@ public class NavDrawerActivity extends BaseActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_clump) {
-            showFragmentByTag(ClumpSummaryFragment.TAG);
+            showFragmentByTag(ClumpSummaryFragment.TAG, null);
             // Handle the camera action
         } else if (id == R.id.nav_friends) {
-            showFragmentByTag(FriendsFragment.TAG);
+            showFragmentByTag(FriendsFragment.TAG, null);
 
         } else if (id == R.id.nav_user) {
-            showFragmentByTag(UserFragment.TAG);
+            showFragmentByTag(UserFragment.TAG, null);
         }
 //
 //        } else if (id == R.id.nav_manage) {
@@ -154,7 +158,7 @@ public class NavDrawerActivity extends BaseActivity
         return true;
     }
 
-    public void showFragmentByTag(String tag) {
+    public void showFragmentByTag(String tag, @Nullable Bundle bundle) {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
         if (fragment == null) {
             if (tag.equals(ClumpSummaryFragment.TAG)){
@@ -167,6 +171,10 @@ public class NavDrawerActivity extends BaseActivity
                 fragment = new SingleClumpFragment();
             }
         }
+        if ((fragment != null) && (bundle != null)) {
+            fragment.setArguments(bundle);
+        }
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         transaction.replace(R.id.layoutContainer, fragment, tag);
@@ -180,8 +188,15 @@ public class NavDrawerActivity extends BaseActivity
     }
 
     @Override
-    public void respondToCVClumpClick(String cityName) {
-        showFragmentByTag(SingleClumpFragment.TAG);
+    public void respondToCVClumpClick(Clump clump) {
+        Bundle bundle = new Bundle();
+        bundle.putString(SingleClumpFragment.OWED_USER, clump.getOwedUser());
+        bundle.putString(SingleClumpFragment.TITLE,clump.getTitle());
+        bundle.putInt(SingleClumpFragment.TYPE, clump.getType().getValue());
+
+        bundle.putSerializable(SingleClumpFragment.DEBT_USERS, clump.getDebtUsers());
+
+        showFragmentByTag(SingleClumpFragment.TAG, bundle);
     }
 
 

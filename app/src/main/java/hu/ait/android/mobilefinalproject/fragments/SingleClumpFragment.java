@@ -12,7 +12,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import hu.ait.android.mobilefinalproject.R;
 
@@ -29,6 +34,12 @@ public class SingleClumpFragment extends BaseFragment {
     private TextView tvOwed;
     private TextView tvUserWhoPaid;
     private ListView listViewUsersWhoOwe;
+    private Bundle args;
+    public static final String OWED_USER = "OWED_USER";
+    public static final String TITLE = "TITLE";
+    public static final String TYPE = "TYPE";
+    public static final String DEBT_USERS = "DEBT_USERS";
+
 
 
     @Nullable
@@ -45,18 +56,28 @@ public class SingleClumpFragment extends BaseFragment {
     }
 
     private void setTVs() {
+        args = getArguments();
+
+        tvUserWhoPaid = (TextView) root.findViewById(R.id.tvUserWhoPaid);
+        tvUserWhoPaid.setText(args.get(OWED_USER)+" Paid");
+
+
         tvDepts = (TextView) root.findViewById(R.id.tvDepts);
         tvDepts.setText("$500");
 
         tvOwed = (TextView) root.findViewById(R.id.tvOwed);
         tvOwed.setText("$5");
 
-        tvUserWhoPaid = (TextView) root.findViewById(R.id.tvUserWhoPaid);
-        tvUserWhoPaid.setText("Carolyn Paid");
-
         listViewUsersWhoOwe = (ListView) root.findViewById(R.id.listViewUsersWhoOwe);
+        HashMap<String, Float> dict = (HashMap<String, Float>) args.getSerializable(DEBT_USERS);
 
-        String[] userList = {"Mo owes $90", "Sam owes $258"};
+        List<String> userList = new ArrayList<>();
+        for (Map.Entry<String, Float> entry : dict.entrySet()) {
+            String user = entry.getKey();
+            Float owed = entry.getValue();
+            userList.add(user + " owes $"+owed);
+        }
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, userList);
 
