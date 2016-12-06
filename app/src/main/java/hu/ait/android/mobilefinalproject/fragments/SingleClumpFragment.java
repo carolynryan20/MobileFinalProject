@@ -75,7 +75,7 @@ public class SingleClumpFragment extends BaseFragment {
         for (Map.Entry<String, Float> entry : dict.entrySet()) {
             String user = entry.getKey();
             Float owed = entry.getValue();
-            if (user == getUserName()) { //if user is currentUser
+            if (user.equals(getUserName())) { //if user is currentUser
                 userDebt += owed;
             } else if (owedUserIsCurrentUser) {
                 userOwed += owed;
