@@ -57,8 +57,10 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
 
         this.context = context;
 
+//        clumpsRef = FirebaseDatabase.getInstance().getReference("clumps");
         clumpsRef = FirebaseDatabase.getInstance().getReference("users")
-                .getRef().child(uid).child("clumps");
+                .child(uid).child("clumps");
+
 
         checkActivityImplementsResponseInterface();
     }

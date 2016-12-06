@@ -119,11 +119,15 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
         // update list
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users")
                 .child(getUid()).child("clumps");
+
+        //final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("clumps");
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Clump newClump = dataSnapshot.getValue(Clump.class);
                 clumpRecyclerAdapter.addClump(newClump, dataSnapshot.getKey());
+//                String key = ref.push().getKey();
+//                ref.child(key).setValue(newClump);
             }
 
             @Override
