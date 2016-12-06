@@ -194,7 +194,7 @@ public class NavDrawerActivity extends BaseActivity
         bundle.putString(SingleClumpFragment.TITLE,clump.getTitle());
         bundle.putInt(SingleClumpFragment.TYPE, clump.getType().getValue());
 
-        bundle.putSerializable(SingleClumpFragment.DEBT_USERS, clump.getDebtUsers());
+        bundle.putSerializable(SingleClumpFragment.DEBT_USERS, (Serializable) clump.getDebtUsers());
 
         showFragmentByTag(SingleClumpFragment.TAG, bundle);
     }
