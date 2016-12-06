@@ -2,58 +2,54 @@ package hu.ait.android.mobilefinalproject.model;
 
 import com.google.firebase.database.Exclude;
 
+import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import hu.ait.android.mobilefinalproject.data.Friend;
+import hu.ait.android.mobilefinalproject.R;
 
 /**
  * Created by Morgan on 12/3/2016.
  */
 public class Clump {
-
-    private List<Friend> friendList;
-    private short type;
-    private String name;
-    private String uid;
     private String title;
-    private String description;
-    private float totalAmount;
+    private ClumpType type;
+    private String owedUser;
+    private Dictionary<String, Float> debtUsers;
 
     public Clump() {
     }
 
-    public Clump(String name, short type, List<Friend> friendList) {
-        this.name = name;
-        this.type = type;
-        this.friendList = friendList;
-    }
-
-    public Clump(String uid, String title, String description, float totalAmount) {
-        this.uid = uid;
+    public Clump(String title, ClumpType type, String owedUser, Dictionary<String, Float> debtUsers) {
         this.title = title;
-        this.description = description;
-        this.totalAmount = totalAmount;
+        this.type = type;
+        this.owedUser = owedUser;
+        this.debtUsers = debtUsers;
     }
 
-    @Exclude
-    public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
-        result.put("uid", uid);
-        result.put("title", title);
-        result.put("description", description);
-        result.put("totalAmount", totalAmount);
-
-        return result;
+    public String getOwedUser() {
+        return owedUser;
     }
 
-    public String getUid() {
-        return uid;
+    public void setOwedUser(String owedUser) {
+        this.owedUser = owedUser;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public Dictionary<String, Float> getDebtUsers() {
+        return debtUsers;
+    }
+
+    public void setDebtUsers(Dictionary<String, Float> debtUsers) {
+        this.debtUsers = debtUsers;
+    }
+
+    public ClumpType getType() {
+        return type;
+    }
+
+    public void setType(ClumpType type) {
+        this.type = type;
     }
 
     public String getTitle() {
@@ -64,19 +60,50 @@ public class Clump {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("title", title);
+        result.put("icon", type);
+        result.put("owedUser", owedUser);
+        result.put("debtUsers", debtUsers);
+
+        return result;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    /**
+     * ShoppingItemType to get icon corresponding to item categories
+     * */
+    public enum ClumpType {
+        FOOD(0, R.drawable.ic_menu_camera),
+        DRINKS(1, R.drawable.ic_menu_gallery),
+        RENT(2, R.drawable.ic_menu_manage),
+        TRAVEL(3, R.drawable.ic_menu_send),
+        OTHER(4, R.drawable.ic_menu_share);
 
-    public float getTotalAmount() {
-        return totalAmount;
-    }
+        private int value;
+        private int iconId;
 
-    public void setTotalAmount(float totalAmount) {
-        this.totalAmount = totalAmount;
+        private ClumpType(int value, int iconId) {
+            this.value = value;
+            this.iconId = iconId;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public int getIconId() {
+            return iconId;
+        }
+
+        public static ClumpType fromInt(int value) {
+            for (ClumpType s : ClumpType.values()) {
+                if (s.value == value) {
+                    return s;
+                }
+            }
+            return OTHER;
+        }
     }
 }

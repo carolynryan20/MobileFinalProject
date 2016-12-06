@@ -5,6 +5,7 @@ import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ public class SummaryFragment extends Fragment {
     private View root;
     private TextView tvDepts;
     private TextView tvOwed;
+    private RecyclerView recyclerClumpInteraction;
     private Button btnSeeFriends;
 
     @Nullable
@@ -45,15 +47,8 @@ public class SummaryFragment extends Fragment {
         tvDepts.setText("$500");
         tvOwed = (TextView) root.findViewById(R.id.tvOwed);
         tvOwed.setText("$5");
-        btnSeeFriends = (Button) root.findViewById(R.id.btnSeeFriends);
-        btnSeeFriends.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "You are not able to see friends yet :( \n" +
-                        "This may be because you don't have any. \n" +
-                        "Loser.", Toast.LENGTH_LONG).show();
-            }
-        });
+        recyclerClumpInteraction = (RecyclerView) root.findViewById(R.id.recyclerClumpInteractions);
+
     }
 
 

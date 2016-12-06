@@ -18,6 +18,8 @@ import hu.ait.android.mobilefinalproject.model.Clump;
  * Created by Morgan on 12/1/2016.
  */
 
+
+
 public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAdapter.ViewHolder> {
 
     private List<Friend> friendList;
@@ -29,7 +31,6 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAd
     public FriendRecyclerAdapter(Context context) {
         friendList = new ArrayList<Friend>();
         friendList.add(new Friend("FriendName", 600, 200));
-
         //this.clumpList = myUser.getClumps();
         this.friendKeys = new ArrayList<String>();
 
@@ -51,12 +52,20 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAd
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View friendRow = LayoutInflater.from(parent.getContext()).inflate(
+        View layoutView = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.friend_row, parent, false);
-
-
-        return new ViewHolder(friendRow);
+        ViewHolder rcv = new ViewHolder(layoutView);
+        return rcv;
     }
+
+    //    @Override
+//    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+//        View friendRow = LayoutInflater.from(parent.getContext()).inflate(
+//                R.layout.friend_row, parent, false);
+//
+//
+//        return new ViewHolder(friendRow);
+//    }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
@@ -84,8 +93,10 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAd
         friendKeys.add(0,key);
         // refresh the whole list
         notifyDataSetChanged();
-        // refresh only one position
-        notifyItemInserted(0);
+    }
+
+    public List<Friend> getFriends() {
+        return friendList;
     }
 
 

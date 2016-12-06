@@ -21,6 +21,8 @@ import hu.ait.android.mobilefinalproject.adapter.CanRespondToCVClumpClick;
 
 import hu.ait.android.mobilefinalproject.fragments.FriendsFragment;
 import hu.ait.android.mobilefinalproject.fragments.ClumpSummaryFragment;
+import hu.ait.android.mobilefinalproject.fragments.FriendsInClumpFragment;
+import hu.ait.android.mobilefinalproject.fragments.SingleClumpFragment;
 import hu.ait.android.mobilefinalproject.fragments.UserFragment;
 import hu.ait.android.mobilefinalproject.model.Clump;
 
@@ -37,6 +39,8 @@ public class NavDrawerActivity extends BaseActivity
         FriendsFragment.OnFragmentInteractionListener,
         UserFragment.OnFragmentInteractionListener {
 
+
+    public NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +86,9 @@ public class NavDrawerActivity extends BaseActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getMenu().getItem(0).setChecked(true);
 
         showFragmentByTag(ClumpSummaryFragment.TAG);
     }
@@ -149,7 +154,7 @@ public class NavDrawerActivity extends BaseActivity
         return true;
     }
 
-    private void showFragmentByTag(String tag) {
+    public void showFragmentByTag(String tag) {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
         if (fragment == null) {
             if (tag.equals(ClumpSummaryFragment.TAG)){
@@ -158,6 +163,8 @@ public class NavDrawerActivity extends BaseActivity
                 fragment = new FriendsFragment();
             } else if (tag.equals(UserFragment.TAG)){
                 fragment = new UserFragment();
+            } else if (tag.equals(SingleClumpFragment.TAG)) {
+                fragment = new SingleClumpFragment();
             }
         }
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -174,6 +181,8 @@ public class NavDrawerActivity extends BaseActivity
 
     @Override
     public void respondToCVClumpClick(String cityName) {
-
+        showFragmentByTag(SingleClumpFragment.TAG);
     }
+
+
 }

@@ -10,16 +10,19 @@ import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
 import java.util.List;
 
 import hu.ait.android.mobilefinalproject.R;
 import hu.ait.android.mobilefinalproject.data.Friend;
+import hu.ait.android.mobilefinalproject.model.Clump;
 
 /**
  * Created by Carolyn on 12/4/16.
@@ -31,6 +34,7 @@ public class AddClumpDialogFragment extends DialogFragment {
 
     private AddClumpFragmentAnswer addClumpFragmentAnswer = null;
     private EditText etClumpName;
+    private EditText etWhoPaid;
     private ListView lvFriendsToAdd;
     private Spinner spinnerClumpType;
     private Context context;
@@ -41,13 +45,23 @@ public class AddClumpDialogFragment extends DialogFragment {
         this.context = context;
         super.onAttach(context);
 
-        addClumpFragmentAnswer = (ClumpSummaryFragment) getParentFragment();
-        //checkParentImplementsAddClumpFragmentAnswer(clumpFragment);
+        addClumpFragmentAnswer = (ClumpFragment)getTargetFragment();
     }
 
-    private void checkParentImplementsAddClumpFragmentAnswer(ClumpSummaryFragment clumpFragment) {
-        if (context instanceof AddClumpFragmentAnswer) {
-            addClumpFragmentAnswer = (AddClumpFragmentAnswer) clumpFragment;
+    private boolean itemIsEditItem() {
+        return (boolean) getArguments().get("IS_EDIT");
+    }
+
+    private void setFieldsForEditItem() {
+        spinnerClumpType.setSelection((int)getArguments().get(ClumpFragment.TYPE));
+        etClumpName.setText((String) getArguments().get(ClumpFragment.CLUMP_TITLE));
+        etWhoPaid.setText((String)getArguments().get(ClumpFragment.WHO_PAID));
+        //lvFriendsToAdd.set(itemToEdit.getEstimatedPriceString());
+    }
+
+    private void checkParentImplementsAddClumpFragmentAnswer() {
+        if (getFragmentManager().findFragmentByTag(ClumpFragment.TAG) instanceof AddClumpFragmentAnswer) {
+            addClumpFragmentAnswer = (ClumpFragment) getFragmentManager().findFragmentByTag(ClumpFragment.TAG);
         } else {
             throw new RuntimeException("Not implementing addClumpFragmentAnswer");
         }
@@ -73,9 +87,15 @@ public class AddClumpDialogFragment extends DialogFragment {
     }
 
     private void setPositiveButton(AlertDialog.Builder alertDialogBuilder, View dialogLayout) {
-        etClumpName = (EditText) dialogLayout.findViewById(R.id.etClumpName);
+        etClumpName = (EditText) dialogLayout.findViewById(R.id.etClumpTitle);
         lvFriendsToAdd = (ListView) dialogLayout.findViewById(R.id.lvFriendsToAdd);
         spinnerClumpType = (Spinner) dialogLayout.findViewById(R.id.spinnerClumpType);
+        setSpinnerChoices();
+        etWhoPaid = (EditText) dialogLayout.findViewById(R.id.etWhoPaid);
+
+        if (itemIsEditItem()) {
+            setFieldsForEditItem();
+        }
 
         alertDialogBuilder.setPositiveButton("Add clump", new DialogInterface.OnClickListener() {
             @Override
@@ -113,20 +133,34 @@ public class AddClumpDialogFragment extends DialogFragment {
         }
     }
 
+    private void setSpinnerChoices() {
+        String[] items = new String[]{"Food", "Drinks", "Rent", "Travel", "Other"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, items);
+        spinnerClumpType.setAdapter(adapter);
+    }
+
     private void handleAddClumpButtonClick() {
         if (TextUtils.isEmpty(etClumpName.getText())) {
             etClumpName.setError("Required");
+        } else if (TextUtils.isEmpty(etWhoPaid.getText())){
+            etWhoPaid.setError("Required");
         } else {
             //Todo get actual info from dialog
             String clumpName = etClumpName.getText().toString();
-            short clumpType = (short)spinnerClumpType.getBaseline();
-            Friend friend = (Friend) lvFriendsToAdd.getSelectedItem();
-            List<Friend> friendList = new ArrayList<>();
-            //friendList.add(friend);
+            String userWhoPaid = etWhoPaid.getText().toString();
+            Dictionary<String, Float> emptyDick = null;
+            Clump.ClumpType clumpType = Clump.ClumpType.fromInt(spinnerClumpType.getSelectedItemPosition());
+            Clump toAdd = new Clump(clumpName, clumpType, userWhoPaid, emptyDick);
 
-            addClumpFragmentAnswer.addClump(clumpName, clumpType, friendList);
-            dismiss();
+            if (itemIsEditItem()) {
+                addClumpFragmentAnswer.addEditClump(toAdd, (int)getArguments().get("EDIT_INDEX"));
+                dismiss();
+            } else {
+                addClumpFragmentAnswer.addClump(toAdd);
+                dismiss();
+            }
         }
     }
+
 
 }
