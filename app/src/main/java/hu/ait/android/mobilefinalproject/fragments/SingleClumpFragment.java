@@ -61,22 +61,33 @@ public class SingleClumpFragment extends BaseFragment {
         tvUserWhoPaid = (TextView) root.findViewById(R.id.tvUserWhoPaid);
         tvUserWhoPaid.setText(args.get(OWED_USER)+" Paid");
 
-
-        tvDepts = (TextView) root.findViewById(R.id.tvDepts);
-        tvDepts.setText("$500");
-
-        tvOwed = (TextView) root.findViewById(R.id.tvOwed);
-        tvOwed.setText("$5");
-
         listViewUsersWhoOwe = (ListView) root.findViewById(R.id.listViewUsersWhoOwe);
         HashMap<String, Float> dict = (HashMap<String, Float>) args.getSerializable(DEBT_USERS);
+
+        boolean owedUserIsCurrentUser = false;
+        if (getUserName().equals(args.getString(OWED_USER))) {
+            owedUserIsCurrentUser = true;
+        }
+        float userDebt = 0;
+        float userOwed = 0;
 
         List<String> userList = new ArrayList<>();
         for (Map.Entry<String, Float> entry : dict.entrySet()) {
             String user = entry.getKey();
             Float owed = entry.getValue();
+            if (user == getUserName()) { //if user is currentUser
+                userDebt += owed;
+            } else if (owedUserIsCurrentUser) {
+                userOwed += owed;
+            }
             userList.add(user + " owes $"+owed);
         }
+
+        tvDepts = (TextView) root.findViewById(R.id.tvDepts);
+        tvDepts.setText("$"+userDebt);
+
+        tvOwed = (TextView) root.findViewById(R.id.tvOwed);
+        tvOwed.setText("$"+userOwed);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, userList);
