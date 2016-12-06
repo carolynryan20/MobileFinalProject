@@ -150,9 +150,14 @@ public class AddClumpDialogFragment extends DialogFragment {
             //Todo get actual info from dialog
             String clumpName = etClumpName.getText().toString();
             String userWhoPaid = etWhoPaid.getText().toString();
+
             Map<String, Float> emptyMap = null;
             Map<String, Float> myMap = new HashMap<>();
+            myMap.put("Mo", (float) 32.6);
+            myMap.put("Sam", (float) 67.8);
             myMap.put("friend1", (float) 100.0);
+            myMap.put("exampleuser", (float) 27.5);
+
             Clump.ClumpType clumpType = Clump.ClumpType.fromInt(spinnerClumpType.getSelectedItemPosition());
             Clump toAdd = new Clump(clumpName, clumpType, userWhoPaid, myMap);
 

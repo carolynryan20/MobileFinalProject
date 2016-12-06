@@ -58,6 +58,8 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
 
     public ClumpRecyclerAdapter(Context context, String uid, ClumpFragment parentFragment) {
         //this.clumpList = myUser.getClumps();
+
+
         this.clumpList = new ArrayList<>();
         this.clumpKeys = new ArrayList<>();
         this.uid = uid;
@@ -113,7 +115,7 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
         viewHolder.cvClump.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                canRespondToCVClumpClick.respondToCVClumpClick((clumpList.get(viewHolder.getAdapterPosition()).getTitle()));
+                canRespondToCVClumpClick.respondToCVClumpClick((clumpList.get(viewHolder.getAdapterPosition())));
             }
         });
 

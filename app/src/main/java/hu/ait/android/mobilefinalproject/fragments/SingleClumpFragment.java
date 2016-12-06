@@ -12,7 +12,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import hu.ait.android.mobilefinalproject.R;
 
@@ -29,6 +34,12 @@ public class SingleClumpFragment extends BaseFragment {
     private TextView tvOwed;
     private TextView tvUserWhoPaid;
     private ListView listViewUsersWhoOwe;
+    private Bundle args;
+    public static final String OWED_USER = "OWED_USER";
+    public static final String TITLE = "TITLE";
+    public static final String TYPE = "TYPE";
+    public static final String DEBT_USERS = "DEBT_USERS";
+
 
 
     @Nullable
@@ -45,18 +56,39 @@ public class SingleClumpFragment extends BaseFragment {
     }
 
     private void setTVs() {
-        tvDepts = (TextView) root.findViewById(R.id.tvDepts);
-        tvDepts.setText("$500");
-
-        tvOwed = (TextView) root.findViewById(R.id.tvOwed);
-        tvOwed.setText("$5");
+        args = getArguments();
 
         tvUserWhoPaid = (TextView) root.findViewById(R.id.tvUserWhoPaid);
-        tvUserWhoPaid.setText("Carolyn Paid");
+        tvUserWhoPaid.setText(args.get(OWED_USER)+" Paid");
 
         listViewUsersWhoOwe = (ListView) root.findViewById(R.id.listViewUsersWhoOwe);
+        HashMap<String, Float> dict = (HashMap<String, Float>) args.getSerializable(DEBT_USERS);
 
-        String[] userList = {"Mo owes $90", "Sam owes $258"};
+        boolean owedUserIsCurrentUser = false;
+        if (getUserName().equals(args.getString(OWED_USER))) {
+            owedUserIsCurrentUser = true;
+        }
+        float userDebt = 0;
+        float userOwed = 0;
+
+        List<String> userList = new ArrayList<>();
+        for (Map.Entry<String, Float> entry : dict.entrySet()) {
+            String user = entry.getKey();
+            Float owed = entry.getValue();
+            if (user == getUserName()) { //if user is currentUser
+                userDebt += owed;
+            } else if (owedUserIsCurrentUser) {
+                userOwed += owed;
+            }
+            userList.add(user + " owes $"+owed);
+        }
+
+        tvDepts = (TextView) root.findViewById(R.id.tvDepts);
+        tvDepts.setText("$"+userDebt);
+
+        tvOwed = (TextView) root.findViewById(R.id.tvOwed);
+        tvOwed.setText("$"+userOwed);
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, userList);
 

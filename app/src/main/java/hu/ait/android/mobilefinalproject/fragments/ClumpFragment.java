@@ -28,10 +28,6 @@ import hu.ait.android.mobilefinalproject.model.User;
 
 
 public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswer{
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
     public static final String TAG = "ClumpFragment";
     public static final String IS_EDIT = "IS_EDIT";
@@ -43,44 +39,12 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
     private ClumpRecyclerAdapter clumpRecyclerAdapter;
     private View root;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public ClumpFragment() {
         // Required empty public constructor
     }
 
-//    /**
-//     * Use this factory method to create a new instance of
-//     * this fragment using the provided parameters.
-//     *
-//     * @param param1 Parameter 1.
-//     * @param param2 Parameter 2.
-//     * @return A new instance of fragment ClumpFragment.
-//     */
-//    // TODO: Rename and change types and number of parameters
-////    public static ClumpFragment newInstance(String param1, String param2) {
-////        ClumpFragment fragment = new ClumpFragment();
-////        Bundle args = new Bundle();
-////        args.putString(ARG_PARAM1, param1);
-////        args.putString(ARG_PARAM2, param2);
-////        fragment.setArguments(args);
-////        return fragment;
-////    }
-
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
-//    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_clump, container, false);
 
@@ -158,7 +122,7 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                //clumpRecyclerAdapter.removeClumpB(dataSnapshot.getKey());
+
             }
 
             @Override
@@ -177,6 +141,7 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
     @Override
     public void addClump(Clump clump) {
         //clumpRecyclerAdapter.addClump(clump, getUid());
+
         String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();
         FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").child(key).setValue(clump);
         Toast.makeText(getContext(), "Clump created", Toast.LENGTH_SHORT).show();
@@ -184,9 +149,9 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
 
     @Override
     public void addEditClump(Clump clump, int index) {
-        clumpRecyclerAdapter.editClump(clump, index);
-//        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();
-//        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").child(key).setValue(newPost);
+//        clumpRecyclerAdapter.editClump(clump, index);
+        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();
+        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").child(key).setValue(clump);
         Toast.makeText(getContext(), "Clump edited", Toast.LENGTH_SHORT).show();
     }
 }

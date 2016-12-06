@@ -46,7 +46,7 @@ public class UserFragment extends Fragment {
         tvUserFriendsAmount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((NavDrawerActivity)getActivity()).showFragmentByTag(FriendsFragment.TAG);
+                ((NavDrawerActivity)getActivity()).showFragmentByTag(FriendsFragment.TAG, null);
 //                Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
                 ((NavDrawerActivity)getActivity()).navigationView.getMenu().getItem(1).setChecked(true);
             }

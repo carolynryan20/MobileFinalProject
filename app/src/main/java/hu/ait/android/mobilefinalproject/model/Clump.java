@@ -16,11 +16,13 @@ public class Clump {
     private String title;
     private ClumpType type;
     private String owedUser;
+
 //    private Dictionary<String, Float> debtUsers;
     private Map<String, Float> debtUsers;
 
     public Clump() {
     }
+
 
     public Clump(String title, ClumpType type, String owedUser, Map<String, Float> debtUsers) {
         this.title = title;
@@ -36,6 +38,7 @@ public class Clump {
     public void setOwedUser(String owedUser) {
         this.owedUser = owedUser;
     }
+
 
     public Map<String, Float> getDebtUsers() {
         return debtUsers;
