@@ -36,7 +36,7 @@ public class AddFriendDialogFragment extends DialogFragment {
     }
 
     private void checkParentImplementsAddClumpFragmentAnswer() {
-        if (getFragmentManager().findFragmentByTag(ClumpFragment.TAG) instanceof AddClumpFragmentAnswer) {
+        if (getFragmentManager().findFragmentByTag(FriendsFragment.TAG) instanceof AddFriendFragmentAnswer) {
             addFriendFragmentAnswer = (AddFriendFragmentAnswer) getFragmentManager().findFragmentByTag(FriendsFragment.TAG);
         } else {
             throw new RuntimeException("Not implementing addFriendFragmentAnswer");

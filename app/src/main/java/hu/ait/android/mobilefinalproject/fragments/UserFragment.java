@@ -12,6 +12,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -22,7 +26,7 @@ import hu.ait.android.mobilefinalproject.R;
  * Created by ssheppe on 12/3/16.
  */
 
-public class UserFragment extends Fragment {
+public class UserFragment extends BaseFragment {
 
 
 //    // TODO: Rename and change types of parameters
@@ -49,6 +53,15 @@ public class UserFragment extends Fragment {
                 ((NavDrawerActivity)getActivity()).showFragmentByTag(FriendsFragment.TAG, null);
 //                Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
                 ((NavDrawerActivity)getActivity()).navigationView.getMenu().getItem(1).setChecked(true);
+            }
+        });
+
+        TextView tvEditPassword = (TextView) root.findViewById(R.id.tvEditPassword);
+        tvEditPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO :: UNCOMMENT FOR FINAL VERSION AND PASSWORD CHANGES
+//                FirebaseAuth.getInstance().sendPasswordResetEmail(getUserEmail());
             }
         });
 
