@@ -95,6 +95,7 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
     }
 
     private void setFriendsList() {
+        friendList = new ArrayList<>(); //reinitialize friendlist because otherwise u will repeat
         //Add the current user to the friend list, as you really are your own best friend
         friendList.add(getUserName());
         //Get's users friends, currently has keys (sort of maybe )
@@ -115,18 +116,22 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
                     }
                 }
             }
+
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
             }
+
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
 
             }
+
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
