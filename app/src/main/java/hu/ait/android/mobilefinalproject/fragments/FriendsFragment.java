@@ -30,7 +30,7 @@ import hu.ait.android.mobilefinalproject.data.Friend;
 import hu.ait.android.mobilefinalproject.model.Clump;
 
 
-public class FriendsFragment extends BaseFragment {
+public class FriendsFragment extends BaseFragment implements AddFriendFragmentAnswer {
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -56,15 +56,16 @@ public class FriendsFragment extends BaseFragment {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
                 // Create a new Clump with the username as the title
-                String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid())
-                        .child("friends").push().getKey();
-                Friend newFriend = new Friend("ryanc2", 100, 200);
-
-                //if (isFriendUnique(newFriend.getUsername())) {
-                    FirebaseDatabase.getInstance().getReference().child("users").child(getUid())
-                            .child("friends").child(key).setValue(newFriend);
-
-                    Toast.makeText(getContext(), "Friend added", Toast.LENGTH_SHORT).show();
+                openAddFriendFragment();
+//                String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid())
+//                        .child("friends").push().getKey();
+//                Friend newFriend = new Friend("ryanc2", 100, 200);
+//
+//                //if (isFriendUnique(newFriend.getUsername())) {
+//                    FirebaseDatabase.getInstance().getReference().child("users").child(getUid())
+//                            .child("friends").child(key).setValue(newFriend);
+//
+//                    Toast.makeText(getContext(), "Friend added", Toast.LENGTH_SHORT).show();
 //                }
 //                else {
 //                    Toast.makeText(getContext(), "You already have that friend", Toast.LENGTH_SHORT).show();
@@ -75,6 +76,15 @@ public class FriendsFragment extends BaseFragment {
         initPostListener();
 
         return root;
+    }
+
+    private void openAddFriendFragment() {
+        AddFriendDialogFragment addFriendDialogFragment = new AddFriendDialogFragment();
+        addFriendDialogFragment.setTargetFragment(this, 1);
+        Bundle bundle = new Bundle();
+//        bundle.putBoolean(IS_EDIT, false);
+        addFriendDialogFragment.setArguments(bundle);
+        addFriendDialogFragment.show(getFragmentManager(), AddFriendDialogFragment.TAG);
     }
 
     private boolean isFriendUnique(final String username) {
@@ -178,6 +188,14 @@ public class FriendsFragment extends BaseFragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void addFriend(Friend friend) {
+        //clumpRecyclerAdapter.addClump(clump, getUid());
+        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("friends").push().getKey();
+        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("friends").child(key).setValue(friend);
+        Toast.makeText(getContext(), "Friend added", Toast.LENGTH_SHORT).show();
     }
 
     public interface OnFragmentInteractionListener {

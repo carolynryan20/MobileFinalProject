@@ -31,7 +31,7 @@ import hu.ait.android.mobilefinalproject.data.Friend;
  * Created by Carolyn on 12/4/16.
  */
 
-public class SingleClumpFragment extends BaseFragment implements AddFriendToClumpFragmentAnswer {
+public class SingleClumpFragment extends BaseFragment {
 
     public static final String TAG = "SingleClumpFragment";
 
@@ -53,29 +53,29 @@ public class SingleClumpFragment extends BaseFragment implements AddFriendToClum
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_single_clump_details, container, false);
 
-        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fabSingleClump);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                // Create a new Clump with the username as the title
-                openAddFriendToClumpFragment();
-
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fabSingleClump);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+////                        .setAction("Action", null).show();
+//                // Create a new Clump with the username as the title
+//                //openAddFriendToClumpFragment();
+//
+//            }
+//        });
 
         return root;
     }
 
-    private void openAddFriendToClumpFragment() {
-        AddFriendToClumpDialogFragment addFriendToClumpDialogFragment = new AddFriendToClumpDialogFragment();
-        addFriendToClumpDialogFragment.setTargetFragment(this, 1);
-        Bundle bundle = new Bundle();
-//        bundle.putBoolean(IS_EDIT, false);
-        addFriendToClumpDialogFragment.setArguments(bundle);
-        addFriendToClumpDialogFragment.show(getFragmentManager(), AddFriendToClumpDialogFragment.TAG);
-    }
+//    private void openAddFriendToClumpFragment() {
+//        AddFriendToClumpDialogFragment addFriendToClumpDialogFragment = new AddFriendToClumpDialogFragment();
+//        addFriendToClumpDialogFragment.setTargetFragment(this, 1);
+//        Bundle bundle = new Bundle();
+////        bundle.putBoolean(IS_EDIT, false);
+//        addFriendToClumpDialogFragment.setArguments(bundle);
+//        addFriendToClumpDialogFragment.show(getFragmentManager(), AddFriendToClumpDialogFragment.TAG);
+//    }
 
 
     @Override
@@ -131,12 +131,12 @@ public class SingleClumpFragment extends BaseFragment implements AddFriendToClum
         });
     }
 
-    @Override
-    public void addFriendToClump(Friend friend) {
-//        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();
-//        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").child(key).setValue(clump);
-//        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").getKey();
-        Toast.makeText(getContext(), "Friend Added to Clump", Toast.LENGTH_SHORT).show();
-
-    }
+//    @Override
+//    public void addFriendToClump(Friend friend) {
+////        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();
+////        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").child(key).setValue(clump);
+////        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").getKey();
+//        Toast.makeText(getContext(), "Friend Added to Clump", Toast.LENGTH_SHORT).show();
+//
+//    }
 }
