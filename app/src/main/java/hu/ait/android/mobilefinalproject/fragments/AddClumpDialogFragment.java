@@ -7,14 +7,17 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -40,6 +43,8 @@ public class AddClumpDialogFragment extends DialogFragment {
     private ListView lvFriendsToAdd;
     private Spinner spinnerClumpType;
     private Context context;
+    private Map<String, Float> friendsWhoOwe;
+    private AddClumpDialogFragment addClumpDialogFragment;
 
 
     @Override
@@ -48,6 +53,8 @@ public class AddClumpDialogFragment extends DialogFragment {
         super.onAttach(context);
 
         addClumpFragmentAnswer = (ClumpFragment)getTargetFragment();
+        friendsWhoOwe = new HashMap<String,Float>();
+        addClumpDialogFragment = this;
     }
 
     private boolean itemIsEditItem() {
@@ -90,7 +97,9 @@ public class AddClumpDialogFragment extends DialogFragment {
 
     private void setPositiveButton(AlertDialog.Builder alertDialogBuilder, View dialogLayout) {
         etClumpName = (EditText) dialogLayout.findViewById(R.id.etClumpTitle);
-        lvFriendsToAdd = (ListView) dialogLayout.findViewById(R.id.lvFriendsToAdd);
+        setUpAddingOwes(dialogLayout);
+
+
         spinnerClumpType = (Spinner) dialogLayout.findViewById(R.id.spinnerClumpType);
         setSpinnerChoices();
         etWhoPaid = (EditText) dialogLayout.findViewById(R.id.etWhoPaid);
@@ -105,6 +114,40 @@ public class AddClumpDialogFragment extends DialogFragment {
                 //Do nothing because the button is overridden in onStart()
             }
         });
+    }
+
+    private void setUpAddingOwes(View dialogLayout) {
+        lvFriendsToAdd = (ListView) dialogLayout.findViewById(R.id.lvFriendsToAdd);
+
+        List<String> friendsWhoCouldBeAdded = new ArrayList<>();
+        friendsWhoCouldBeAdded.add("moroz");
+        friendsWhoCouldBeAdded.add("ryanc2");
+        friendsWhoCouldBeAdded.add("ssheppe");
+        friendsWhoCouldBeAdded.add("exampleuser");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_list_item_1, android.R.id.text1, friendsWhoCouldBeAdded);
+
+        lvFriendsToAdd.setAdapter(adapter);
+        lvFriendsToAdd.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int itemPosition = position;
+                String  itemValue = (String) lvFriendsToAdd.getItemAtPosition(position);
+
+                FragmentAskFloat fragmentAskFloat = new FragmentAskFloat();
+                fragmentAskFloat.setTargetFragment(addClumpDialogFragment, 1);
+                fragmentAskFloat.show(getFragmentManager(), AddClumpDialogFragment.TAG);
+                Bundle bundle = new Bundle();
+                bundle.putString("USER", itemValue);
+                fragmentAskFloat.setArguments(bundle);
+            }
+        });
+    }
+
+    public void addFriendWhoOwes(String friend, Float amt) {
+        friendsWhoOwe.put(friend, amt);
+        Toast.makeText(context, "Added Friends to Owe Map", Toast.LENGTH_SHORT).show();
     }
 
     private void setNegativeButton(AlertDialog.Builder alertDialogBuilder) {
@@ -152,14 +195,7 @@ public class AddClumpDialogFragment extends DialogFragment {
             String userWhoPaid = etWhoPaid.getText().toString();
             Clump.ClumpType clumpType = Clump.ClumpType.fromInt(spinnerClumpType.getSelectedItemPosition());
 
-
-            Map<String, Float> myMap = new HashMap<>();
-            myMap.put("Mo", (float) 32.6);
-            myMap.put("Sam", (float) 67.8);
-            myMap.put("friend1", (float) 100.0);
-            myMap.put("exampleuser", (float) 27.5);
-
-            Clump toAdd = new Clump(clumpName, clumpType, userWhoPaid, myMap);
+            Clump toAdd = new Clump(clumpName, clumpType, userWhoPaid, friendsWhoOwe);
 
             if (itemIsEditItem()) {
                 addClumpFragmentAnswer.addEditClump(toAdd, (int)getArguments().get("EDIT_INDEX"));
@@ -170,6 +206,4 @@ public class AddClumpDialogFragment extends DialogFragment {
             }
         }
     }
-
-
 }
