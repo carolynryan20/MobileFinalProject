@@ -27,7 +27,7 @@ import hu.ait.android.mobilefinalproject.model.Clump;
 import hu.ait.android.mobilefinalproject.model.User;
 
 
-public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswer{
+public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswer {
 
     public static final String TAG = "ClumpFragment";
     public static final String IS_EDIT = "IS_EDIT";
@@ -61,9 +61,7 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
 
             }
         });
-
         initPostListener();
-
 
         return root;
     }
@@ -77,7 +75,19 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
         addClumpDialogFragment.show(getFragmentManager(), AddClumpDialogFragment.TAG);
     }
 
-    public void openAddClumpFragment(Clump clump, int position) {
+    //    public void openAddClumpFragment(Clump clump, int position) {
+//        AddClumpDialogFragment addClumpDialogFragment = new AddClumpDialogFragment();
+//        addClumpDialogFragment.setTargetFragment(this, 1);
+//        Bundle bundle = new Bundle();
+//        bundle.putString(CLUMP_TITLE, clump.getTitle());
+//        bundle.putString(WHO_PAID, clump.getOwedUser());
+//        bundle.putInt(TYPE, clump.getType().getValue());
+//        bundle.putBoolean(IS_EDIT, true);
+//        bundle.putInt(EDIT_INDEX, position);
+//        addClumpDialogFragment.setArguments(bundle);
+//        addClumpDialogFragment.show(getFragmentManager(), AddClumpDialogFragment.TAG);
+//    }
+    public void openAddClumpFragment(Clump clump, String key) {
         AddClumpDialogFragment addClumpDialogFragment = new AddClumpDialogFragment();
         addClumpDialogFragment.setTargetFragment(this, 1);
         Bundle bundle = new Bundle();
@@ -85,10 +95,12 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
         bundle.putString(WHO_PAID, clump.getOwedUser());
         bundle.putInt(TYPE, clump.getType().getValue());
         bundle.putBoolean(IS_EDIT, true);
-        bundle.putInt(EDIT_INDEX, position);
+        bundle.putString(EDIT_INDEX, key);
+//        bundle.putInt(EDIT_INDEX, position);
         addClumpDialogFragment.setArguments(bundle);
         addClumpDialogFragment.show(getFragmentManager(), AddClumpDialogFragment.TAG);
     }
+
 
     private void setupRecyclerView() {
         recyclerView = (RecyclerView) root.findViewById(R.id.recyclerClump);
@@ -137,7 +149,6 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
         });
     }
 
-
     @Override
     public void addClump(Clump clump) {
         //clumpRecyclerAdapter.addClump(clump, getUid());
@@ -146,11 +157,21 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
         Toast.makeText(getContext(), "Clump created", Toast.LENGTH_SHORT).show();
     }
 
+    //    @Override
+//    public void addEditClump(Clump clump, int index) {
+////        clumpRecyclerAdapter.editClump(clump, index);
+//        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();
+//        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").child(key).setValue(clump);
+//        Toast.makeText(getContext(), "Clump edited", Toast.LENGTH_SHORT).show();
+//    }
+
     @Override
-    public void addEditClump(Clump clump, int index) {
+    public void addEditClump(Clump clump, String key) {
 //        clumpRecyclerAdapter.editClump(clump, index);
-        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();
+//        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();
         FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").child(key).setValue(clump);
         Toast.makeText(getContext(), "Clump edited", Toast.LENGTH_SHORT).show();
+        clumpRecyclerAdapter.notifyDataSetChanged();
     }
+
 }

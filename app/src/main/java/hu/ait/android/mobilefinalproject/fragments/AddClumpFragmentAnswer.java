@@ -12,5 +12,7 @@ import hu.ait.android.mobilefinalproject.model.Clump;
 public interface AddClumpFragmentAnswer {
     public void addClump(Clump clump);
 
-    public void addEditClump(Clump clump, int index);
+//    public void addEditClump(Clump clump, int index);
+      public void addEditClump(Clump clump, String key);
+
 }

@@ -161,7 +161,8 @@ public class AddClumpDialogFragment extends DialogFragment {
             Clump toAdd = new Clump(clumpName, clumpType, userWhoPaid, myMap);
 
             if (itemIsEditItem()) {
-                addClumpFragmentAnswer.addEditClump(toAdd, (int)getArguments().get("EDIT_INDEX"));
+//                addClumpFragmentAnswer.addEditClump(toAdd, (int)getArguments().get("EDIT_INDEX"));
+                addClumpFragmentAnswer.addEditClump(toAdd, (String)getArguments().get("EDIT_INDEX"));
                 dismiss();
             } else {
                 addClumpFragmentAnswer.addClump(toAdd);
