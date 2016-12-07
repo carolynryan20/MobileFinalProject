@@ -79,11 +79,11 @@ public class Clump {
      * ShoppingItemType to get icon corresponding to item categories
      * */
     public enum ClumpType {
-        FOOD(0, R.drawable.ic_menu_camera),
-        DRINKS(1, R.drawable.ic_menu_gallery),
-        RENT(2, R.drawable.ic_menu_manage),
-        TRAVEL(3, R.drawable.ic_menu_send),
-        OTHER(4, R.drawable.ic_menu_share);
+        FOOD(0, R.drawable.knife_fork),
+        DRINKS(1, R.drawable.drink),
+        RENT(2, R.drawable.ic_home_black_24dp),
+        TRAVEL(3, R.drawable.airplane),
+        OTHER(4, R.drawable.ic_all_inclusive_black_24dp);
 
         private int value;
         private int iconId;

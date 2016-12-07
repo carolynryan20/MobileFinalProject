@@ -47,7 +47,6 @@ public class SingleClumpFragment extends BaseFragment {
     public static final String DEBT_USERS = "DEBT_USERS";
 
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -88,47 +87,50 @@ public class SingleClumpFragment extends BaseFragment {
         args = getArguments();
 
         tvUserWhoPaid = (TextView) root.findViewById(R.id.tvUserWhoPaid);
-        tvUserWhoPaid.setText(args.get(OWED_USER)+" Paid");
+        tvUserWhoPaid.setText(args.get(OWED_USER) + " Paid");
 
         listViewUsersWhoOwe = (ListView) root.findViewById(R.id.listViewUsersWhoOwe);
         HashMap<String, Float> dict = (HashMap<String, Float>) args.getSerializable(DEBT_USERS);
 
-        boolean owedUserIsCurrentUser = false;
-        if (getUserName().equals(args.getString(OWED_USER))) {
-            owedUserIsCurrentUser = true;
-        }
         float userDebt = 0;
         float userOwed = 0;
-
-        List<String> userList = new ArrayList<>();
-        for (Map.Entry<String, Float> entry : dict.entrySet()) {
-            String user = entry.getKey();
-            Float owed = entry.getValue();
-            if (user.equals(getUserName())) { //if user is currentUser
-                userDebt += owed;
-            } else if (owedUserIsCurrentUser) {
-                userOwed += owed;
+        if ((dict != null) && (!dict.isEmpty())) {
+            boolean owedUserIsCurrentUser = false;
+            if (getUserName().equals(args.getString(OWED_USER))) {
+                owedUserIsCurrentUser = true;
             }
-            userList.add(user + " owes $"+owed);
-        }
+            List<String> userList = new ArrayList<>();
+            for (Map.Entry<String, Float> entry : dict.entrySet()) {
+                String user = entry.getKey();
+                Float owed = entry.getValue();
+                if (user.equals(getUserName())) { //if user is currentUser
+                    userDebt += owed;
+                } else if (owedUserIsCurrentUser) {
+                    userOwed += owed;
+                }
+                userList.add(user + " owes $" + owed);
+            }
 
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                    android.R.layout.simple_list_item_1, android.R.id.text1, userList);
+
+            listViewUsersWhoOwe.setAdapter(adapter);
+            listViewUsersWhoOwe.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    int itemPosition = position;
+                    String itemValue = (String) listViewUsersWhoOwe.getItemAtPosition(position);
+                }
+            });
+        } else {
+            Toast.makeText(getContext(), "No users were inputed as having debts", Toast.LENGTH_SHORT).show();
+        }
         tvDepts = (TextView) root.findViewById(R.id.tvDepts);
-        tvDepts.setText("$"+userDebt);
+        tvDepts.setText("$" + userDebt);
 
         tvOwed = (TextView) root.findViewById(R.id.tvOwed);
-        tvOwed.setText("$"+userOwed);
+        tvOwed.setText("$" + userOwed);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, userList);
-
-        listViewUsersWhoOwe.setAdapter(adapter);
-        listViewUsersWhoOwe.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int itemPosition = position;
-                String  itemValue = (String) listViewUsersWhoOwe.getItemAtPosition(position);
-            }
-        });
     }
 
 //    @Override
