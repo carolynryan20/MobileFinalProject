@@ -95,6 +95,8 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
     }
 
     private void setFriendsList() {
+        //Add the current user to the friend list, as you really are your own best friend
+        friendList.add(getUserName());
         //Get's users friends, currently has keys (sort of maybe )
         DatabaseReference friendsRef = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("friends");
 
