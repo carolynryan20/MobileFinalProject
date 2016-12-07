@@ -172,6 +172,15 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
         }
     }
 
+    public boolean checkClumpAlreadyInList(Clump toCheck) {
+        for (Clump clump : clumpList) {
+           if (clump.equals(toCheck)){
+               return true;
+           }
+        }
+        return false;
+    }
+
     public void editClump(Clump clump, int index) {
         removeClump(index);
         addClump(clump, index);
