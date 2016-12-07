@@ -95,7 +95,7 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
     public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
         final Clump tmpClump = clumpList.get(position);
         viewHolder.tvClumpName.setText(tmpClump.getTitle());
-//        viewHolder.ivClumpIcon.setImageResource(tmpClump.getType().getIconId());
+        viewHolder.ivClumpIcon.setImageResource(tmpClump.getType().getIconId());
 
 
         viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
