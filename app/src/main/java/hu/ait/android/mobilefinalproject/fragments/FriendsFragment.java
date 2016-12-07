@@ -19,6 +19,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -28,7 +30,7 @@ import hu.ait.android.mobilefinalproject.data.Friend;
 import hu.ait.android.mobilefinalproject.model.Clump;
 
 
-public class FriendsFragment extends BaseFragment {
+public class FriendsFragment extends BaseFragment implements AddFriendFragmentAnswer {
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -54,20 +56,65 @@ public class FriendsFragment extends BaseFragment {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
                 // Create a new Clump with the username as the title
-                String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid())
-                        .child("friends").push().getKey();
-                Friend newPost = new Friend("ryanc2", 100, 200);
-
-                FirebaseDatabase.getInstance().getReference().child("users").child(getUid())
-                        .child("friends").child(key).setValue(newPost);
-
-                Toast.makeText(getContext(), "Friend added", Toast.LENGTH_SHORT).show();
+                openAddFriendFragment();
+//                String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid())
+//                        .child("friends").push().getKey();
+//                Friend newFriend = new Friend("ryanc2", 100, 200);
+//
+//                //if (isFriendUnique(newFriend.getUsername())) {
+//                    FirebaseDatabase.getInstance().getReference().child("users").child(getUid())
+//                            .child("friends").child(key).setValue(newFriend);
+//
+//                    Toast.makeText(getContext(), "Friend added", Toast.LENGTH_SHORT).show();
+//                }
+//                else {
+//                    Toast.makeText(getContext(), "You already have that friend", Toast.LENGTH_SHORT).show();
+//                }
             }
         });
 
         initPostListener();
 
         return root;
+    }
+
+    private void openAddFriendFragment() {
+        AddFriendDialogFragment addFriendDialogFragment = new AddFriendDialogFragment();
+        addFriendDialogFragment.setTargetFragment(this, 1);
+        Bundle bundle = new Bundle();
+//        bundle.putBoolean(IS_EDIT, false);
+        addFriendDialogFragment.setArguments(bundle);
+        addFriendDialogFragment.show(getFragmentManager(), AddFriendDialogFragment.TAG);
+    }
+
+    private boolean isFriendUnique(final String username) {
+        final boolean[] isUnique = {false};
+        final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("users")
+                .child(getUid()).child("friends");
+        rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Query users = rootRef.getDatabase().getReference().orderByChild("username").equalTo(username);
+//                if (users.getRef().getKey() == null) {
+                    Toast.makeText(getContext(), users.getRef().getKey(), Toast.LENGTH_SHORT).show();
+//                }
+//                if (users.getRef() == null) {
+                if(users.getRef().getKey() == null) {
+                    isUnique[0] = true;
+                }
+
+//                if (snapshot.hasChild("name")) {
+//                    // run some code
+//                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        return isUnique[0];
     }
 
     private void initPostListener() {
@@ -141,6 +188,14 @@ public class FriendsFragment extends BaseFragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void addFriend(Friend friend) {
+        //clumpRecyclerAdapter.addClump(clump, getUid());
+        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("friends").push().getKey();
+        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("friends").child(key).setValue(friend);
+        Toast.makeText(getContext(), "Friend added", Toast.LENGTH_SHORT).show();
     }
 
     public interface OnFragmentInteractionListener {

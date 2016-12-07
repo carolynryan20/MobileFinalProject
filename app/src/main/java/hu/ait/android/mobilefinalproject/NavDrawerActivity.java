@@ -35,7 +35,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.Serializable;
 import java.util.Dictionary;
-import java.util.HashMap;
 
 
 public class NavDrawerActivity extends BaseActivity
@@ -195,7 +194,7 @@ public class NavDrawerActivity extends BaseActivity
         bundle.putString(SingleClumpFragment.TITLE,clump.getTitle());
         bundle.putInt(SingleClumpFragment.TYPE, clump.getType().getValue());
 
-        bundle.putSerializable(SingleClumpFragment.DEBT_USERS, (HashMap<String, Float>) clump.getDebtUsers());
+        bundle.putSerializable(SingleClumpFragment.DEBT_USERS, (Serializable) clump.getDebtUsers());
 
         showFragmentByTag(SingleClumpFragment.TAG, bundle);
     }

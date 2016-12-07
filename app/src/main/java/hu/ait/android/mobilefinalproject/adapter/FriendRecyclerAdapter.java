@@ -69,7 +69,7 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAd
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
+        holder.tvFriendUsername.setText(friendList.get(holder.getAdapterPosition()).getUsername());
     }
 
     @Override
@@ -84,7 +84,6 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAd
         public ViewHolder(final View itemView) {
             super(itemView);
             tvFriendUsername = (TextView) itemView.findViewById(R.id.tvFriendUsername);
-
         }
     }
 
