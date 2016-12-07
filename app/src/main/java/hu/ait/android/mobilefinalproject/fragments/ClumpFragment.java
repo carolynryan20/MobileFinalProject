@@ -61,7 +61,8 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
 
             }
         });
-        initPostListener();
+
+            initPostListener();
 
         return root;
     }
