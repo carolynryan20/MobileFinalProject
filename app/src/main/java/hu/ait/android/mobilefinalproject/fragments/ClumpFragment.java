@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import hu.ait.android.mobilefinalproject.R;
 import hu.ait.android.mobilefinalproject.adapter.ClumpRecyclerAdapter;
@@ -173,6 +174,12 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
                 Clump newClump = dataSnapshot.getValue(Clump.class);
                 //ref.child(dataSnapshot.getKey()).setValue(newClump);
                 clumpRecyclerAdapter.addClump(newClump, dataSnapshot.getKey());
+                // when you add a clump, add it to all users in that clump
+//                Map<String, Float> clumpUsers = newClump.getDebtUsers();
+//                for (Map.Entry<String, Float> entry : clumpUsers.entrySet()) {
+//                    // find this user in snapshot:
+//
+//                }
             }
 
             @Override
