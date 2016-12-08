@@ -11,7 +11,8 @@ public class User {
     private String username;
     private UserIcon userIcon;
 
-    public User(){}
+    public User() {
+    }
 
     public User(String email, String username, UserIcon userIcon) {
         this.email = email;
@@ -82,5 +83,36 @@ public class User {
             }
             return FARIDA;
         }
+
+        public static String fromIconId(int id) {
+            switch (id) {
+                case R.drawable.circle_alex:
+                    return "ALEX";
+                case R.drawable.circle_cal:
+                    return "CAL";
+                case R.drawable.circle_carolyn1:
+                    return "CAROLYN1";
+                case R.drawable.circle_carolyn2:
+                    return "CAROLYN2";
+                case R.drawable.circle_charlie:
+                    return "CHARLIE";
+                case R.drawable.circle_dylan:
+                    return "DYLAN";
+                case R.drawable.circle_sam:
+                    return "SAM";
+                case R.drawable.circle_farida:
+                    return "FARIDA";
+                case R.drawable.circle_keith:
+                    return "KEITH";
+                case R.drawable.circle_mo:
+                    return "MO";
+                case R.drawable.circle_nick:
+                    return "NICK";
+                case R.drawable.circle_oscar:
+                    return "OSCAR";
+            }
+            return "FARIDA";
+        }
     }
 }
+

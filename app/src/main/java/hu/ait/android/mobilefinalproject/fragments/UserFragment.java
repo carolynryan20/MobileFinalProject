@@ -14,8 +14,15 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,6 +74,22 @@ public class UserFragment extends BaseFragment {
 
         accountIcon = (ImageView) root.findViewById(R.id.ivAccountIcon);
 
+
+        DatabaseReference iconRef = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("icon");
+
+        Query iconQuery = iconRef.orderByValue();
+        iconQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User.UserIcon iconInt = User.UserIcon.valueOf(dataSnapshot.getValue().toString());
+                accountIcon.setImageResource(iconInt.getIconId());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         TextView tvUserFriendsAmount = (TextView) root.findViewById(R.id.tvUserFriendsAmount);
         tvUserFriendsAmount.setOnClickListener(new View.OnClickListener() {
@@ -133,7 +156,12 @@ public class UserFragment extends BaseFragment {
 //                accountIcon = (ImageView) imageAdapter.getView(position, view, parent);
 
                 int editedIcon = imageAdapter.getDrawableID(position, view, parent);
+                String iconID = User.UserIcon.fromIconId(editedIcon);
+
                 accountIcon.setImageResource(editedIcon);
+
+                DatabaseReference iconRef = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("icon");
+                iconRef.setValue(User.UserIcon.valueOf(iconID));
 
                 userIconDialog.dismiss();
             }

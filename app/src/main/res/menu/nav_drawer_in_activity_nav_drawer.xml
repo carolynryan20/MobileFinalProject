@@ -14,17 +14,10 @@
             android:id="@+id/nav_user"
             android:icon="@drawable/ic_user"
             android:title="User" />
-<<<<<<< HEAD
-=======
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_delete"
             android:title="Logout" />
->>>>>>> bf987f55003ea28298dcc8bbad49a9af49daff2d
     </group>
 
     <item android:title="Communicate">
