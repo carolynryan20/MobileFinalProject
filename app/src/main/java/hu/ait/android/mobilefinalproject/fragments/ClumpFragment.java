@@ -266,9 +266,12 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         Toast.makeText(getContext(), "in the map for, searching for: " + entry.getKey(), Toast.LENGTH_SHORT).show();
                         for (DataSnapshot user : dataSnapshot.getChildren()) {
-                            String userKey = user.getKey();
-                            String newClumpKey = ref.child(userKey).child("clumps").push().getKey();
-                            ref.child(userKey).child("clumps").child(newClumpKey).setValue(clump);
+                            String username = (String) user.child("username").getValue();
+                            if (!username.equals(getUserName())) {
+                                String userKey = user.getKey();
+                                String newClumpKey = ref.child(userKey).child("clumps").push().getKey();
+                                ref.child(userKey).child("clumps").child(newClumpKey).setValue(clump);
+                            }
                         }
                     }
 
