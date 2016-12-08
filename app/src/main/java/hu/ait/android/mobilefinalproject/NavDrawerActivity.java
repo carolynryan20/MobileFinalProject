@@ -1,6 +1,7 @@
 package hu.ait.android.mobilefinalproject;
 
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -31,6 +32,7 @@ import hu.ait.android.mobilefinalproject.model.Clump;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.Serializable;
@@ -144,11 +146,13 @@ public class NavDrawerActivity extends BaseActivity
 
         } else if (id == R.id.nav_user) {
             showFragmentByTag(UserFragment.TAG, null);
+
+        } else if (id == R.id.nav_logout) {
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
         }
-//
-//        } else if (id == R.id.nav_manage) {
-//
-//        } else if (id == R.id.nav_share) {
+        //else if (id == R.id.nav_share) {
 //
 //        } else if (id == R.id.nav_send) {
 //    }
