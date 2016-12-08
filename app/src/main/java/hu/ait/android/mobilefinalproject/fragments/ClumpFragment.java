@@ -17,6 +17,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -216,11 +218,6 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
                 //ref.child(dataSnapshot.getKey()).setValue(newClump);
                 clumpRecyclerAdapter.addClump(newClump, dataSnapshot.getKey());
                 // when you add a clump, add it to all users in that clump
-//                Map<String, Float> clumpUsers = newClump.getDebtUsers();
-//                for (Map.Entry<String, Float> entry : clumpUsers.entrySet()) {
-//                    // find this user in snapshot:
-//
-//                }
             }
 
             @Override
@@ -246,10 +243,42 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
     }
 
     @Override
-    public void addClump(Clump clump) {
+    public void addClump(final Clump clump) {
         //clumpRecyclerAdapter.addClump(clump, getUid());
+        // add to this user
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users");
+
         String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();
         FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").child(key).setValue(clump);
+
+        // add to all other users in that clump:
+        Map<String, Float> clumpUsers = clump.getDebtUsers();
+        if (clumpUsers == null) {
+            Toast.makeText(getContext(), "friends list in clump is empty", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            for (final Map.Entry<String, Float> entry : clumpUsers.entrySet()) {
+                // find this user in snapshot:
+                final Query user = ref.orderByChild("username").equalTo(entry.getKey());
+                user.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Toast.makeText(getContext(), "in the map for, searching for: " + entry.getKey(), Toast.LENGTH_SHORT).show();
+                        for (DataSnapshot user : dataSnapshot.getChildren()) {
+                            String userKey = user.getKey();
+                            String newClumpKey = ref.child(userKey).child("clumps").push().getKey();
+                            ref.child(userKey).child("clumps").child(newClumpKey).setValue(clump);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        }
+
         Toast.makeText(getContext(), "Clump created", Toast.LENGTH_SHORT).show();
     }
 
