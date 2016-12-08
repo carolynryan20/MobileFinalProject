@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -38,10 +39,17 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
     public static final String CLUMP_TITLE = "CLUMP_TITLE";
     public static final String WHO_PAID = "WHO_PAID";
     public static final String EDIT_INDEX = "EDIT_INDEX";
+    public static final String FRIEND_LIST = "FRIEND_LIST";
+
+
     private RecyclerView recyclerView;
     private ClumpRecyclerAdapter clumpRecyclerAdapter;
     private View root;
-    private ArrayList<String> friendList;
+    private ArrayList<String> friendList = new ArrayList<>();
+
+    private float dragX;
+    private float dragY;
+    private int lastAction;
 
     public ClumpFragment() {
         // Required empty public constructor
@@ -53,6 +61,7 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
         root = inflater.inflate(R.layout.fragment_clump, container, false);
 
         setupRecyclerView();
+        setFriendsList();
 
         FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fabClumpFragment);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -66,9 +75,51 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
             }
         });
 
-            initPostListener();
+        initPostListener();
 
         return root;
+    }
+
+//    private void setUpFab() {
+//        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fab);
+//
+//        /* I use View.OnTouchListener here as I want the user to be able to drag the FAB if desired,
+//         * if the user's city list is long enough, the fab would cover the delete button, leading to
+//         * potential user frustration.  As such, I made the fab draggable all across the screen.   */
+//
+//        fab.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                switch (motionEvent.getActionMasked()) {
+//                    case MotionEvent.ACTION_DOWN:
+//                        fabActionDown(view, motionEvent);
+//                        break;
+//                    case MotionEvent.ACTION_MOVE:
+//                        fabActionMove(view, motionEvent);
+//                        break;
+//                    case MotionEvent.ACTION_UP:
+//                        //we know action_down, action_up is a click action so:
+//                        if (lastAction == MotionEvent.ACTION_DOWN)
+//                            openAddClumpFragment();
+//                        break;
+//                    default:
+//                        return false;
+//                }
+//                return true;
+//            }
+//        });
+//    }
+
+    private void fabActionDown(View view, MotionEvent motionEvent) {
+        dragX = view.getX() - motionEvent.getRawX();
+        dragY = view.getY() - motionEvent.getRawY();
+        lastAction = MotionEvent.ACTION_DOWN;
+    }
+
+    private void fabActionMove(View view, MotionEvent motionEvent) {
+        view.setX(motionEvent.getRawX() + dragX);
+        view.setY(motionEvent.getRawY() + dragY);
+        lastAction = MotionEvent.ACTION_MOVE;
     }
 
     private void openAddClumpFragment() {
@@ -76,22 +127,12 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
         addClumpDialogFragment.setTargetFragment(this, 1);
         Bundle bundle = new Bundle();
         bundle.putBoolean(IS_EDIT, false);
+        bundle.putStringArrayList(FRIEND_LIST, friendList);
         addClumpDialogFragment.setArguments(bundle);
         addClumpDialogFragment.show(getFragmentManager(), AddClumpDialogFragment.TAG);
     }
 
-    //    public void openAddClumpFragment(Clump clump, int position) {
-//        AddClumpDialogFragment addClumpDialogFragment = new AddClumpDialogFragment();
-//        addClumpDialogFragment.setTargetFragment(this, 1);
-//        Bundle bundle = new Bundle();
-//        bundle.putString(CLUMP_TITLE, clump.getTitle());
-//        bundle.putString(WHO_PAID, clump.getOwedUser());
-//        bundle.putInt(TYPE, clump.getType().getValue());
-//        bundle.putBoolean(IS_EDIT, true);
-//        bundle.putInt(EDIT_INDEX, position);
-//        addClumpDialogFragment.setArguments(bundle);
-//        addClumpDialogFragment.show(getFragmentManager(), AddClumpDialogFragment.TAG);
-//    }
+    //    }
     public void openAddClumpFragment(Clump clump, String key) {
         AddClumpDialogFragment addClumpDialogFragment = new AddClumpDialogFragment();
         addClumpDialogFragment.setTargetFragment(this, 1);
@@ -100,8 +141,8 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
         bundle.putString(WHO_PAID, clump.getOwedUser());
         bundle.putInt(TYPE, clump.getType().getValue());
         bundle.putBoolean(IS_EDIT, true);
+        bundle.putStringArrayList(FRIEND_LIST, friendList);
         bundle.putString(EDIT_INDEX, key);
-//        bundle.putInt(EDIT_INDEX, position);
         addClumpDialogFragment.setArguments(bundle);
         addClumpDialogFragment.show(getFragmentManager(), AddClumpDialogFragment.TAG);
     }
