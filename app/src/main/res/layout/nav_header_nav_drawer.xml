@@ -20,17 +20,17 @@
         android:paddingTop="30dp"
         android:src="@drawable/applogo" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="Holy Split"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:paddingTop="@dimen/nav_header_vertical_spacing"-->
+        <!--android:text="Holy Split"-->
+        <!--android:textAppearance="@style/TextAppearance.AppCompat.Body1" />-->
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Created by: Mo, Coorlyn &amp; Sam" />
+    <!--<TextView-->
+        <!--android:id="@+id/textView"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Created by: Mo, Coorlyn &amp; Sam" />-->
 
 </LinearLayout>
