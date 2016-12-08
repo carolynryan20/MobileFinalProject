@@ -22,10 +22,10 @@ public class AccountActivity extends Activity{
 //        mapFragment.getMapAsync(this);
     }
 
-    @OnClick(R.id.tvEditPassword)
-    void editPassword(){
-        Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
-    }
+//    @OnClick(R.id.tvEditPassword)
+//    void editPassword(){
+//        Toast.makeText(this, "clicked", Toast.LENGTH_SHORT).show();
+//    }
 
     @OnClick(R.id.tvUserFriendsAmount)
     void openFriendsActivity(){
