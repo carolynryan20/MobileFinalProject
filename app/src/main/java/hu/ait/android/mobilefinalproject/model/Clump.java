@@ -75,21 +75,6 @@ public class Clump {
         return result;
     }
 
-
-    public boolean equals(Clump otherClump) {
-
-        if (! (getTitle().equals(otherClump.getTitle()))) {
-            return false;
-        } if (getType().getValue() != otherClump.getType().getValue()) {
-            return false;
-        } if (! (getOwedUser().equals(otherClump.getOwedUser()))) {
-            return false;
-        } if (!getDebtUsers().equals(otherClump.getDebtUsers())) {
-            return false;
-        }
-        return true;
-    }
-
     /**
      * ShoppingItemType to get icon corresponding to item categories
      * */

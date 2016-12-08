@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
+    android:background="@color/lightGreen"
     tools:context="hu.ait.android.mobilefinalproject.fragments.SingleClumpFragment">
 
     <LinearLayout
@@ -26,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="Your Debts"
+                android:textColor="@color/orange"
                 android:textSize="22sp" />
 
             <LinearLayout
@@ -35,12 +37,12 @@
                 android:gravity="center_horizontal"
                 android:padding="10dp">
 
-                <ImageView
-                    android:id="@+id/ivDepts"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_debt_sum" />
+                <!--<ImageView-->
+                    <!--android:id="@+id/ivDepts"-->
+                    <!--android:layout_width="20dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:scaleType="fitXY"-->
+                    <!--android:src="@drawable/ic_debt_sum" />-->
 
                 <TextView
                     android:id="@+id/tvDepts"
@@ -63,6 +65,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:text="You're Owed"
+                android:textColor="@color/mediumBlue"
                 android:textSize="22sp" />
 
             <LinearLayout
@@ -72,12 +75,12 @@
                 android:gravity="center_horizontal"
                 android:padding="10dp">
 
-                <ImageView
-                    android:id="@+id/ivOwed"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_owed_sum" />
+                <!--<ImageView-->
+                    <!--android:id="@+id/ivOwed"-->
+                    <!--android:layout_width="20dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:scaleType="fitXY"-->
+                    <!--android:src="@drawable/ic_owed_sum" />-->
 
                 <TextView
                     android:id="@+id/tvOwed"
@@ -95,8 +98,8 @@
         android:textSize="22sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"/>
-
+        android:gravity="center_horizontal"
+        android:textStyle="bold"/>
 
     <ListView
         android:id="@+id/listViewUsersWhoOwe"
