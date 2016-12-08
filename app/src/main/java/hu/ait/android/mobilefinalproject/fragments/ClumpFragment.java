@@ -79,13 +79,13 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
         addClumpDialogFragment.show(getFragmentManager(), AddClumpDialogFragment.TAG);
     }
 
-    public void openAddClumpFragment(Clump clump, int position) {
+    public void openAddClumpFragment(Clump clump, String key) {
         Bundle bundle = new Bundle();
         bundle.putString(CLUMP_TITLE, clump.getTitle());
         bundle.putString(WHO_PAID, clump.getOwedUser());
         bundle.putInt(TYPE, clump.getType().getValue());
         bundle.putBoolean(IS_EDIT, true);
-        bundle.putInt(EDIT_INDEX, position);
+        bundle.putString(EDIT_INDEX, key);
         bundle.putStringArrayList(FRIEND_LIST, friendList);
 
         AddClumpDialogFragment addClumpDialogFragment = new AddClumpDialogFragment();
@@ -188,9 +188,9 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
     }
 
     @Override
-    public void addEditClump(Clump clump, int index) {
+    public void addEditClump(Clump clump, String key) {
 //        clumpRecyclerAdapter.editClump(clump, index);
-        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();
+        //String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();
         FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").child(key).setValue(clump);
         Toast.makeText(getContext(), "Clump edited", Toast.LENGTH_SHORT).show();
     }

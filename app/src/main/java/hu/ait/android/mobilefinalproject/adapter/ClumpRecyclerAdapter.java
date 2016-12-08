@@ -110,7 +110,7 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
             public void onClick(View v) {
                 String thisKey = clumpKeys.get(viewHolder.getAdapterPosition());
 //                showEditDialog(tmpClump, viewHolder.getAdapterPosition());
-                showEditDialog(tmpClump, thisKey);
+                showEditDialog(tmpClump, thisKey, viewHolder.getAdapterPosition());
             }
         });
 
@@ -128,8 +128,9 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
 //
 //        parentFragment.openAddClumpFragment(clumpToEdit, position);
 //    }
-    public void showEditDialog(Clump clumpToEdit, String key) {
+    public void showEditDialog(Clump clumpToEdit, String key, int position) {
         parentFragment.openAddClumpFragment(clumpToEdit, key);
+        notifyItemChanged(position);
     }
 
 
