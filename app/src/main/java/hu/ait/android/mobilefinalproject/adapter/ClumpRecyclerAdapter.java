@@ -178,6 +178,12 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
         addClump(clump, index);
     }
 
+    public void editClump(Clump clump, String key) {
+        int idx = clumpKeys.indexOf(key);
+        clumpList.set(idx,clump);
+        notifyDataSetChanged();
+    }
+
     public void removeAllClumps() {
         while (!clumpList.isEmpty()) {
             clumpList.remove(0);

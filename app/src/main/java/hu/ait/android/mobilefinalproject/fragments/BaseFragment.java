@@ -20,5 +20,6 @@ public class BaseFragment extends Fragment {
     public String getUserEmail() {
         return FirebaseAuth.getInstance().getCurrentUser().getEmail();
     }
+    
 
 }

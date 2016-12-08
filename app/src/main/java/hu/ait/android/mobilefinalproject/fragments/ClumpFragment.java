@@ -297,7 +297,7 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
 //        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();
         FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").child(key).setValue(clump);
         Toast.makeText(getContext(), "Clump edited", Toast.LENGTH_SHORT).show();
-        clumpRecyclerAdapter.notifyDataSetChanged();
+        clumpRecyclerAdapter.editClump(clump,key);
     }
 
 }

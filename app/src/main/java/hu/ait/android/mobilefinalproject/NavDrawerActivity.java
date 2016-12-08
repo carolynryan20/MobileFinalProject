@@ -16,6 +16,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -101,13 +102,14 @@ public class NavDrawerActivity extends BaseActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.getMenu().getItem(0).setChecked(true);
+//        navigationView.getMenu().getItem(0).setChecked(true);
 
         showFragmentByTag(ClumpSummaryFragment.TAG, null);
     }
 
     @Override
     public void onBackPressed() {
+//        navigationView.getMenu().getItem(0).setChecked(true);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -156,10 +158,12 @@ public class NavDrawerActivity extends BaseActivity
             showSendDialog();
         } else if (id == R.id.nav_about) {
             showAboutDialog();
+
         } else if (id == R.id.nav_logout) {
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(this, LoginActivity.class));
             finish();
+
         }
         //else if (id == R.id.nav_share) {
 //
@@ -231,6 +235,7 @@ public class NavDrawerActivity extends BaseActivity
 
         showFragmentByTag(SingleClumpFragment.TAG, bundle);
     }
+
 
 
 }

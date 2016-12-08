@@ -42,7 +42,7 @@
 
         <activity
             android:name=".NavDrawerActivity"
-            android:label="@string/title_activity_nav_drawer"
+            android:label="Holy Split"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
     </application>
