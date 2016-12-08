@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,7 @@ public class UserFragment extends BaseFragment {
     private View root;
     private UserFragment.OnFragmentInteractionListener mListener;
     private ImageAdapter imageAdapter;
+    private int friendCounter = 0;
 
 
     @Override
@@ -74,6 +76,34 @@ public class UserFragment extends BaseFragment {
 
         accountIcon = (ImageView) root.findViewById(R.id.ivAccountIcon);
 
+        String userNameString = getUserName();
+
+        TextView tvUsername = (TextView) root.findViewById(R.id.tvUsername);
+        tvUsername.setText(userNameString);
+
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("friends");
+
+
+        final Query friends = ref.orderByChild("username");
+        friends.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                friendCounter = (int) dataSnapshot.getChildrenCount();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        TextView friendCount = (TextView) root.findViewById(R.id.tvUserFriendsAmount);
+        if(1 == friendCounter){
+            friendCount.setText("" + friendCounter + " friend");
+        } else {
+            friendCount.setText("" + friendCounter + " friends");
+        }
+
 
         DatabaseReference iconRef = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("icon");
 
@@ -97,7 +127,7 @@ public class UserFragment extends BaseFragment {
             public void onClick(View view) {
                 ((NavDrawerActivity)getActivity()).showFragmentByTag(FriendsFragment.TAG, null);
 //                Toast.makeText(getContext(), "click", Toast.LENGTH_SHORT).show();
-                ((NavDrawerActivity)getActivity()).navigationView.getMenu().getItem(1).setChecked(true);
+//                ((NavDrawerActivity)getActivity()).navigationView.getMenu().getItem(1).setChecked(true);
             }
         });
 

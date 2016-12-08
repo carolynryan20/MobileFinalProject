@@ -1,5 +1,6 @@
 package hu.ait.android.mobilefinalproject.fragments;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -66,52 +67,51 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
         setupRecyclerView();
         setFriendsList();
 
-        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fabClumpFragment);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                // Create a new Clump with the username as the title
-                openAddClumpFragment();
+//        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fabClumpFragment);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+////                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+////                        .setAction("Action", null).show();
+//                // Create a new Clump with the username as the title
+//                openAddClumpFragment();
+//
+//            }
+//        });
 
-            }
-        });
-
+        setUpFab();
         initPostListener();
 
         return root;
     }
 
-//    private void setUpFab() {
-//        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fab);
-//
-//        /* I use View.OnTouchListener here as I want the user to be able to drag the FAB if desired,
-//         * if the user's city list is long enough, the fab would cover the delete button, leading to
-//         * potential user frustration.  As such, I made the fab draggable all across the screen.   */
-//
-//        fab.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent) {
-//                switch (motionEvent.getActionMasked()) {
-//                    case MotionEvent.ACTION_DOWN:
-//                        fabActionDown(view, motionEvent);
-//                        break;
-//                    case MotionEvent.ACTION_MOVE:
-//                        fabActionMove(view, motionEvent);
-//                        break;
-//                    case MotionEvent.ACTION_UP:
-//                        //we know action_down, action_up is a click action so:
-//                        if (lastAction == MotionEvent.ACTION_DOWN)
-//                            openAddClumpFragment();
-//                        break;
-//                    default:
-//                        return false;
-//                }
-//                return true;
-//            }
-//        });
-//    }
+
+    private void setUpFab() {
+        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fabClumpFragment);
+
+        fab.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getActionMasked()) {
+                    case MotionEvent.ACTION_DOWN:
+                        fabActionDown(view, motionEvent);
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        fabActionMove(view, motionEvent);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        //we know action_down, action_up is a click action so:
+                        if (lastAction == MotionEvent.ACTION_DOWN)
+                            openAddClumpFragment();
+                        break;
+                    default:
+                        return false;
+                }
+                return true;
+            }
+        });
+    }
 
     private void fabActionDown(View view, MotionEvent motionEvent) {
         dragX = view.getX() - motionEvent.getRawX();

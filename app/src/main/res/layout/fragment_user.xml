@@ -153,7 +153,7 @@
                     android:background="@drawable/rectangle_background_account_items"
                     android:clickable="true"
                     android:gravity="center"
-                    android:text="5 friends"
+                    android:text="friends"
                     android:textSize="20sp" />
                 <!--android:layout_marginTop="15dp"-->
 
