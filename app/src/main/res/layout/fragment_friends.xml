@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/lightGreen"
+    android:background="@color/lightBlue"
     android:padding="0dp"
     android:layout_margin="0dp"
     tools:context="hu.ait.android.mobilefinalproject.fragments.FriendsFragment">
