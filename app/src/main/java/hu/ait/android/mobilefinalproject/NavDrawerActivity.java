@@ -20,7 +20,6 @@ import android.view.MenuItem;
 
 import hu.ait.android.mobilefinalproject.adapter.CanRespondToCVClumpClick;
 
-import hu.ait.android.mobilefinalproject.fragments.ClumpFragment;
 import hu.ait.android.mobilefinalproject.fragments.FriendsFragment;
 import hu.ait.android.mobilefinalproject.fragments.ClumpSummaryFragment;
 import hu.ait.android.mobilefinalproject.fragments.FriendsInClumpFragment;
@@ -46,8 +45,6 @@ public class NavDrawerActivity extends BaseActivity
 
 
     public NavigationView navigationView;
-    private Fragment prevFragment;
-    private boolean firstOpenClumpFragment = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,9 +163,6 @@ public class NavDrawerActivity extends BaseActivity
         if (fragment == null) {
             if (tag.equals(ClumpSummaryFragment.TAG)){
                 fragment = new ClumpSummaryFragment();
-                if (firstOpenClumpFragment) {
-                    firstOpenClumpFragment = false;
-                }
             } else if (tag.equals(FriendsFragment.TAG)){
                 fragment = new FriendsFragment();
             } else if (tag.equals(UserFragment.TAG)){
@@ -180,7 +174,6 @@ public class NavDrawerActivity extends BaseActivity
         if ((fragment != null) && (bundle != null)) {
             fragment.setArguments(bundle);
         }
-        prevFragment = fragment;
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);

@@ -2,6 +2,7 @@ package hu.ait.android.mobilefinalproject.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import hu.ait.android.mobilefinalproject.LoginActivity;
 import hu.ait.android.mobilefinalproject.NavDrawerActivity;
 import hu.ait.android.mobilefinalproject.R;
 
@@ -62,6 +64,16 @@ public class UserFragment extends BaseFragment {
             public void onClick(View view) {
                 // TODO :: UNCOMMENT FOR FINAL VERSION AND PASSWORD CHANGES
 //                FirebaseAuth.getInstance().sendPasswordResetEmail(getUserEmail());
+            }
+        });
+
+        TextView tvLogout = (TextView) root.findViewById(R.id.tvLogout);
+        tvLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(getContext(), LoginActivity.class));
+                getActivity().finish();
             }
         });
 
