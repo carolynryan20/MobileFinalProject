@@ -14,11 +14,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></Spinner>
 
-    <Spinner
-        android:id="@+id/spinnerWhoPaid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></Spinner>
-
     <ListView
         android:id="@+id/lvFriendsToAdd"
         android:layout_width="match_parent"
