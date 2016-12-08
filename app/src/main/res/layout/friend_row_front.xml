@@ -1,7 +1,6 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
-    cardBackgroundColor="@color/lightBlue"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_marginBottom="16dp"
@@ -11,15 +10,20 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:background="@color/lightBlue"
         android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/ivFriendIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:contentDescription="@string/action_settings"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_clump" />
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/circle_farida"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
         <TextView
             android:id="@+id/tvFriendUsername"
@@ -27,12 +31,13 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_below="@+id/ivFriendIcon"
-            android:background="@color/lightBlue"
+            android:background="@color/darkBlue"
             android:gravity="center"
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
             android:text="@string/username"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
             android:textSize="13sp" />
 
     </RelativeLayout>
