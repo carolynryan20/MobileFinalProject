@@ -149,12 +149,12 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
     }
 
     public void addClump(Clump clump, String key) {
-        clumpList.add(0, clump);
-        clumpKeys.add(0, key);
-        // refresh the whole list
-        notifyDataSetChanged();
-        // refresh only one position
-        notifyItemInserted(0);
+        if (!clumpKeys.contains(key)) {
+            clumpList.add(0, clump);
+            clumpKeys.add(0, key);
+            // refresh the whole list
+            notifyDataSetChanged();
+        }
     }
 
     public void addClump(Clump clump, int index) {
