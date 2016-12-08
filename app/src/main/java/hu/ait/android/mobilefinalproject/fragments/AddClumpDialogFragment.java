@@ -45,7 +45,6 @@ public class AddClumpDialogFragment extends DialogFragment {
     private EditText etClumpName;
     private ListView lvFriendsToAdd;
     private Spinner spinnerClumpType;
-    private Spinner spinnerWhoPaid;
     private Context context;
     private Map<String, Float> friendsWhoOwe;
     private AddClumpDialogFragment addClumpDialogFragment;
@@ -78,7 +77,6 @@ public class AddClumpDialogFragment extends DialogFragment {
                 payerPosition = i;
             }
         }
-        spinnerWhoPaid.setSelection(payerPosition);
 
         etClumpName.setText((String) getArguments().get(ClumpFragment.CLUMP_TITLE));
         //// TODO: 12/8/16 set Friends who owe upon edit
@@ -126,10 +124,9 @@ public class AddClumpDialogFragment extends DialogFragment {
             add("Other");
         }};
 
-        setSpinnerChoices(spinnerClumpType, typesOfClump);
+        ArrayAdapter<String> adapterClump = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, typesOfClump);
+        spinnerClumpType.setAdapter(adapterClump);
 
-        spinnerWhoPaid = (Spinner) dialogLayout.findViewById(R.id.spinnerWhoPaid);
-        setSpinnerChoices(spinnerClumpType, getArguments().getStringArrayList(FRIEND_LIST));
 
         if (itemIsEditItem()) {
             setFieldsForEditItem();
@@ -209,20 +206,14 @@ public class AddClumpDialogFragment extends DialogFragment {
         }
     }
 
-    private void setSpinnerChoices(Spinner spinner, ArrayList<String> choices) {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, choices);
-        spinner.setAdapter(adapter);
-    }
-
     private void handleAddClumpButtonClick() {
         if (TextUtils.isEmpty(etClumpName.getText())) {
             etClumpName.setError("Required");
         } else {
             String clumpName = etClumpName.getText().toString();
-            String userWhoPaid = spinnerClumpType.getSelectedItem().toString();
             Clump.ClumpType clumpType = Clump.ClumpType.fromInt(spinnerClumpType.getSelectedItemPosition());
 
-            Clump toAdd = new Clump(clumpName, clumpType, userWhoPaid, friendsWhoOwe);
+            Clump toAdd = new Clump(clumpName, clumpType, friendsList.get(0), friendsWhoOwe);
 
             if (itemIsEditItem()) {
                 addClumpFragmentAnswer.addEditClump(toAdd, (String) getArguments().get("EDIT_INDEX"));

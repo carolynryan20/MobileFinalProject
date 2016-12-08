@@ -24,6 +24,7 @@ import hu.ait.android.mobilefinalproject.LoginActivity;
 import hu.ait.android.mobilefinalproject.NavDrawerActivity;
 import hu.ait.android.mobilefinalproject.R;
 import hu.ait.android.mobilefinalproject.adapter.ImageAdapter;
+import hu.ait.android.mobilefinalproject.model.User;
 
 public class UserFragment extends BaseFragment {
 
@@ -131,7 +132,9 @@ public class UserFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                accountIcon = (ImageView) imageAdapter.getView(position, view, parent);
 
-                accountIcon.setImageResource(imageAdapter.getDrawableID(position, view, parent));
+                int editedIcon = imageAdapter.getDrawableID(position, view, parent);
+                accountIcon.setImageResource(editedIcon);
+
                 userIconDialog.dismiss();
             }
         });

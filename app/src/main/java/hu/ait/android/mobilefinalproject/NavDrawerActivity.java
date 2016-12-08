@@ -1,7 +1,14 @@
 package hu.ait.android.mobilefinalproject;
 
 
+<<<<<<< HEAD
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+=======
+import android.content.Intent;
+>>>>>>> bf987f55003ea28298dcc8bbad49a9af49daff2d
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -143,14 +150,20 @@ public class NavDrawerActivity extends BaseActivity
             // Handle the camera action
         } else if (id == R.id.nav_friends) {
             showFragmentByTag(FriendsFragment.TAG, null);
-
         } else if (id == R.id.nav_user) {
             showFragmentByTag(UserFragment.TAG, null);
+<<<<<<< HEAD
+        } else if (id == R.id.nav_send) {
+            showSendDialog();
+        } else if (id == R.id.nav_about) {
+            showAboutDialog();
+=======
 
         } else if (id == R.id.nav_logout) {
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(this, LoginActivity.class));
             finish();
+>>>>>>> bf987f55003ea28298dcc8bbad49a9af49daff2d
         }
         //else if (id == R.id.nav_share) {
 //
@@ -160,6 +173,26 @@ public class NavDrawerActivity extends BaseActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void showAboutDialog() {
+
+        final Dialog aboutDialog = new Dialog(NavDrawerActivity.this);
+        aboutDialog.setContentView(R.layout.about_dialog);
+        aboutDialog.setTitle("Choose icon");
+        aboutDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        aboutDialog.show();
+
+    }
+
+    private void showSendDialog() {
+
+        final Dialog sendDialog = new Dialog(NavDrawerActivity.this);
+        sendDialog.setContentView(R.layout.send_dialog);
+        sendDialog.setTitle("Choose icon");
+        sendDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        sendDialog.show();
+
     }
 
     public void showFragmentByTag(String tag, @Nullable Bundle bundle) {

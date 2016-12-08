@@ -14,6 +14,8 @@
             android:id="@+id/nav_user"
             android:icon="@drawable/ic_user"
             android:title="User" />
+<<<<<<< HEAD
+=======
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
@@ -22,18 +24,19 @@
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_delete"
             android:title="Logout" />
+>>>>>>> bf987f55003ea28298dcc8bbad49a9af49daff2d
     </group>
 
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:id="@+id/nav_about"
+                android:icon="@drawable/information_outline"
+                android:title="About" />
             <item
                 android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:icon="@drawable/email"
+                android:title="Contact" />
         </menu>
     </item>
 
