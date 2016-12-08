@@ -30,7 +30,7 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAd
 
     public FriendRecyclerAdapter(Context context) {
         friendList = new ArrayList<Friend>();
-        friendList.add(new Friend("FriendName", 600, 200));
+//        friendList.add(new Friend("FriendName", 600, 200));
         //this.clumpList = myUser.getClumps();
         this.friendKeys = new ArrayList<String>();
 

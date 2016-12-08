@@ -14,18 +14,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></Spinner>
 
-
-    <EditText
-        android:id="@+id/etWhoPaid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Who Paid" />
-
     <ListView
         android:id="@+id/lvFriendsToAdd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </ListView>
+
+
 
 
 </LinearLayout>

@@ -110,7 +110,7 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
             public void onClick(View v) {
                 String thisKey = clumpKeys.get(viewHolder.getAdapterPosition());
 //                showEditDialog(tmpClump, viewHolder.getAdapterPosition());
-                showEditDialog(tmpClump, thisKey);
+                showEditDialog(tmpClump, thisKey, viewHolder.getAdapterPosition());
             }
         });
 
@@ -128,8 +128,9 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
 //
 //        parentFragment.openAddClumpFragment(clumpToEdit, position);
 //    }
-    public void showEditDialog(Clump clumpToEdit, String key) {
+    public void showEditDialog(Clump clumpToEdit, String key, int position) {
         parentFragment.openAddClumpFragment(clumpToEdit, key);
+        notifyItemChanged(position);
     }
 
 
@@ -148,12 +149,12 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
     }
 
     public void addClump(Clump clump, String key) {
-        clumpList.add(0, clump);
-        clumpKeys.add(0, key);
-        // refresh the whole list
-        notifyDataSetChanged();
-        // refresh only one position
-        notifyItemInserted(0);
+        if (!clumpKeys.contains(key)) {
+            clumpList.add(0, clump);
+            clumpKeys.add(0, key);
+            // refresh the whole list
+            notifyDataSetChanged();
+        }
     }
 
     public void addClump(Clump clump, int index) {

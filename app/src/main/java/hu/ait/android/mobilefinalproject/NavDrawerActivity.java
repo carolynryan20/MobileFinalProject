@@ -1,10 +1,14 @@
 package hu.ait.android.mobilefinalproject;
 
 
+<<<<<<< HEAD
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+=======
+import android.content.Intent;
+>>>>>>> bf987f55003ea28298dcc8bbad49a9af49daff2d
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -35,6 +39,7 @@ import hu.ait.android.mobilefinalproject.model.Clump;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.Serializable;
@@ -147,15 +152,20 @@ public class NavDrawerActivity extends BaseActivity
             showFragmentByTag(FriendsFragment.TAG, null);
         } else if (id == R.id.nav_user) {
             showFragmentByTag(UserFragment.TAG, null);
+<<<<<<< HEAD
         } else if (id == R.id.nav_send) {
             showSendDialog();
         } else if (id == R.id.nav_about) {
             showAboutDialog();
+=======
+
+        } else if (id == R.id.nav_logout) {
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+>>>>>>> bf987f55003ea28298dcc8bbad49a9af49daff2d
         }
-//
-//        } else if (id == R.id.nav_manage) {
-//
-//        } else if (id == R.id.nav_share) {
+        //else if (id == R.id.nav_share) {
 //
 //        } else if (id == R.id.nav_send) {
 //    }

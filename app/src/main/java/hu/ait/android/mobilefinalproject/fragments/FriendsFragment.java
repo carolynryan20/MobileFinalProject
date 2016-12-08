@@ -24,6 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
+import hu.ait.android.mobilefinalproject.BaseActivity;
+import hu.ait.android.mobilefinalproject.NavDrawerActivity;
 import hu.ait.android.mobilefinalproject.R;
 import hu.ait.android.mobilefinalproject.adapter.FriendRecyclerAdapter;
 import hu.ait.android.mobilefinalproject.data.Friend;
@@ -191,11 +193,38 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
     }
 
     @Override
-    public void addFriend(Friend friend) {
+    public void addFriend(final Friend friend) {
         //clumpRecyclerAdapter.addClump(clump, getUid());
-        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("friends").push().getKey();
-        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("friends").child(key).setValue(friend);
-        Toast.makeText(getContext(), "Friend added", Toast.LENGTH_SHORT).show();
+
+        // check if that friend is a user in firebase!
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users");
+        Query usernameMatch = ref.orderByChild("username").equalTo(friend.getUsername());
+        usernameMatch.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Toast.makeText(getContext(), "In the snapshot", Toast.LENGTH_SHORT).show();
+                for (DataSnapshot user : dataSnapshot.getChildren()) {
+                    if (user.exists()) {
+                        // add friend
+                        String newKey = ref.child(getUid()).child("friends").push().getKey();
+                        ref.child(getUid()).child("friends").child(newKey).setValue(friend);
+                        Toast.makeText(getContext(), "Friend Added", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+//        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("friends").push().getKey();
+//        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("friends").child(key).setValue(friend);
+        //Toast.makeText(getContext(), "Friend added", Toast.LENGTH_SHORT).show();
     }
 
     public interface OnFragmentInteractionListener {
