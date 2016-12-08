@@ -54,6 +54,12 @@ public class FragmentAskFloat extends DialogFragment {
         alertDialogBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                String amtString = amt.getText().toString();
+                if (! amtString.isEmpty()) {
+                    Float amtFloat = Float.parseFloat(amtString);
+                    addClumpDialogFragment.addFriendWhoOwes(args.getString("USER"), amtFloat);
+                }
+
                 addClumpDialogFragment.addFriendWhoOwes(args.getString("USER"),Float.parseFloat(amt.getText().toString()) );
                 dismiss();
             }

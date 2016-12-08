@@ -17,8 +17,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -41,12 +43,14 @@ public class AddClumpDialogFragment extends DialogFragment {
 
     private AddClumpFragmentAnswer addClumpFragmentAnswer = null;
     private EditText etClumpName;
-    private EditText etWhoPaid;
     private ListView lvFriendsToAdd;
     private Spinner spinnerClumpType;
+    private Spinner spinnerWhoPaid;
     private Context context;
     private Map<String, Float> friendsWhoOwe;
     private AddClumpDialogFragment addClumpDialogFragment;
+    private ArrayList<String> friendsList;
+    private TextView currentLVClick;
 
 
     @Override
@@ -56,6 +60,7 @@ public class AddClumpDialogFragment extends DialogFragment {
 
         addClumpFragmentAnswer = (ClumpFragment) getTargetFragment();
         friendsWhoOwe = new HashMap<String, Float>();
+        friendsList = getArguments().getStringArrayList(FRIEND_LIST);
         addClumpDialogFragment = this;
     }
 
@@ -64,9 +69,19 @@ public class AddClumpDialogFragment extends DialogFragment {
     }
 
     private void setFieldsForEditItem() {
+
         spinnerClumpType.setSelection((int) getArguments().get(ClumpFragment.TYPE));
+
+        int payerPosition = 0;
+        for (int i = 0; i < friendsList.size(); i++) {
+            if (friendsList.get(i).equals(getArguments().get(ClumpFragment.WHO_PAID))){
+                payerPosition = i;
+            }
+        }
+        spinnerWhoPaid.setSelection(payerPosition);
+
         etClumpName.setText((String) getArguments().get(ClumpFragment.CLUMP_TITLE));
-        etWhoPaid.setText((String) getArguments().get(ClumpFragment.WHO_PAID));
+        //// TODO: 12/8/16 set Friends who owe upon edit
         //lvFriendsToAdd.set(itemToEdit.getEstimatedPriceString());
     }
 
@@ -103,8 +118,18 @@ public class AddClumpDialogFragment extends DialogFragment {
 
 
         spinnerClumpType = (Spinner) dialogLayout.findViewById(R.id.spinnerClumpType);
-        setSpinnerChoices();
-        etWhoPaid = (EditText) dialogLayout.findViewById(R.id.etWhoPaid);
+        ArrayList<String> typesOfClump = new ArrayList<String>() {{
+            add("Food");
+            add("Drinks");
+            add("Rent");
+            add("Travel");
+            add("Other");
+        }};
+
+        setSpinnerChoices(spinnerClumpType, typesOfClump);
+
+        spinnerWhoPaid = (Spinner) dialogLayout.findViewById(R.id.spinnerWhoPaid);
+        setSpinnerChoices(spinnerClumpType, getArguments().getStringArrayList(FRIEND_LIST));
 
         if (itemIsEditItem()) {
             setFieldsForEditItem();
@@ -140,6 +165,9 @@ public class AddClumpDialogFragment extends DialogFragment {
                     Bundle bundle = new Bundle();
                     bundle.putString("USER", itemValue);
                     fragmentAskFloat.setArguments(bundle);
+
+                    currentLVClick = (TextView) view;
+
                 }
             });
 
@@ -150,7 +178,7 @@ public class AddClumpDialogFragment extends DialogFragment {
 
     public void addFriendWhoOwes(String friend, Float amt) {
         friendsWhoOwe.put(friend, amt);
-        Toast.makeText(context, "Added Friends to Owe Map", Toast.LENGTH_SHORT).show();
+        currentLVClick.setText(friend+" owes $"+amt);
     }
 
     private void setNegativeButton(AlertDialog.Builder alertDialogBuilder) {
@@ -181,27 +209,22 @@ public class AddClumpDialogFragment extends DialogFragment {
         }
     }
 
-    private void setSpinnerChoices() {
-        String[] items = new String[]{"Food", "Drinks", "Rent", "Travel", "Other"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, items);
-        spinnerClumpType.setAdapter(adapter);
+    private void setSpinnerChoices(Spinner spinner, ArrayList<String> choices) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, choices);
+        spinner.setAdapter(adapter);
     }
 
     private void handleAddClumpButtonClick() {
         if (TextUtils.isEmpty(etClumpName.getText())) {
             etClumpName.setError("Required");
-        } else if (TextUtils.isEmpty(etWhoPaid.getText())) {
-            etWhoPaid.setError("Required");
         } else {
-            //Todo get actual info from dialog
             String clumpName = etClumpName.getText().toString();
-            String userWhoPaid = etWhoPaid.getText().toString();
+            String userWhoPaid = spinnerClumpType.getSelectedItem().toString();
             Clump.ClumpType clumpType = Clump.ClumpType.fromInt(spinnerClumpType.getSelectedItemPosition());
 
             Clump toAdd = new Clump(clumpName, clumpType, userWhoPaid, friendsWhoOwe);
 
             if (itemIsEditItem()) {
-//                addClumpFragmentAnswer.addEditClump(toAdd, (int)getArguments().get("EDIT_INDEX"));
                 addClumpFragmentAnswer.addEditClump(toAdd, (String) getArguments().get("EDIT_INDEX"));
                 dismiss();
             } else {
