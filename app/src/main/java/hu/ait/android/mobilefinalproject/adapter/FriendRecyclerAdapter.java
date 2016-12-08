@@ -88,10 +88,12 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAd
     }
 
     public void addFriend(Friend friend, String key) {
-        friendList.add(0, friend);
-        friendKeys.add(0,key);
-        // refresh the whole list
-        notifyDataSetChanged();
+        if (!friendKeys.contains(key)) {
+            friendList.add(0, friend);
+            friendKeys.add(0, key);
+            // refresh the whole list
+            notifyDataSetChanged();
+        }
     }
 
     public List<Friend> getFriends() {

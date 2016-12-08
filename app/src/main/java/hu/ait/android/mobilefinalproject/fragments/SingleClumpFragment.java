@@ -2,30 +2,22 @@ package hu.ait.android.mobilefinalproject.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import hu.ait.android.mobilefinalproject.R;
-import hu.ait.android.mobilefinalproject.data.Friend;
 
 /**
  * Created by Carolyn on 12/4/16.
@@ -36,7 +28,7 @@ public class SingleClumpFragment extends BaseFragment {
     public static final String TAG = "SingleClumpFragment";
 
     private View root;
-    private TextView tvDepts;
+    private TextView tvDebts;
     private TextView tvOwed;
     private TextView tvUserWhoPaid;
     private ListView listViewUsersWhoOwe;
@@ -45,7 +37,6 @@ public class SingleClumpFragment extends BaseFragment {
     public static final String TITLE = "TITLE";
     public static final String TYPE = "TYPE";
     public static final String DEBT_USERS = "DEBT_USERS";
-
 
     @Nullable
     @Override
@@ -90,17 +81,19 @@ public class SingleClumpFragment extends BaseFragment {
         tvUserWhoPaid.setText(args.get(OWED_USER) + " Paid");
 
         listViewUsersWhoOwe = (ListView) root.findViewById(R.id.listViewUsersWhoOwe);
-        HashMap<String, Float> dict = (HashMap<String, Float>) args.getSerializable(DEBT_USERS);
+        HashMap<String, Float> debtUsersMap = (HashMap<String, Float>) args.getSerializable(DEBT_USERS);
 
         float userDebt = 0;
         float userOwed = 0;
-        if ((dict != null) && (!dict.isEmpty())) {
+        if ((debtUsersMap != null) && (!debtUsersMap.isEmpty())) {
             boolean owedUserIsCurrentUser = false;
+
             if (getUserName().equals(args.getString(OWED_USER))) {
                 owedUserIsCurrentUser = true;
             }
+
             List<String> userList = new ArrayList<>();
-            for (Map.Entry<String, Float> entry : dict.entrySet()) {
+            for (Map.Entry<String, Float> entry : debtUsersMap.entrySet()) {
                 String user = entry.getKey();
                 Float owed = entry.getValue();
                 if (user.equals(getUserName())) { //if user is currentUser
@@ -125,8 +118,8 @@ public class SingleClumpFragment extends BaseFragment {
         } else {
             Toast.makeText(getContext(), "No users were inputed as having debts", Toast.LENGTH_SHORT).show();
         }
-        tvDepts = (TextView) root.findViewById(R.id.tvDepts);
-        tvDepts.setText("$" + userDebt);
+        tvDebts = (TextView) root.findViewById(R.id.tvDepts);
+        tvDebts.setText("$" + userDebt);
 
         tvOwed = (TextView) root.findViewById(R.id.tvOwed);
         tvOwed.setText("$" + userOwed);
