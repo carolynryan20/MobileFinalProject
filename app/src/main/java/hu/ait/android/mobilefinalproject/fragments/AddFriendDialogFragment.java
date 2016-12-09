@@ -15,6 +15,7 @@ import android.widget.EditText;
 
 import hu.ait.android.mobilefinalproject.R;
 import hu.ait.android.mobilefinalproject.data.Friend;
+import hu.ait.android.mobilefinalproject.model.User;
 
 /**
  * Created by Morgan on 12/7/2016.
@@ -114,8 +115,8 @@ public class AddFriendDialogFragment extends DialogFragment {
             String clumpName = etFriendUsername.getText().toString();
 
             addFriendFragmentAnswer.addFriend(new Friend(
-                    etFriendUsername.getText().toString(), 100, 500)
-            );
+                    etFriendUsername.getText().toString(), 100, 500, User.UserIcon.CAROLYN2
+            ));
             dismiss();
         }
     }

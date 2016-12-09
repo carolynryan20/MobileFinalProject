@@ -5,8 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -16,14 +16,12 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import hu.ait.android.mobilefinalproject.R;
 import hu.ait.android.mobilefinalproject.data.Friend;
 import hu.ait.android.mobilefinalproject.fragments.FriendsFragment;
-import hu.ait.android.mobilefinalproject.model.Clump;
+import hu.ait.android.mobilefinalproject.model.User;
 
 /**
  * Created by Morgan on 12/1/2016.
@@ -66,12 +64,34 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAd
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final String currentUsername = friendList.get(holder.getAdapterPosition()).getUsername();
         holder.tvFriendUsername.setText(currentUsername);
+        setupBackCard(holder, currentUsername);
+        setupFrontCard(holder, currentUsername);
 
-        setUpBackFriendsCard(holder, currentUsername);
 
     }
 
-    private void setUpBackFriendsCard(final ViewHolder holder, final String currentUsername) {
+    private void setupFrontCard(final ViewHolder holder, final String currentUsername) {
+        DatabaseReference iconRef = FirebaseDatabase.getInstance().getReference().child("users");
+        Query iconQuery = iconRef.orderByChild("username");
+        iconQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ss : dataSnapshot.getChildren()) {
+                    if (ss.child("username").getValue().toString().equals(currentUsername)) {
+                        User.UserIcon iconInt = User.UserIcon.valueOf(ss.child("icon").getValue().toString());
+                        holder.ivFriendIcon.setImageResource(iconInt.getIconId());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void setupBackCard(final ViewHolder holder, final String currentUsername) {
         DatabaseReference friendsRef = FirebaseDatabase.getInstance().getReference().child("users")
                 .child(FriendsFragment.getUid()).child("clumps");
         Query friendsQuery = friendsRef.orderByChild("owedUser");
@@ -127,12 +147,14 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAd
         public TextView tvFriendUsername;
         public TextView tvFriendOwed;
         public TextView tvFriendDebt;
+        public ImageView ivFriendIcon;
 
         public ViewHolder(final View itemView) {
             super(itemView);
             tvFriendUsername = (TextView) itemView.findViewById(R.id.tvFriendUsername);
             tvFriendOwed = (TextView) itemView.findViewById(R.id.tvFriendOwed);
             tvFriendDebt = (TextView) itemView.findViewById(R.id.tvFriendDebt);
+            ivFriendIcon = (ImageView) itemView.findViewById(R.id.ivFriendIcon);
         }
     }
 
