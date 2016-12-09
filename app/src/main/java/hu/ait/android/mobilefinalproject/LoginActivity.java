@@ -1,11 +1,16 @@
 package hu.ait.android.mobilefinalproject;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,6 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import hu.ait.android.mobilefinalproject.adapter.ImageAdapter;
+import hu.ait.android.mobilefinalproject.fragments.BaseFragment;
 import hu.ait.android.mobilefinalproject.model.User;
 
 public class LoginActivity extends BaseActivity {
@@ -32,6 +39,8 @@ public class LoginActivity extends BaseActivity {
 
     DatabaseReference databaseReference;
     FirebaseAuth firebaseAuth;
+    private ImageAdapter imageAdapter;
+    ImageView accountIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +51,8 @@ public class LoginActivity extends BaseActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
+
+        accountIcon = (ImageView) findViewById(R.id.ivAccountIcon);
     }
 
     @OnClick(R.id.btnRegister)
@@ -66,6 +77,8 @@ public class LoginActivity extends BaseActivity {
                             databaseReference.child("users").child(fbUser.getUid()).setValue(user);
 
                             Toast.makeText(LoginActivity.this, "User created", Toast.LENGTH_SHORT).show();
+
+                            showGridDialog();
                         } else {
                             Toast.makeText(LoginActivity.this, task.getException().getLocalizedMessage(),
                                     Toast.LENGTH_SHORT).show();
@@ -81,6 +94,37 @@ public class LoginActivity extends BaseActivity {
                         e.printStackTrace();
                     }
                 });
+    }
+
+    private void showGridDialog() {
+
+        final Dialog userIconDialog = new Dialog(this);
+        userIconDialog.setContentView(R.layout.icon_grid_dialog);
+        userIconDialog.setTitle("Choose icon");
+
+        GridView iconGridView= (GridView)userIconDialog.findViewById(R.id.grid);
+
+        imageAdapter = new ImageAdapter(this);
+        iconGridView.setAdapter(imageAdapter);
+        iconGridView.setNumColumns(3);
+        iconGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                accountIcon = (ImageView) imageAdapter.getView(position, view, parent);
+
+//                int editedIcon = imageAdapter.getDrawableID(position, view, parent);
+//                String iconID = User.UserIcon.fromIconId(editedIcon);
+
+//                accountIcon.setImageResource(editedIcon);
+
+//                DatabaseReference iconRef = FirebaseDatabase.getInstance().getReference().child("users").child(BaseFragment.getUid()).child("icon");
+//                iconRef.setValue(User.UserIcon.valueOf(iconID));
+
+                userIconDialog.dismiss();
+            }
+        });
+
+        userIconDialog.show();
     }
 
     @OnClick(R.id.btnLogin)

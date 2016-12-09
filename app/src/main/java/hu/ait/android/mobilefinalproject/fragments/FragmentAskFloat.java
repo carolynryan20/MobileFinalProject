@@ -7,9 +7,11 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.HashMap;
 
@@ -54,14 +56,7 @@ public class FragmentAskFloat extends DialogFragment {
         alertDialogBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String amtString = amt.getText().toString();
-                if (! amtString.isEmpty()) {
-                    Float amtFloat = Float.parseFloat(amtString);
-                    addClumpDialogFragment.addFriendWhoOwes(args.getString("USER"), amtFloat);
-                }
-
-                addClumpDialogFragment.addFriendWhoOwes(args.getString("USER"),Float.parseFloat(amt.getText().toString()) );
-                dismiss();
+                handleOnClickPositive();
             }
         });
         alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -72,5 +67,23 @@ public class FragmentAskFloat extends DialogFragment {
         });
     }
 
+    //this shouldn't let the user click okay if they don't give input, but currently it does
+    private void handleOnClickPositive() {
+        Toast.makeText(getContext(), "in on positive", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(amt.getText())) {
+            amt.setError("Required");
+            Toast.makeText(getContext(), "no text", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), "gave text", Toast.LENGTH_SHORT).show();
+            String amtString = amt.getText().toString();
+            if (! amtString.isEmpty()) {
+                Float amtFloat = Float.parseFloat(amtString);
+                addClumpDialogFragment.addFriendWhoOwes(args.getString("USER"), amtFloat);
+            }
+
+            addClumpDialogFragment.addFriendWhoOwes(args.getString("USER"),Float.parseFloat(amt.getText().toString()) );
+            dismiss();
+        }
+    }
 
 }
