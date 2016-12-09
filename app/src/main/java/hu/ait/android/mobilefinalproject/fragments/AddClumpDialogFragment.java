@@ -158,10 +158,12 @@ public class AddClumpDialogFragment extends DialogFragment {
 
                     FragmentAskFloat fragmentAskFloat = new FragmentAskFloat();
                     fragmentAskFloat.setTargetFragment(addClumpDialogFragment, 1);
-                    fragmentAskFloat.show(getFragmentManager(), AddClumpDialogFragment.TAG);
+
                     Bundle bundle = new Bundle();
                     bundle.putString("USER", itemValue);
                     fragmentAskFloat.setArguments(bundle);
+
+                    fragmentAskFloat.show(getFragmentManager(), AddClumpDialogFragment.TAG);
 
                     currentLVClick = (TextView) view;
 
