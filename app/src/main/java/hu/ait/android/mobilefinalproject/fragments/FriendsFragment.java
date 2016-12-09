@@ -98,7 +98,7 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
             public void onDataChange(DataSnapshot snapshot) {
                 Query users = rootRef.getDatabase().getReference().orderByChild("username").equalTo(username);
 //                if (users.getRef().getKey() == null) {
-                    Toast.makeText(getContext(), users.getRef().getKey(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), users.getRef().getKey(), Toast.LENGTH_SHORT).show();
 //                }
 //                if (users.getRef() == null) {
                 if(users.getRef().getKey() == null) {
@@ -202,10 +202,8 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
         usernameMatch.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Toast.makeText(getContext(), "In the snapshot", Toast.LENGTH_SHORT).show();
                 for (DataSnapshot user : dataSnapshot.getChildren()) {
                     if (user.exists()) {
-                        // add friend
                         String newKey = ref.child(getUid()).child("friends").push().getKey();
                         ref.child(getUid()).child("friends").child(newKey).setValue(friend);
                         Toast.makeText(getContext(), "Friend Added", Toast.LENGTH_SHORT).show();

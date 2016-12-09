@@ -27,14 +27,15 @@
                android:textColor="@color/orange"
                android:textSize="18sp"
                android:textStyle="bold"
-               android:text="You Owe: "/>
+               android:text="You Owe: $"/>
 
            <TextView
+               android:id="@+id/tvFriendDebt"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:textColor="@color/orange"
                android:textSize="18sp"
-               android:text="$30"/>
+               android:text="0"/>
            
        </LinearLayout>
 
@@ -50,14 +51,15 @@
                 android:textColor="@color/mediumBlue"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:text="You're Owed: "/>
+                android:text="You're Owed: $"/>
 
             <TextView
+                android:id="@+id/tvFriendOwed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/mediumBlue"
                 android:textSize="18sp"
-                android:text="$40"/>
+                android:text="0"/>
 
         </LinearLayout>
 
