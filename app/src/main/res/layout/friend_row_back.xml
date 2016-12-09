@@ -30,6 +30,7 @@
                android:text="You Owe: "/>
 
            <TextView
+               android:id="@+id/tvFriendDebt"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:textColor="@color/orange"
@@ -53,6 +54,7 @@
                 android:text="You're Owed: "/>
 
             <TextView
+                android:id="@+id/tvFriendOwed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/mediumBlue"

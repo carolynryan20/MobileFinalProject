@@ -6,18 +6,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import hu.ait.android.mobilefinalproject.R;
 import hu.ait.android.mobilefinalproject.data.Friend;
+import hu.ait.android.mobilefinalproject.fragments.FriendsFragment;
 import hu.ait.android.mobilefinalproject.model.Clump;
 
 /**
  * Created by Morgan on 12/1/2016.
  */
-
 
 
 public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAdapter.ViewHolder> {
@@ -68,8 +78,47 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAd
 //    }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.tvFriendUsername.setText(friendList.get(holder.getAdapterPosition()).getUsername());
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        final String currentUsername = friendList.get(holder.getAdapterPosition()).getUsername();
+        holder.tvFriendUsername.setText(currentUsername);
+
+        DatabaseReference friendsRef = FirebaseDatabase.getInstance().getReference().child("users")
+                .child(FriendsFragment.getUid()).child("clumps");
+        Query friendsQuery = friendsRef.orderByChild("owedUser");
+        friendsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // create the friend/owed map
+                Map<String, Double> owedMap = new HashMap<String, Double>();
+                for (DataSnapshot ss : dataSnapshot.getChildren()) {
+//                    Toast.makeText(context, ss.toString(), Toast.LENGTH_SHORT).show();
+                    String owedUser = (String) ss.child("owedUser").getValue();
+                    if(owedUser.equals(FriendsFragment.getUserName())) {
+                        List<Double> debtList = new ArrayList<Double>();
+                        int numDebtUsers = (int) ss.child("debtUsers").getChildrenCount();
+                        for (DataSnapshot debtUser : ss.child("debtUsers").getChildren()) {
+                            if (debtUser.getKey().toString().equals(currentUsername)) {
+                                String debtUserValue = debtUser.getValue().toString();
+                                Double debtUserDouble = Double.parseDouble(debtUserValue);
+
+                                debtList.add(debtUserDouble);
+//                                totalOwed += debtUserDouble;
+//                                Toast.makeText(context, "" + totalOwed, Toast.LENGTH_SHORT).show();
+//                                holder.tvFriendDebt.setText(totalOwed.toString());
+                            }
+                        }
+                        // try iterating through list to sum all values and set to textview
+//                        holder.tvFriendDebt.setText();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     @Override
@@ -77,13 +126,17 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAd
         return friendList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder  {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView tvFriendUsername;
+        public TextView tvFriendOwed;
+        public TextView tvFriendDebt;
 
         public ViewHolder(final View itemView) {
             super(itemView);
             tvFriendUsername = (TextView) itemView.findViewById(R.id.tvFriendUsername);
+            tvFriendOwed = (TextView) itemView.findViewById(R.id.tvFriendOwed);
+            tvFriendDebt = (TextView) itemView.findViewById(R.id.tvFriendDebt);
         }
     }
 

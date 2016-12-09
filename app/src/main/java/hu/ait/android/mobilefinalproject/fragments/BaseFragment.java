@@ -9,11 +9,11 @@ import com.google.firebase.auth.FirebaseAuth;
  */
 public class BaseFragment extends Fragment {
 
-    public String getUid() {
+    public static String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
-    public String getUserName() {
+    public static String getUserName() {
         return FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
     }
 
