@@ -21,7 +21,6 @@
             android:scaleType="fitXY"
             android:layout_marginBottom="4dp"
             android:layout_marginTop="4dp"
-            android:src="@drawable/circle_farida"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 

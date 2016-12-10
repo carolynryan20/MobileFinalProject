@@ -35,8 +35,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
                     android:layout_weight="3"
-                    android:clickable="true"
-                    android:src="@drawable/circle_carolyn1" />
+                    android:clickable="true" />
 
                 <!--android:layout_height="wrap_content"-->
                 <TextView
