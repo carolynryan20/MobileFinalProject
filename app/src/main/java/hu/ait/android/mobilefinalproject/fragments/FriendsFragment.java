@@ -10,6 +10,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -45,23 +46,58 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
     private FriendsFragment.OnFragmentInteractionListener mListener;
     private GridLayoutManager lLayout;
 
+    private float dragX;
+    private float dragY;
+    private int lastAction;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_friends, container, false);
 //        setupRecyclerView();
-
-        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fabFriends);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openAddFriendFragment();
-            }
-        });
+//        setUpFab();
 
         initPostListener();
 
         return root;
+    }
+
+    private void setUpFab() {
+        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fabFriends);
+
+        fab.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getActionMasked()) {
+                    case MotionEvent.ACTION_DOWN:
+                        fabActionDown(view, motionEvent);
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        fabActionMove(view, motionEvent);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        //we know action_down, action_up is a click action so:
+                        if (lastAction == MotionEvent.ACTION_DOWN)
+                            openAddFriendFragment();
+                        break;
+                    default:
+                        return false;
+                }
+                return true;
+            }
+        });
+    }
+
+    private void fabActionDown(View view, MotionEvent motionEvent) {
+        dragX = view.getX() - motionEvent.getRawX();
+        dragY = view.getY() - motionEvent.getRawY();
+        lastAction = MotionEvent.ACTION_DOWN;
+    }
+
+    private void fabActionMove(View view, MotionEvent motionEvent) {
+        view.setX(motionEvent.getRawX() + dragX);
+        view.setY(motionEvent.getRawY() + dragY);
+        lastAction = MotionEvent.ACTION_MOVE;
     }
 
     private void openAddFriendFragment() {
@@ -73,35 +109,35 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
         addFriendDialogFragment.show(getFragmentManager(), AddFriendDialogFragment.TAG);
     }
 
-//    private boolean isFriendUnique(final String username) {
-//        final boolean[] isUnique = {false};
-//        final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("users")
-//                .child(getUid()).child("friends");
-//        rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot snapshot) {
-//                Query users = rootRef.getDatabase().getReference().orderByChild("username").equalTo(username);
-////                if (users.getRef().getKey() == null) {
-////                    Toast.makeText(getContext(), users.getRef().getKey(), Toast.LENGTH_SHORT).show();
-////                }
-////                if (users.getRef() == null) {
+    private boolean isFriendUnique(final String username) {
+        final boolean[] isUnique = {false};
+        final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("users")
+                .child(getUid()).child("friends");
+        rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Query users = rootRef.getDatabase().getReference().orderByChild("username").equalTo(username);
 //                if (users.getRef().getKey() == null) {
-//                    isUnique[0] = true;
+//                    Toast.makeText(getContext(), users.getRef().getKey(), Toast.LENGTH_SHORT).show();
 //                }
-//
-////                if (snapshot.hasChild("name")) {
-////                    // run some code
-////                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-//        return isUnique[0];
-//    }
+//                if (users.getRef() == null) {
+                if(users.getRef().getKey() == null) {
+                    isUnique[0] = true;
+                }
+
+//                if (snapshot.hasChild("name")) {
+//                    // run some code
+//                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        return isUnique[0];
+    }
 
     private void initPostListener() {
         // update list
@@ -140,6 +176,17 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
     public void onResume() {
         super.onResume();
         setupRecyclerView();
+        setUpFab();
+
+
+//        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -168,53 +215,51 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
 
     @Override
     public void addFriend(final Friend friend) {
-        //clumpRecyclerAdapter.addClump(clump, getUid());
-
-        // check if that friend is a user in firebase!
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users");
+
         Query usernameMatch = ref.orderByChild("username").equalTo(friend.getUsername());
         usernameMatch.addListenerForSingleValueEvent(new ValueEventListener() {
-                 @Override
-                 public void onDataChange(DataSnapshot dataSnapshot) {
-                     if (dataSnapshot.getChildrenCount() == 0) {
-                         Toast.makeText(getContext(), "User '" + friend.getUsername() + "' does not exist!", Toast.LENGTH_SHORT).show();
-                     } else {
-                         for (DataSnapshot user : dataSnapshot.getChildren()) {
-                             // check if that username already exists in your friends list:
-                             DatabaseReference friendRef = ref.child(getUid()).child("friends");
-                             Query friendQuery = friendRef.orderByChild("username").equalTo(friend.getUsername());
-                             friendQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                                 @Override
-                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                     if (dataSnapshot.getChildrenCount() == 0) {
-                                         //Toast.makeText(getContext(), "You are not yet friends with " + friend.getUsername(),
-                                         //        Toast.LENGTH_SHORT).show();
-                                         // add this user as a friend
-                                         String newKey = ref.child(getUid()).child("friends").push().getKey();
-                                         ref.child(getUid()).child("friends").child(newKey).setValue(friend);
-                                         Toast.makeText(getContext(), "Friend Added", Toast.LENGTH_SHORT).show();
-                                     }
-                                     else {
-                                         Toast.makeText(getContext(), "You are already friends with " + friend.getUsername() + "!",
-                                                 Toast.LENGTH_SHORT).show();
-                                     }
-                                 }
+                                                         @Override
+                                                         public void onDataChange(DataSnapshot dataSnapshot) {
+                                                             if (dataSnapshot.getChildrenCount() == 0) {
+                                                                 Toast.makeText(getContext(), "User '" + friend.getUsername() + "' does not exist!", Toast.LENGTH_SHORT).show();
+                                                             } else {
+                                                                 for (DataSnapshot user : dataSnapshot.getChildren()) {
+                                                                     // check if that username already exists in your friends list:
+                                                                     DatabaseReference friendRef = ref.child(getUid()).child("friends");
+                                                                     Query friendQuery = friendRef.orderByChild("username").equalTo(friend.getUsername());
+                                                                     friendQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                         @Override
+                                                                         public void onDataChange(DataSnapshot dataSnapshot) {
+                                                                             if (dataSnapshot.getChildrenCount() == 0) {
+                                                                                 //Toast.makeText(getContext(), "You are not yet friends with " + friend.getUsername(),
+                                                                                 //        Toast.LENGTH_SHORT).show();
+                                                                                 // add this user as a friend
+                                                                                 String newKey = ref.child(getUid()).child("friends").push().getKey();
+                                                                                 ref.child(getUid()).child("friends").child(newKey).setValue(friend);
+                                                                                 Toast.makeText(getContext(), "Friend Added", Toast.LENGTH_SHORT).show();
+                                                                             }
+                                                                             else {
+                                                                                 Toast.makeText(getContext(), "You are already friends with " + friend.getUsername() + "!",
+                                                                                         Toast.LENGTH_SHORT).show();
+                                                                             }
+                                                                         }
 
-                                 @Override
-                                 public void onCancelled(DatabaseError databaseError) {
+                                                                         @Override
+                                                                         public void onCancelled(DatabaseError databaseError) {
 
-                                 }
-                             });
-                         }
-                     }
-                 }
+                                                                         }
+                                                                     });
+                                                                 }
+                                                             }
+                                                         }
 
 
-                 @Override
-                 public void onCancelled(DatabaseError databaseError) {
+                                                         @Override
+                                                         public void onCancelled(DatabaseError databaseError) {
 
-                 }
-             }
+                                                         }
+                                                     }
 
         );
 
@@ -236,12 +281,18 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
 
         lLayout = new GridLayoutManager(getContext(), 2);
         RecyclerView rview = (RecyclerView) root.findViewById(R.id.recyclerFriends);
+//        lLayout.setReverseLayout(true);
+//        lLayout.setStackFromEnd(true);
         rview.setHasFixedSize(true);
         rview.setLayoutManager(lLayout);
 
         friendRecyclerAdapter = new FriendRecyclerAdapter(getContext());
 
+        //List<Friend> rowListItem = friendRecyclerAdapter.getFriends();
+
         recyclerView.setAdapter(friendRecyclerAdapter);
     }
+
+
 
 }
