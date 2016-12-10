@@ -245,26 +245,27 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
 
     @Override
     public void addClump(final Clump clump) {
-        //clumpRecyclerAdapter.addClump(clump, getUid());
-        // add to this user
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users");
 
         String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();
         FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").child(key).setValue(clump);
 
+        addToAllContainedUsers(clump, ref);
+        Toast.makeText(getContext(), "Clump created", Toast.LENGTH_SHORT).show();
+    }
+
+    private void addToAllContainedUsers(final Clump clump, final DatabaseReference ref) {
         // add to all other users in that clump:
         Map<String, Float> clumpUsers = clump.getDebtUsers();
         if (clumpUsers == null) {
             Toast.makeText(getContext(), "friends list in clump is empty", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             for (final Map.Entry<String, Float> entry : clumpUsers.entrySet()) {
                 // find this user in snapshot:
                 final Query user = ref.orderByChild("username").equalTo(entry.getKey());
                 user.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Toast.makeText(getContext(), "in the map for, searching for: " + entry.getKey(), Toast.LENGTH_SHORT).show();
                         for (DataSnapshot user : dataSnapshot.getChildren()) {
                             String username = (String) user.child("username").getValue();
                             if (!username.equals(getUserName())) {
@@ -282,17 +283,7 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
                 });
             }
         }
-
-        Toast.makeText(getContext(), "Clump created", Toast.LENGTH_SHORT).show();
     }
-
-    //    @Override
-//    public void addEditClump(Clump clump, int index) {
-////        clumpRecyclerAdapter.editClump(clump, index);
-//        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();
-//        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").child(key).setValue(clump);
-//        Toast.makeText(getContext(), "Clump edited", Toast.LENGTH_SHORT).show();
-//    }
 
     @Override
     public void addEditClump(Clump clump, String key) {

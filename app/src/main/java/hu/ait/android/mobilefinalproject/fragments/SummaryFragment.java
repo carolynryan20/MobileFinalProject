@@ -27,7 +27,7 @@ public class SummaryFragment extends Fragment {
     private TextView tvDepts;
     private TextView tvOwed;
     private RecyclerView recyclerClumpInteraction;
-    private Button btnSeeFriends;
+//    private Button btnSeeFriends;
 
     @Nullable
     @Override
