@@ -58,7 +58,7 @@ public class AddFriendDialogFragment extends DialogFragment {
 
     private void setUpAlertDialogBuilder(AlertDialog.Builder alertDialogBuilder, View dialogLayout) {
         alertDialogBuilder.setView(dialogLayout);
-        alertDialogBuilder.setTitle("Add a payment");
+        alertDialogBuilder.setTitle("Add a friend");
         setPositiveButton(alertDialogBuilder, dialogLayout);
         setNegativeButton(alertDialogBuilder);
     }

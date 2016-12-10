@@ -10,6 +10,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -45,39 +46,58 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
     private FriendsFragment.OnFragmentInteractionListener mListener;
     private GridLayoutManager lLayout;
 
+    private float dragX;
+    private float dragY;
+    private int lastAction;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_friends, container, false);
 //        setupRecyclerView();
-
-        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fabFriends);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                // Create a new Clump with the username as the title
-                openAddFriendFragment();
-//                String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid())
-//                        .child("friends").push().getKey();
-//                Friend newFriend = new Friend("ryanc2", 100, 200);
-//
-//                //if (isFriendUnique(newFriend.getUsername())) {
-//                    FirebaseDatabase.getInstance().getReference().child("users").child(getUid())
-//                            .child("friends").child(key).setValue(newFriend);
-//
-//                    Toast.makeText(getContext(), "Friend added", Toast.LENGTH_SHORT).show();
-//                }
-//                else {
-//                    Toast.makeText(getContext(), "You already have that friend", Toast.LENGTH_SHORT).show();
-//                }
-            }
-        });
+//        setUpFab();
 
         initPostListener();
 
         return root;
+    }
+
+    private void setUpFab() {
+        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fabFriends);
+
+        fab.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                switch (motionEvent.getActionMasked()) {
+                    case MotionEvent.ACTION_DOWN:
+                        fabActionDown(view, motionEvent);
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        fabActionMove(view, motionEvent);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        //we know action_down, action_up is a click action so:
+                        if (lastAction == MotionEvent.ACTION_DOWN)
+                            openAddFriendFragment();
+                        break;
+                    default:
+                        return false;
+                }
+                return true;
+            }
+        });
+    }
+
+    private void fabActionDown(View view, MotionEvent motionEvent) {
+        dragX = view.getX() - motionEvent.getRawX();
+        dragY = view.getY() - motionEvent.getRawY();
+        lastAction = MotionEvent.ACTION_DOWN;
+    }
+
+    private void fabActionMove(View view, MotionEvent motionEvent) {
+        view.setX(motionEvent.getRawX() + dragX);
+        view.setY(motionEvent.getRawY() + dragY);
+        lastAction = MotionEvent.ACTION_MOVE;
     }
 
     private void openAddFriendFragment() {
@@ -156,6 +176,7 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
     public void onResume() {
         super.onResume();
         setupRecyclerView();
+        setUpFab();
 
 
 //        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fab);
@@ -252,5 +273,7 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
 
         recyclerView.setAdapter(friendRecyclerAdapter);
     }
+
+
 
 }
