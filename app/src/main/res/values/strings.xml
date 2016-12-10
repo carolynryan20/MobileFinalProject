@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Holy Split</string>
+    <string name="app_name">Lickety Split</string>
     <string name="title_activity_main">MainActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -19,7 +19,7 @@
     <string name="title_activity_base">BaseActivity</string>
     <string name="username"><b>username</b></string>
     <string name="location"><b>location: </b></string>
-    <string name="title_activity_nav_drawer">NavDrawerActivity</string>
+    <string name="title_activity_nav_drawer">Lickety Split</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

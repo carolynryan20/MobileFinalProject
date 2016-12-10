@@ -110,15 +110,15 @@ public class LoginActivity extends BaseActivity {
         iconGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                accountIcon = (ImageView) imageAdapter.getView(position, view, parent);
+                accountIcon = (ImageView) imageAdapter.getView(position, view, parent);
 
-//                int editedIcon = imageAdapter.getDrawableID(position, view, parent);
-//                String iconID = User.UserIcon.fromIconId(editedIcon);
+                int icon = imageAdapter.getDrawableID(position, view, parent);
+                String iconID = User.UserIcon.fromIconId(icon);
 
-//                accountIcon.setImageResource(editedIcon);
+                accountIcon.setImageResource(icon);
 
-//                DatabaseReference iconRef = FirebaseDatabase.getInstance().getReference().child("users").child(BaseFragment.getUid()).child("icon");
-//                iconRef.setValue(User.UserIcon.valueOf(iconID));
+                DatabaseReference iconRef = FirebaseDatabase.getInstance().getReference().child("users").child(BaseFragment.getUid()).child("icon");
+                iconRef.setValue(User.UserIcon.valueOf(iconID));
 
                 userIconDialog.dismiss();
             }
