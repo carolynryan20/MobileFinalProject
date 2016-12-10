@@ -10,6 +10,7 @@ public class User {
     private String email;
     private String username;
     private UserIcon userIcon;
+//    private String location;
 
     public User() {
     }
@@ -18,6 +19,7 @@ public class User {
         this.email = email;
         this.username = username;
         this.userIcon = userIcon;
+//        this.location = location;
     }
 
     public String getEmail() {
@@ -35,6 +37,11 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
+
+//    public String getLocation() { return location; }
+//
+//    public void setLocation(String location) { th
+// is.location = location; }
 
     public UserIcon getIcon() {
         return userIcon;
@@ -78,6 +85,15 @@ public class User {
         public static User.UserIcon fromInt(int value) {
             for (User.UserIcon s : User.UserIcon.values()) {
                 if (s.value == value) {
+                    return s;
+                }
+            }
+            return FARIDA;
+        }
+
+        public static User.UserIcon toUserIconFromId(int iconId) {
+            for (User.UserIcon s : User.UserIcon.values()) {
+                if (s.getIconId() == iconId) {
                     return s;
                 }
             }

@@ -10,6 +10,7 @@ import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -83,6 +84,25 @@ public class FragmentAskFloat extends DialogFragment {
 
             addClumpDialogFragment.addFriendWhoOwes(args.getString("USER"),Float.parseFloat(amt.getText().toString()) );
             dismiss();
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        AlertDialog alertDialog = (AlertDialog) getDialog();
+        if (alertDialog != null) {
+            /* I override here because otherwise an error of required city couldn't be set as the dialog
+             * fragment exits automatically upon click of positive button, but now it will not
+             */
+            Button positiveButton = (Button) alertDialog.getButton(Dialog.BUTTON_POSITIVE);
+            positiveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    handleOnClickPositive();
+                }
+            });
         }
     }
 

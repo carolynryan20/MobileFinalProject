@@ -3,6 +3,7 @@ package hu.ait.android.mobilefinalproject;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
@@ -30,6 +31,8 @@ import hu.ait.android.mobilefinalproject.adapter.ImageAdapter;
 import hu.ait.android.mobilefinalproject.fragments.BaseFragment;
 import hu.ait.android.mobilefinalproject.model.User;
 
+import static java.util.logging.Logger.global;
+
 public class LoginActivity extends BaseActivity {
 
     @BindView(R.id.etEmail)
@@ -41,6 +44,7 @@ public class LoginActivity extends BaseActivity {
     FirebaseAuth firebaseAuth;
     private ImageAdapter imageAdapter;
     ImageView accountIcon;
+    private int icon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,12 +77,19 @@ public class LoginActivity extends BaseActivity {
                             fbUser.updateProfile(new UserProfileChangeRequest.Builder().
                                     setDisplayName(usernameFromEmail(fbUser.getEmail())).build());
 
-                            User user = new User(fbUser.getEmail(), usernameFromEmail(fbUser.getEmail()), User.UserIcon.FARIDA);
+                            int onRegisterIcon = showGridDialog();
+                            User.UserIcon userIcon = User.UserIcon.toUserIconFromId(onRegisterIcon);
+
+
+                            //then make thing that asks for location, in on finish call the on grid dialog
+
+
+                            User user = new User(fbUser.getEmail(), usernameFromEmail(fbUser.getEmail()), userIcon);
                             databaseReference.child("users").child(fbUser.getUid()).setValue(user);
 
                             Toast.makeText(LoginActivity.this, "User created", Toast.LENGTH_SHORT).show();
 
-                            showGridDialog();
+
                         } else {
                             Toast.makeText(LoginActivity.this, task.getException().getLocalizedMessage(),
                                     Toast.LENGTH_SHORT).show();
@@ -96,7 +107,7 @@ public class LoginActivity extends BaseActivity {
                 });
     }
 
-    private void showGridDialog() {
+    private int showGridDialog() {
 
         final Dialog userIconDialog = new Dialog(this);
         userIconDialog.setContentView(R.layout.icon_grid_dialog);
@@ -112,8 +123,10 @@ public class LoginActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 accountIcon = (ImageView) imageAdapter.getView(position, view, parent);
 
-                int icon = imageAdapter.getDrawableID(position, view, parent);
+                icon = imageAdapter.getDrawableID(position, view, parent);
                 String iconID = User.UserIcon.fromIconId(icon);
+
+                iconID = User.UserIcon.fromIconId(icon);
 
                 accountIcon.setImageResource(icon);
 
@@ -125,6 +138,8 @@ public class LoginActivity extends BaseActivity {
         });
 
         userIconDialog.show();
+
+        return icon;
     }
 
     @OnClick(R.id.btnLogin)
