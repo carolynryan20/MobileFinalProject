@@ -36,6 +36,11 @@ import hu.ait.android.mobilefinalproject.model.User;
 
 public class UserFragment extends BaseFragment {
 
+
+//    // TODO: Rename and change types of parameters
+//    private String mParam1;
+//    private String mParam2;
+
     private ImageView accountIcon;
     public static final String TAG = "UserFragment";
     private View root;
@@ -256,10 +261,20 @@ public class UserFragment extends BaseFragment {
 
 
 
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
+    }
+
+
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 
 }
