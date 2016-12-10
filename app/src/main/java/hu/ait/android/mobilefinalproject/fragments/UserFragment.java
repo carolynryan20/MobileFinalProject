@@ -36,17 +36,17 @@ import hu.ait.android.mobilefinalproject.model.User;
 
 public class UserFragment extends BaseFragment {
 
-
-//    // TODO: Rename and change types of parameters
-//    private String mParam1;
-//    private String mParam2;
-
     private ImageView accountIcon;
     public static final String TAG = "UserFragment";
     private View root;
     private UserFragment.OnFragmentInteractionListener mListener;
+    private TextView tvUserMoneyDebtAmount;
+    private TextView tvUserMoneyOwedAmount;
     private ImageAdapter imageAdapter;
     private int friendCounter = 0;
+
+    private float debt;
+    private float owed;
 
 
     @Override
@@ -75,6 +75,8 @@ public class UserFragment extends BaseFragment {
 //        pager.setAdapter(new MainPagerAdapter(this.getFragmentManager(), getContext()));
 
         accountIcon = (ImageView) root.findViewById(R.id.ivAccountIcon);
+        tvUserMoneyDebtAmount = (TextView) root.findViewById(R.id.tvUserMoneyDebtAmount);
+        tvUserMoneyOwedAmount = (TextView) root.findViewById(R.id.tvUserMoneyOwedAmount);
 
         String userNameString = getUserName();
 
@@ -165,7 +167,45 @@ public class UserFragment extends BaseFragment {
                 showGridDialog();
             }
         });
+
+        setDebtAndOwed();
+
         return root;
+    }
+
+    private void setDebtAndOwed() {
+        debt = 0;
+        owed = 0;
+        DatabaseReference friendsRef = FirebaseDatabase.getInstance().getReference().child("users").child(FriendsFragment.getUid()).child("clumps");
+        Query friendsQuery = friendsRef.orderByChild("owedUser");
+        friendsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot ss : dataSnapshot.getChildren()) {
+                    String owedUser = (String) ss.child("owedUser").getValue();
+                    Log.d("TAGG_oweduseris", owedUser);
+                    if (owedUser.equals(getUserName())){
+                        //TODO add to owes
+                        for (DataSnapshot debtUser : ss.child("debtUsers").getChildren()) {
+                            owed += Float.parseFloat(debtUser.getValue().toString());
+                            tvUserMoneyOwedAmount.setText(String.valueOf(owed));
+                        }
+                    } else {
+                        for (DataSnapshot debtUser : ss.child("debtUsers").getChildren()) {
+                            if (debtUser.getKey().equals(getUserName())) {
+                                Log.d("TAGG", debtUser.getValue().toString());
+                                debt += Float.parseFloat(debtUser.getValue().toString());
+                                tvUserMoneyDebtAmount.setText(String.valueOf(debt));
+                            }
+                        }
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
     }
 
 
@@ -214,12 +254,6 @@ public class UserFragment extends BaseFragment {
 //        });
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
 
 
 
@@ -227,7 +261,5 @@ public class UserFragment extends BaseFragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
-
 
 }

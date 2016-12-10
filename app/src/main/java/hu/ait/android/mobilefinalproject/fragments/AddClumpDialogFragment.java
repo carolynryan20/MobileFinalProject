@@ -127,12 +127,15 @@ public class AddClumpDialogFragment extends DialogFragment {
         ArrayAdapter<String> adapterClump = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, typesOfClump);
         spinnerClumpType.setAdapter(adapterClump);
 
+        String positiveButton = "Add clump";
 
         if (itemIsEditItem()) {
             setFieldsForEditItem();
+            positiveButton = "Save";
         }
 
-        alertDialogBuilder.setPositiveButton("Add clump", new DialogInterface.OnClickListener() {
+
+        alertDialogBuilder.setPositiveButton(positiveButton, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //Do nothing because the button is overridden in onStart()
