@@ -169,6 +169,4 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAd
     public List<Friend> getFriends() {
         return friendList;
     }
-
-
 }
