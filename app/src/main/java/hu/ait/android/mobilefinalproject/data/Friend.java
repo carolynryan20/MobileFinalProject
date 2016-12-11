@@ -9,14 +9,14 @@ import hu.ait.android.mobilefinalproject.model.User;
 public class Friend {
 
     private String username;
-    private float debt;
-    private float owed;
+    private int debt;
+    private int owed;
     private User.UserIcon iconId;
 
     public Friend() {
     }
 
-    public Friend(String username, float debt, float owed, User.UserIcon iconId) {
+    public Friend(String username, int debt, int owed, User.UserIcon iconId) {
         this.username = username;
         this.debt = debt;
         this.owed = owed;
@@ -27,11 +27,11 @@ public class Friend {
         return username;
     }
 
-    public float getDebt() {
+    public int getDebt() {
         return debt;
     }
 
-    public float getOwed() {
+    public int getOwed() {
         return owed;
     }
 

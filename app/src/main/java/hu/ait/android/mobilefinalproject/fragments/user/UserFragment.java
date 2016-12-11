@@ -49,8 +49,8 @@ public class UserFragment extends BaseFragment {
     private ImageAdapter imageAdapter;
     private int friendCounter = 0;
 
-    private float debt;
-    private float owed;
+    private int debt;
+    private int owed;
 
 
     @Override
@@ -209,15 +209,17 @@ public class UserFragment extends BaseFragment {
                     if (owedUser.equals(getUserName())){
                         //TODO add to owes
                         for (DataSnapshot debtUser : ss.child("debtUsers").getChildren()) {
-                            owed += Float.parseFloat(debtUser.getValue().toString());
-                            tvUserMoneyOwedAmount.setText(String.valueOf(owed));
+//                            owed += Float.parseFloat(debtUser.getValue().toString());
+                            owed += Integer.parseInt(debtUser.getValue().toString());
+                            tvUserMoneyOwedAmount.setText(String.valueOf(owed) + " Ft");
                         }
                     } else {
                         for (DataSnapshot debtUser : ss.child("debtUsers").getChildren()) {
                             if (debtUser.getKey().equals(getUserName())) {
                                 Log.d("TAGG", debtUser.getValue().toString());
-                                debt += Float.parseFloat(debtUser.getValue().toString());
-                                tvUserMoneyDebtAmount.setText(String.valueOf(debt));
+//                                debt += Float.parseFloat(debtUser.getValue().toString());
+                                debt += Integer.parseInt(debtUser.getValue().toString());
+                                tvUserMoneyDebtAmount.setText(String.valueOf(debt) + " Ft");
                             }
                         }
                     }

@@ -85,7 +85,7 @@ public class LoginActivity extends BaseActivity {
                             User user = new User(fbUser.getEmail(), usernameFromEmail(fbUser.getEmail()), userIcon, "Budapest");
                             databaseReference.child("users").child(fbUser.getUid()).setValue(user);
 
-                            Toast.makeText(LoginActivity.this, "User created", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(LoginActivity.this, "User created", Toast.LENGTH_SHORT).show();
 
 
                         } else {

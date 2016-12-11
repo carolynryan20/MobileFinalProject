@@ -251,11 +251,11 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
 
     private void addToAllContainedUsers(final Clump clump, final DatabaseReference ref) {
         // add to all other users in that clump:
-        Map<String, Float> clumpUsers = clump.getDebtUsers();
+        Map<String, Integer> clumpUsers = clump.getDebtUsers();
         if (clumpUsers == null) {
             Toast.makeText(getContext(), "friends list in clump is empty", Toast.LENGTH_SHORT).show();
         } else {
-            for (final Map.Entry<String, Float> entry : clumpUsers.entrySet()) {
+            for (final Map.Entry<String, Integer> entry : clumpUsers.entrySet()) {
                 // find this user in snapshot:
                 final Query user = ref.orderByChild("username").equalTo(entry.getKey());
                 user.addListenerForSingleValueEvent(new ValueEventListener() {

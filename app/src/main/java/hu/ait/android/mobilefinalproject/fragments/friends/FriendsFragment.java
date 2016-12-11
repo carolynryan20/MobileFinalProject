@@ -115,7 +115,7 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
 //                    Toast.makeText(getContext(), users.getRef().getKey(), Toast.LENGTH_SHORT).show();
 //                }
 //                if (users.getRef() == null) {
-                if(users.getRef().getKey() == null) {
+                if (users.getRef().getKey() == null) {
                     isUnique[0] = true;
                 }
 
@@ -250,7 +250,6 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
                 }
             }
 
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -285,7 +284,6 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
 
         recyclerView.setAdapter(friendRecyclerAdapter);
     }
-
 
 
 }

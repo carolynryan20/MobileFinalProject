@@ -76,11 +76,11 @@ public class AmountOwedDialogFragment extends DialogFragment {
             Toast.makeText(getContext(), "gave text", Toast.LENGTH_SHORT).show();
             String amtString = amt.getText().toString();
             if (! amtString.isEmpty()) {
-                Float amtFloat = Float.parseFloat(amtString);
-                addClumpDialogFragment.addFriendWhoOwes(args.getString("USER"), amtFloat);
+                int amtInt = Integer.parseInt(amtString);
+                addClumpDialogFragment.addFriendWhoOwes(args.getString("USER"), amtInt);
             }
 
-            addClumpDialogFragment.addFriendWhoOwes(args.getString("USER"),Float.parseFloat(amt.getText().toString()) );
+            addClumpDialogFragment.addFriendWhoOwes(args.getString("USER"),Integer.parseInt(amt.getText().toString()) );
             dismiss();
         }
     }
