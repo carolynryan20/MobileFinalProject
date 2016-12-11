@@ -1,4 +1,4 @@
-package hu.ait.android.mobilefinalproject.fragments.clump;
+package hu.ait.android.mobilefinalproject.fragments.transaction;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

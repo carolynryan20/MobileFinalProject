@@ -1,4 +1,4 @@
-package hu.ait.android.mobilefinalproject.fragments.clump;
+package hu.ait.android.mobilefinalproject.fragments.transaction;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -25,25 +25,25 @@ import java.util.List;
 import java.util.Map;
 
 import hu.ait.android.mobilefinalproject.R;
-import hu.ait.android.mobilefinalproject.model.Clump;
+import hu.ait.android.mobilefinalproject.model.Transaction;
 
-import static hu.ait.android.mobilefinalproject.fragments.clump.ClumpFragment.FRIEND_LIST;
+import static hu.ait.android.mobilefinalproject.fragments.transaction.TransactionFragment.FRIEND_LIST;
 
 /**
  * Created by Carolyn on 12/4/16.
  */
 
-public class AddClumpDialogFragment extends DialogFragment {
+public class AddTransactionDialogFragment extends DialogFragment {
 
     public static final String TAG = "AddCityFragment";
 
-    private AddClumpFragmentAnswer addClumpFragmentAnswer = null;
+    private AddTransactionFragmentAnswer addTransactionFragmentAnswer = null;
     private EditText etClumpName;
     private ListView lvFriendsToAdd;
     private Spinner spinnerClumpType;
     private Context context;
     private Map<String, Integer> friendsWhoOwe;
-    private AddClumpDialogFragment addClumpDialogFragment;
+    private AddTransactionDialogFragment addTransactionDialogFragment;
     private ArrayList<String> friendsList;
     private TextView currentLVClick;
 
@@ -53,10 +53,10 @@ public class AddClumpDialogFragment extends DialogFragment {
         this.context = context;
         super.onAttach(context);
 
-        addClumpFragmentAnswer = (ClumpFragment) getTargetFragment();
+        addTransactionFragmentAnswer = (TransactionFragment) getTargetFragment();
         friendsWhoOwe = new HashMap<String, Integer>();
         friendsList = getArguments().getStringArrayList(FRIEND_LIST);
-        addClumpDialogFragment = this;
+        addTransactionDialogFragment = this;
     }
 
     private boolean itemIsEditItem() {
@@ -65,25 +65,25 @@ public class AddClumpDialogFragment extends DialogFragment {
 
     private void setFieldsForEditItem() {
 
-        spinnerClumpType.setSelection((int) getArguments().get(ClumpFragment.TYPE));
+        spinnerClumpType.setSelection((int) getArguments().get(TransactionFragment.TYPE));
 
         int payerPosition = 0;
         for (int i = 0; i < friendsList.size(); i++) {
-            if (friendsList.get(i).equals(getArguments().get(ClumpFragment.WHO_PAID))){
+            if (friendsList.get(i).equals(getArguments().get(TransactionFragment.WHO_PAID))){
                 payerPosition = i;
             }
         }
 
-        etClumpName.setText((String) getArguments().get(ClumpFragment.CLUMP_TITLE));
+        etClumpName.setText((String) getArguments().get(TransactionFragment.CLUMP_TITLE));
         //// TODO: 12/8/16 set Friends who owe upon edit
         //lvFriendsToAdd.set(itemToEdit.getEstimatedPriceString());
     }
 
     private void checkParentImplementsAddClumpFragmentAnswer() {
-        if (getFragmentManager().findFragmentByTag(ClumpFragment.TAG) instanceof AddClumpFragmentAnswer) {
-            addClumpFragmentAnswer = (ClumpFragment) getFragmentManager().findFragmentByTag(ClumpFragment.TAG);
+        if (getFragmentManager().findFragmentByTag(TransactionFragment.TAG) instanceof AddTransactionFragmentAnswer) {
+            addTransactionFragmentAnswer = (TransactionFragment) getFragmentManager().findFragmentByTag(TransactionFragment.TAG);
         } else {
-            throw new RuntimeException("Not implementing addClumpFragmentAnswer");
+            throw new RuntimeException("Not implementing addTransactionFragmentAnswer");
         }
     }
 
@@ -156,13 +156,13 @@ public class AddClumpDialogFragment extends DialogFragment {
                     String itemValue = (String) lvFriendsToAdd.getItemAtPosition(position);
 
                     AmountOwedDialogFragment amountOwedDialogFragment = new AmountOwedDialogFragment();
-                    amountOwedDialogFragment.setTargetFragment(addClumpDialogFragment, 1);
+                    amountOwedDialogFragment.setTargetFragment(addTransactionDialogFragment, 1);
 
                     Bundle bundle = new Bundle();
                     bundle.putString("USER", itemValue);
                     amountOwedDialogFragment.setArguments(bundle);
 
-                    amountOwedDialogFragment.show(getFragmentManager(), AddClumpDialogFragment.TAG);
+                    amountOwedDialogFragment.show(getFragmentManager(), AddTransactionDialogFragment.TAG);
 
                     currentLVClick = (TextView) view;
 
@@ -213,15 +213,15 @@ public class AddClumpDialogFragment extends DialogFragment {
             etClumpName.setError("Required");
         } else {
             String clumpName = etClumpName.getText().toString();
-            Clump.ClumpType clumpType = Clump.ClumpType.fromInt(spinnerClumpType.getSelectedItemPosition());
+            Transaction.TransactionType transactionType = Transaction.TransactionType.fromInt(spinnerClumpType.getSelectedItemPosition());
 
-            Clump toAdd = new Clump(clumpName, clumpType, friendsList.get(0), friendsWhoOwe);
+            Transaction toAdd = new Transaction(clumpName, transactionType, friendsList.get(0), friendsWhoOwe);
 
             if (itemIsEditItem()) {
-                addClumpFragmentAnswer.addEditClump(toAdd, (String) getArguments().get("EDIT_INDEX"));
+                addTransactionFragmentAnswer.addEditClump(toAdd, (String) getArguments().get("EDIT_INDEX"));
                 dismiss();
             } else {
-                addClumpFragmentAnswer.addClump(toAdd);
+                addTransactionFragmentAnswer.addClump(toAdd);
                 dismiss();
             }
         }

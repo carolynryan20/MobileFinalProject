@@ -1,4 +1,4 @@
-package hu.ait.android.mobilefinalproject.fragments.clump;
+package hu.ait.android.mobilefinalproject.fragments.transaction;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -23,16 +23,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import hu.ait.android.mobilefinalproject.R;
-import hu.ait.android.mobilefinalproject.adapter.ClumpRecyclerAdapter;
+import hu.ait.android.mobilefinalproject.adapter.TransactionRecyclerAdapter;
 import hu.ait.android.mobilefinalproject.fragments.BaseFragment;
-import hu.ait.android.mobilefinalproject.fragments.clump.AddClumpDialogFragment;
-import hu.ait.android.mobilefinalproject.fragments.clump.AddClumpFragmentAnswer;
-import hu.ait.android.mobilefinalproject.model.Clump;
+import hu.ait.android.mobilefinalproject.model.Transaction;
 
 
-public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswer {
+public class TransactionFragment extends BaseFragment implements AddTransactionFragmentAnswer {
 
-    public static final String TAG = "ClumpFragment";
+    public static final String TAG = "TransactionFragment";
     public static final String IS_EDIT = "IS_EDIT";
     public static final String TYPE = "TYPE";
     public static final String CLUMP_TITLE = "CLUMP_TITLE";
@@ -42,7 +40,7 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
 
 
     private RecyclerView recyclerView;
-    private ClumpRecyclerAdapter clumpRecyclerAdapter;
+    private TransactionRecyclerAdapter transactionRecyclerAdapter;
     private View root;
     private ArrayList<String> friendList = new ArrayList<>();
 
@@ -50,7 +48,7 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
     private float dragY;
     private int lastAction;
 
-    public ClumpFragment() {
+    public TransactionFragment() {
         // Required empty public constructor
     }
 
@@ -69,7 +67,7 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
 //
 ////                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 ////                        .setAction("Action", null).show();
-//                // Create a new Clump with the username as the title
+//                // Create a new Transaction with the username as the title
 //                openAddClumpFragment();
 //
 //            }
@@ -121,28 +119,28 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
     }
 
     private void openAddClumpFragment() {
-        AddClumpDialogFragment addClumpDialogFragment = new AddClumpDialogFragment();
-        addClumpDialogFragment.setTargetFragment(this, 1);
+        AddTransactionDialogFragment addTransactionDialogFragment = new AddTransactionDialogFragment();
+        addTransactionDialogFragment.setTargetFragment(this, 1);
         Bundle bundle = new Bundle();
         bundle.putBoolean(IS_EDIT, false);
         bundle.putStringArrayList(FRIEND_LIST, friendList);
-        addClumpDialogFragment.setArguments(bundle);
-        addClumpDialogFragment.show(getFragmentManager(), AddClumpDialogFragment.TAG);
+        addTransactionDialogFragment.setArguments(bundle);
+        addTransactionDialogFragment.show(getFragmentManager(), AddTransactionDialogFragment.TAG);
     }
 
     //    }
-    public void openAddClumpFragment(Clump clump, String key) {
-        AddClumpDialogFragment addClumpDialogFragment = new AddClumpDialogFragment();
-        addClumpDialogFragment.setTargetFragment(this, 1);
+    public void openAddClumpFragment(Transaction transaction, String key) {
+        AddTransactionDialogFragment addTransactionDialogFragment = new AddTransactionDialogFragment();
+        addTransactionDialogFragment.setTargetFragment(this, 1);
         Bundle bundle = new Bundle();
-        bundle.putString(CLUMP_TITLE, clump.getTitle());
-        bundle.putString(WHO_PAID, clump.getOwedUser());
-        bundle.putInt(TYPE, clump.getType().getValue());
+        bundle.putString(CLUMP_TITLE, transaction.getTitle());
+        bundle.putString(WHO_PAID, transaction.getOwedUser());
+        bundle.putInt(TYPE, transaction.getType().getValue());
         bundle.putBoolean(IS_EDIT, true);
         bundle.putStringArrayList(FRIEND_LIST, friendList);
         bundle.putString(EDIT_INDEX, key);
-        addClumpDialogFragment.setArguments(bundle);
-        addClumpDialogFragment.show(getFragmentManager(), AddClumpDialogFragment.TAG);
+        addTransactionDialogFragment.setArguments(bundle);
+        addTransactionDialogFragment.show(getFragmentManager(), AddTransactionDialogFragment.TAG);
     }
 
     private void setFriendsList() {
@@ -196,9 +194,9 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
         final LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
 
-        clumpRecyclerAdapter = new ClumpRecyclerAdapter(getContext(), getUid(), this);
+        transactionRecyclerAdapter = new TransactionRecyclerAdapter(getContext(), getUid(), this);
 
-        recyclerView.setAdapter(clumpRecyclerAdapter);
+        recyclerView.setAdapter(transactionRecyclerAdapter);
     }
 
     private void initPostListener() {
@@ -210,9 +208,9 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Clump newClump = dataSnapshot.getValue(Clump.class);
-                //ref.child(dataSnapshot.getKey()).setValue(newClump);
-                clumpRecyclerAdapter.addClump(newClump, dataSnapshot.getKey());
+                Transaction newTransaction = dataSnapshot.getValue(Transaction.class);
+                //ref.child(dataSnapshot.getKey()).setValue(newTransaction);
+                transactionRecyclerAdapter.addClump(newTransaction, dataSnapshot.getKey());
                 // when you add a clump, add it to all users in that clump
             }
 
@@ -239,21 +237,21 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
     }
 
     @Override
-    public void addClump(final Clump clump) {
+    public void addClump(final Transaction transaction) {
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users");
 
         String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();
-        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").child(key).setValue(clump);
+        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").child(key).setValue(transaction);
 
-        addToAllContainedUsers(clump, ref);
-        Toast.makeText(getContext(), "Clump created", Toast.LENGTH_SHORT).show();
+        addToAllContainedUsers(transaction, ref);
+        Toast.makeText(getContext(), "Transaction created", Toast.LENGTH_SHORT).show();
     }
 
-    private void addToAllContainedUsers(final Clump clump, final DatabaseReference ref) {
-        // add to all other users in that clump:
-        Map<String, Integer> clumpUsers = clump.getDebtUsers();
+    private void addToAllContainedUsers(final Transaction transaction, final DatabaseReference ref) {
+        // add to all other users in that transaction:
+        Map<String, Integer> clumpUsers = transaction.getDebtUsers();
         if (clumpUsers == null) {
-            Toast.makeText(getContext(), "friends list in clump is empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "friends list in transaction is empty", Toast.LENGTH_SHORT).show();
         } else {
             for (final Map.Entry<String, Integer> entry : clumpUsers.entrySet()) {
                 // find this user in snapshot:
@@ -266,7 +264,7 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
                             if (!username.equals(getUserName())) {
                                 String userKey = user.getKey();
                                 String newClumpKey = ref.child(userKey).child("clumps").push().getKey();
-                                ref.child(userKey).child("clumps").child(newClumpKey).setValue(clump);
+                                ref.child(userKey).child("clumps").child(newClumpKey).setValue(transaction);
                             }
                         }
                     }
@@ -281,12 +279,12 @@ public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswe
     }
 
     @Override
-    public void addEditClump(Clump clump, String key) {
-//        clumpRecyclerAdapter.editClump(clump, index);
+    public void addEditClump(Transaction transaction, String key) {
+//        transactionRecyclerAdapter.editClump(transaction, index);
 //        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();
-        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").child(key).setValue(clump);
-        Toast.makeText(getContext(), "Clump edited", Toast.LENGTH_SHORT).show();
-        clumpRecyclerAdapter.editClump(clump,key);
+        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").child(key).setValue(transaction);
+        Toast.makeText(getContext(), "Transaction edited", Toast.LENGTH_SHORT).show();
+        transactionRecyclerAdapter.editClump(transaction,key);
     }
 
 }

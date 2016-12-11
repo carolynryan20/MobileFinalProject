@@ -17,30 +17,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hu.ait.android.mobilefinalproject.R;
-import hu.ait.android.mobilefinalproject.fragments.clump.ClumpFragment;
-import hu.ait.android.mobilefinalproject.model.Clump;
+import hu.ait.android.mobilefinalproject.fragments.transaction.TransactionFragment;
+import hu.ait.android.mobilefinalproject.model.Transaction;
 
 /**
- * ClumpRecyclerAdapter.java
+ * TransactionRecyclerAdapter.java
  *
  * Created by Carolyn Ryan
  * 11/29/2016
  *
  * Recycler Adapter class for user's list of clumps
  */
-public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdapter.ViewHolder> {
+public class TransactionRecyclerAdapter extends RecyclerView.Adapter<TransactionRecyclerAdapter.ViewHolder> {
 
-    private List<Clump> clumpList;
+    private List<Transaction> transactionList;
     private List<String> clumpKeys;
 
-    private CanRespondToCVClumpClick canRespondToCVClumpClick;
+    private CanRespondToCVTransactionClick canRespondToCVTransactionClick;
     private Context context;
 
     private DatabaseReference clumpsRef;
-    private ClumpFragment parentFragment;
+    private TransactionFragment parentFragment;
 
-    public ClumpRecyclerAdapter(Context context, String uid, ClumpFragment parentFragment) {
-        this.clumpList = new ArrayList<>();
+    public TransactionRecyclerAdapter(Context context, String uid, TransactionFragment parentFragment) {
+        this.transactionList = new ArrayList<>();
         this.clumpKeys = new ArrayList<>();
         this.parentFragment = parentFragment;
         this.context = context;
@@ -50,10 +50,10 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
     }
 
     private void checkActivityImplementsResponseInterface() {
-        if (context instanceof CanRespondToCVClumpClick) {
-            this.canRespondToCVClumpClick = (CanRespondToCVClumpClick) context;
+        if (context instanceof CanRespondToCVTransactionClick) {
+            this.canRespondToCVTransactionClick = (CanRespondToCVTransactionClick) context;
         } else {
-            throw new RuntimeException("Activity does not implement CanRespondToCVClumpClick interface");
+            throw new RuntimeException("Activity does not implement CanRespondToCVTransactionClick interface");
         }
     }
 
@@ -67,89 +67,87 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
-        final Clump tmpClump = clumpList.get(position);
-        viewHolder.tvClumpName.setText(tmpClump.getTitle());
-        viewHolder.ivClumpIcon.setImageResource(tmpClump.getType().getIconId());
+        final Transaction tmpTransaction = transactionList.get(position);
 
+        setTitleAndIcon(viewHolder, tmpTransaction);
+        setButtonClicks(viewHolder, tmpTransaction);
+        setCardViewClick(viewHolder);
+    }
 
+    private void setTitleAndIcon(ViewHolder viewHolder, Transaction tmpTransaction) {
+        viewHolder.tvClumpName.setText(tmpTransaction.getTitle());
+        viewHolder.ivClumpIcon.setImageResource(tmpTransaction.getType().getIconId());
+    }
+
+    private void setButtonClicks(final ViewHolder viewHolder, final Transaction tmpTransaction) {
+        setDeleteButton(viewHolder);
+        setEditButton(viewHolder, tmpTransaction);
+    }
+
+    private void setDeleteButton(final ViewHolder viewHolder) {
         viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 removeClump(viewHolder.getAdapterPosition());
             }
         });
+    }
 
+    private void setEditButton(final ViewHolder viewHolder, final Transaction tmpTransaction) {
         viewHolder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String thisKey = clumpKeys.get(viewHolder.getAdapterPosition());
-                showEditDialog(tmpClump, thisKey, viewHolder.getAdapterPosition());
-            }
-        });
-
-        viewHolder.cvClump.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                canRespondToCVClumpClick.respondToCVClumpClick((clumpList.get(viewHolder.getAdapterPosition())));
+                showEditDialog(tmpTransaction, thisKey, viewHolder.getAdapterPosition());
             }
         });
     }
 
-    public void showEditDialog(Clump clumpToEdit, String key, int position) {
-        parentFragment.openAddClumpFragment(clumpToEdit, key);
+    private void setCardViewClick(final ViewHolder viewHolder) {
+        viewHolder.cvClump.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                canRespondToCVTransactionClick.respondToCVClumpClick((transactionList.get(viewHolder.getAdapterPosition())));
+            }
+        });
+    }
+
+    public void showEditDialog(Transaction transactionToEdit, String key, int position) {
+        parentFragment.openAddClumpFragment(transactionToEdit, key);
         notifyItemChanged(position);
     }
 
     @Override
     public int getItemCount() {
-        return clumpList.size();
+        return transactionList.size();
     }
 
-    public void addClump(Clump clump, String key) {
+    public void addClump(Transaction transaction, String key) {
         if (!clumpKeys.contains(key)) {
-            clumpList.add(0, clump);
+            transactionList.add(0, transaction);
             clumpKeys.add(0, key);
-            // refresh the whole list
             notifyDataSetChanged();
         }
     }
 
-    public void addClump(Clump clump, int index) {
-        clumpList.add(index, clump);
-        // refresh the whole list
+    public void addClump(Transaction transaction, int index) {
+        transactionList.add(index, transaction);
         notifyDataSetChanged();
     }
 
     public void removeClump(int index) {
-        // remove it from the DB TODO: 12/4/16
         clumpsRef.child(clumpKeys.get(index)).removeValue();
         if (index != -1) {
-            clumpList.remove(index);
+            transactionList.remove(index);
             clumpKeys.remove(index);
             notifyItemRemoved(index);
         }
     }
 
-    public void editClump(Clump clump, int index) {
-        removeClump(index);
-        addClump(clump, index);
-    }
-
-    public void editClump(Clump clump, String key) {
+    public void editClump(Transaction transaction, String key) {
         int idx = clumpKeys.indexOf(key);
-        clumpList.set(idx,clump);
+        transactionList.set(idx, transaction);
         notifyDataSetChanged();
-    }
-
-    public void removeAllClumps() {
-        while (!clumpList.isEmpty()) {
-            clumpList.remove(0);
-            notifyItemRemoved(0);
-        }
-    }
-
-    public Clump getCity(int i) {
-        return clumpList.get(i);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

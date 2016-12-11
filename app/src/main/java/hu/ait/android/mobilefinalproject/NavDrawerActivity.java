@@ -20,13 +20,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import hu.ait.android.mobilefinalproject.adapter.CanRespondToCVClumpClick;
+import hu.ait.android.mobilefinalproject.adapter.CanRespondToCVTransactionClick;
 
 import hu.ait.android.mobilefinalproject.fragments.friends.FriendsFragment;
-import hu.ait.android.mobilefinalproject.fragments.clump.ClumpSummaryFragment;
-import hu.ait.android.mobilefinalproject.fragments.clump.SingleClumpFragment;
+import hu.ait.android.mobilefinalproject.fragments.transaction.TransactionAndSummaryFragment;
+import hu.ait.android.mobilefinalproject.fragments.transaction.SingleTransactionFragment;
 import hu.ait.android.mobilefinalproject.fragments.user.UserFragment;
-import hu.ait.android.mobilefinalproject.model.Clump;
+import hu.ait.android.mobilefinalproject.model.Transaction;
 
 
 import android.support.v4.app.Fragment;
@@ -38,7 +38,7 @@ import java.io.Serializable;
 
 public class NavDrawerActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        ClumpSummaryFragment.OnFragmentInteractionListener, CanRespondToCVClumpClick,
+        TransactionAndSummaryFragment.OnFragmentInteractionListener, CanRespondToCVTransactionClick,
         FriendsFragment.OnFragmentInteractionListener,
         UserFragment.OnFragmentInteractionListener {
 
@@ -54,7 +54,7 @@ public class NavDrawerActivity extends BaseActivity
 //
 //        Fragment fragment = null;
 //        Class fragmentClass = null;
-//        fragmentClass = ClumpFragment.class;
+//        fragmentClass = TransactionFragment.class;
 //        try {
 //            fragment = (Fragment) fragmentClass.newInstance();
 //        } catch (Exception e) {
@@ -70,15 +70,15 @@ public class NavDrawerActivity extends BaseActivity
 //            public void onClick(View view) {
 ////                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 ////                        .setAction("Action", null).show();
-//                // Create a new Clump with the username as the title
+//                // Create a new Transaction with the username as the title
 //                String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid())
 //                        .child("clumps").push().getKey();
-//                Clump newPost = new Clump(getUid(), getUserName(), "descrip", 100);
+//                Transaction newPost = new Transaction(getUid(), getUserName(), "descrip", 100);
 //
 //                FirebaseDatabase.getInstance().getReference().child("users").child(getUid())
 //                        .child("clumps").child(key).setValue(newPost);
 //
-//                Toast.makeText(NavDrawerActivity.this, "Clump created", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(NavDrawerActivity.this, "Transaction created", Toast.LENGTH_SHORT).show();
 //
 //            }
 //        });
@@ -93,7 +93,7 @@ public class NavDrawerActivity extends BaseActivity
         navigationView.setNavigationItemSelectedListener(this);
 //        navigationView.getMenu().getItem(0).setChecked(true);
 
-        showFragmentByTag(ClumpSummaryFragment.TAG, null);
+        showFragmentByTag(TransactionAndSummaryFragment.TAG, null);
     }
 
     @Override
@@ -137,7 +137,7 @@ public class NavDrawerActivity extends BaseActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_clump) {
-            showFragmentByTag(ClumpSummaryFragment.TAG, null);
+            showFragmentByTag(TransactionAndSummaryFragment.TAG, null);
             // Handle the camera action
         } else if (id == R.id.nav_friends) {
             showFragmentByTag(FriendsFragment.TAG, null);
@@ -187,14 +187,14 @@ public class NavDrawerActivity extends BaseActivity
     public void showFragmentByTag(String tag, @Nullable Bundle bundle) {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
         if (fragment == null) {
-            if (tag.equals(ClumpSummaryFragment.TAG)){
-                fragment = new ClumpSummaryFragment();
+            if (tag.equals(TransactionAndSummaryFragment.TAG)){
+                fragment = new TransactionAndSummaryFragment();
             } else if (tag.equals(FriendsFragment.TAG)){
                 fragment = new FriendsFragment();
             } else if (tag.equals(UserFragment.TAG)){
                 fragment = new UserFragment();
-            } else if (tag.equals(SingleClumpFragment.TAG)) {
-                fragment = new SingleClumpFragment();
+            } else if (tag.equals(SingleTransactionFragment.TAG)) {
+                fragment = new SingleTransactionFragment();
             }
         }
         if ((fragment != null) && (bundle != null)) {
@@ -214,15 +214,15 @@ public class NavDrawerActivity extends BaseActivity
     }
 
     @Override
-    public void respondToCVClumpClick(Clump clump) {
+    public void respondToCVClumpClick(Transaction transaction) {
         Bundle bundle = new Bundle();
-        bundle.putString(SingleClumpFragment.OWED_USER, clump.getOwedUser());
-        bundle.putString(SingleClumpFragment.TITLE,clump.getTitle());
-        bundle.putInt(SingleClumpFragment.TYPE, clump.getType().getValue());
+        bundle.putString(SingleTransactionFragment.OWED_USER, transaction.getOwedUser());
+        bundle.putString(SingleTransactionFragment.TITLE, transaction.getTitle());
+        bundle.putInt(SingleTransactionFragment.TYPE, transaction.getType().getValue());
 
-        bundle.putSerializable(SingleClumpFragment.DEBT_USERS, (Serializable) clump.getDebtUsers());
+        bundle.putSerializable(SingleTransactionFragment.DEBT_USERS, (Serializable) transaction.getDebtUsers());
 
-        showFragmentByTag(SingleClumpFragment.TAG, bundle);
+        showFragmentByTag(SingleTransactionFragment.TAG, bundle);
     }
 
 

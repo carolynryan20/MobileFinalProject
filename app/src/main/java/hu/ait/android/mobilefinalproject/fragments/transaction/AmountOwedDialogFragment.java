@@ -1,4 +1,4 @@
-package hu.ait.android.mobilefinalproject.fragments.clump;
+package hu.ait.android.mobilefinalproject.fragments.transaction;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import hu.ait.android.mobilefinalproject.R;
-import hu.ait.android.mobilefinalproject.fragments.clump.AddClumpDialogFragment;
 
 /**
  * Created by Carolyn on 12/6/16.
@@ -25,12 +24,12 @@ public class AmountOwedDialogFragment extends DialogFragment {
     private Context context;
     private EditText amt;
     private Bundle args;
-    private AddClumpDialogFragment addClumpDialogFragment;
+    private AddTransactionDialogFragment addTransactionDialogFragment;
 
     @Override
     public void onAttach(Context context) {
         this.context = context;
-        this.addClumpDialogFragment = (AddClumpDialogFragment) getTargetFragment();
+        this.addTransactionDialogFragment = (AddTransactionDialogFragment) getTargetFragment();
         this.args = getArguments();
         super.onAttach(context);
     }
@@ -77,10 +76,10 @@ public class AmountOwedDialogFragment extends DialogFragment {
             String amtString = amt.getText().toString();
             if (! amtString.isEmpty()) {
                 int amtInt = Integer.parseInt(amtString);
-                addClumpDialogFragment.addFriendWhoOwes(args.getString("USER"), amtInt);
+                addTransactionDialogFragment.addFriendWhoOwes(args.getString("USER"), amtInt);
             }
 
-            addClumpDialogFragment.addFriendWhoOwes(args.getString("USER"),Integer.parseInt(amt.getText().toString()) );
+            addTransactionDialogFragment.addFriendWhoOwes(args.getString("USER"),Integer.parseInt(amt.getText().toString()) );
             dismiss();
         }
     }

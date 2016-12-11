@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import hu.ait.android.mobilefinalproject.fragments.clump.ClumpFragment;
-import hu.ait.android.mobilefinalproject.fragments.clump.SummaryFragment;
+import hu.ait.android.mobilefinalproject.fragments.transaction.TransactionFragment;
+import hu.ait.android.mobilefinalproject.fragments.transaction.SummaryFragment;
 
 /**
  * MainPagerAdapter.java
@@ -21,7 +21,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
 
     private Context context;
     private FragmentManager fm;
-    private Fragment clumpFragment;
+    private Fragment transactionFragment;
 
 
     public MainPagerAdapter(FragmentManager fm, Context context) {
@@ -35,16 +35,16 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = new ClumpFragment();
+                fragment = new TransactionFragment();
                 break;
             case 1:
                 fragment = new SummaryFragment();
                 break;
             default:
-                fragment = new ClumpFragment();
+                fragment = new TransactionFragment();
                 break;
         }
-        if (fragment instanceof ClumpFragment) clumpFragment = fragment;
+        if (fragment instanceof TransactionFragment) transactionFragment = fragment;
         return fragment;
     }
 
@@ -52,7 +52,7 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "Your Clumps";
+                return "Your Transactions";
             case 1:
                 return "Summary";
         }
@@ -65,6 +65,6 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     }
 
     public Fragment getFragment() {
-        return clumpFragment;
+        return transactionFragment;
     }
 }

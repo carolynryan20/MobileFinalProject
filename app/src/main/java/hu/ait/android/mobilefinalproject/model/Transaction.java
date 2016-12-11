@@ -1,10 +1,5 @@
 package hu.ait.android.mobilefinalproject.model;
 
-import com.google.firebase.database.Exclude;
-
-import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import hu.ait.android.mobilefinalproject.R;
@@ -12,19 +7,19 @@ import hu.ait.android.mobilefinalproject.R;
 /**
  * Created by Morgan on 12/3/2016.
  */
-public class Clump {
+public class Transaction {
     private String title;
-    private ClumpType type;
+    private TransactionType type;
     private String owedUser;
 
 //    private Dictionary<String, Float> debtUsers;
     private Map<String, Integer> debtUsers;
 
-    public Clump() {
+    public Transaction() {
     }
 
 
-    public Clump(String title, ClumpType type, String owedUser, Map<String, Integer> debtUsers) {
+    public Transaction(String title, TransactionType type, String owedUser, Map<String, Integer> debtUsers) {
         this.title = title;
         this.type = type;
         this.owedUser = owedUser;
@@ -48,11 +43,11 @@ public class Clump {
         this.debtUsers = debtUsers;
     }
 
-    public ClumpType getType() {
+    public TransactionType getType() {
         return type;
     }
 
-    public void setType(ClumpType type) {
+    public void setType(TransactionType type) {
         this.type = type;
     }
 
@@ -78,7 +73,7 @@ public class Clump {
     /**
      * ShoppingItemType to get icon corresponding to item categories
      * */
-    public enum ClumpType {
+    public enum TransactionType {
         FOOD(0, R.drawable.knife_fork),
         DRINKS(1, R.drawable.drink),
         RENT(2, R.drawable.ic_home_black_24dp),
@@ -88,7 +83,7 @@ public class Clump {
         private int value;
         private int iconId;
 
-        private ClumpType(int value, int iconId) {
+        private TransactionType(int value, int iconId) {
             this.value = value;
             this.iconId = iconId;
         }
@@ -101,8 +96,8 @@ public class Clump {
             return iconId;
         }
 
-        public static ClumpType fromInt(int value) {
-            for (ClumpType s : ClumpType.values()) {
+        public static TransactionType fromInt(int value) {
+            for (TransactionType s : TransactionType.values()) {
                 if (s.value == value) {
                     return s;
                 }

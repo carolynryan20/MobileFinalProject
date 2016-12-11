@@ -1,4 +1,4 @@
-package hu.ait.android.mobilefinalproject.fragments.clump;
+package hu.ait.android.mobilefinalproject.fragments.transaction;
 
 import android.content.Context;
 import android.net.Uri;
@@ -7,24 +7,17 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import hu.ait.android.mobilefinalproject.R;
-import hu.ait.android.mobilefinalproject.adapter.ClumpRecyclerAdapter;
 import hu.ait.android.mobilefinalproject.adapter.MainPagerAdapter;
-import hu.ait.android.mobilefinalproject.data.Friend;
-import hu.ait.android.mobilefinalproject.model.Clump;
 
-public class ClumpSummaryFragment extends Fragment {
+public class TransactionAndSummaryFragment extends Fragment {
 
-    public static final String TAG = "ClumpSummaryFragment";
+    public static final String TAG = "TransactionAndSummaryFragment";
     private View root;
     private ViewPager pager;
     private OnFragmentInteractionListener mListener;

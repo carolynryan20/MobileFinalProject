@@ -1,4 +1,4 @@
-package hu.ait.android.mobilefinalproject.fragments.clump;
+package hu.ait.android.mobilefinalproject.fragments.transaction;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,9 +24,9 @@ import hu.ait.android.mobilefinalproject.fragments.BaseFragment;
  * Created by Carolyn on 12/4/16.
  */
 
-public class SingleClumpFragment extends BaseFragment {
+public class SingleTransactionFragment extends BaseFragment {
 
-    public static final String TAG = "SingleClumpFragment";
+    public static final String TAG = "SingleTransactionFragment";
 
     private View root;
     private TextView tvDebts;
@@ -50,7 +50,7 @@ public class SingleClumpFragment extends BaseFragment {
 //            public void onClick(View view) {
 ////                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 ////                        .setAction("Action", null).show();
-//                // Create a new Clump with the username as the title
+//                // Create a new Transaction with the username as the title
 //                //openAddFriendToClumpFragment();
 //
 //            }
@@ -132,7 +132,7 @@ public class SingleClumpFragment extends BaseFragment {
 ////        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();
 ////        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").child(key).setValue(clump);
 ////        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").getKey();
-//        Toast.makeText(getContext(), "Friend Added to Clump", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "Friend Added to Transaction", Toast.LENGTH_SHORT).show();
 //
 //    }
 }

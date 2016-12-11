@@ -34,7 +34,7 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAd
     private List<String> friendKeys;
 
     private Context context;
-    private CanRespondToCVClumpClick canRespondToCVClumpClick;
+    private CanRespondToCVTransactionClick canRespondToCVTransactionClick;
 
     public FriendRecyclerAdapter(Context context) {
         friendList = new ArrayList<Friend>();
@@ -45,10 +45,10 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAd
     }
 
     private void checkActivityImplementsResponseInterface() {
-        if (context instanceof CanRespondToCVClumpClick) {
-            this.canRespondToCVClumpClick = (CanRespondToCVClumpClick) context;
+        if (context instanceof CanRespondToCVTransactionClick) {
+            this.canRespondToCVTransactionClick = (CanRespondToCVTransactionClick) context;
         } else {
-            throw new RuntimeException("Activity does not implement CanRespondToCVClumpClick interface");
+            throw new RuntimeException("Activity does not implement CanRespondToCVTransactionClick interface");
         }
     }
 
@@ -117,11 +117,11 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAd
         for (DataSnapshot debtUser : ss.child("debtUsers").getChildren()) {
             if (debtUser.getKey().toString().equals(FriendsFragment.getUserName())) {
                 String debtUserValue = debtUser.getValue().toString();
-                Double debtUserDouble = Double.parseDouble(debtUserValue);
+                int debtUserDouble = Integer.parseInt(debtUserValue);
 
-                Double prevDebt = Double.valueOf(holder.tvFriendDebt.getText().toString());
+                int prevDebt = Integer.parseInt(holder.tvFriendDebt.getText().toString());
 //                holder.tvFriendDebt.setText(String.format("%1$.2f", (prevDebt+debtUserDouble)));
-                holder.tvFriendDebt.setText(prevDebt+debtUserDouble.toString() + " Ft");
+                holder.tvFriendDebt.setText(prevDebt+debtUserDouble + " Ft");
             }
         }
     }
@@ -130,11 +130,11 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAd
         for (DataSnapshot debtUser : ss.child("debtUsers").getChildren()) {
             if (debtUser.getKey().toString().equals(currentUsername)) {
                 String debtUserValue = debtUser.getValue().toString();
-                Double debtUserDouble = Double.parseDouble(debtUserValue);
+                int debtUserDouble = Integer.parseInt(debtUserValue);
 
-                Double prevDebt = Double.valueOf(holder.tvFriendOwed.getText().toString());
+                int prevDebt = Integer.parseInt(holder.tvFriendOwed.getText().toString());
 //                holder.tvFriendOwed.setText(String.format("%1$.2f", (prevDebt+debtUserDouble)));
-                holder.tvFriendOwed.setText(prevDebt+debtUserDouble.toString() + " Ft");
+                holder.tvFriendOwed.setText(prevDebt+debtUserDouble + " Ft");
             }
         }
     }
