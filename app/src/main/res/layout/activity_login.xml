@@ -33,9 +33,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:text="carolynuser@gmail.com"
+
                 android:hint="email"/>
         </android.support.design.widget.TextInputLayout>
+
+    <!--android:text="carolynuser@gmail.com"-->
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -48,9 +50,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:text="qwerty"
+
                 android:hint="Password"/>
         </android.support.design.widget.TextInputLayout>
+
+    <!--android:text="qwerty"-->
 
         <Button
             android:id="@+id/btnLogin"

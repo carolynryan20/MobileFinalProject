@@ -99,7 +99,7 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         hideProgressDialog();
-                        Toast.makeText(LoginActivity.this, "Wasn't able to make new user from input", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(LoginActivity.this, "Wasn't able to make new user from input", Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
                 });
