@@ -72,11 +72,11 @@ public class NavDrawerActivity extends BaseActivity
 ////                        .setAction("Action", null).show();
 //                // Create a new Transaction with the username as the title
 //                String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid())
-//                        .child("clumps").push().getKey();
+//                        .child("transactions").push().getKey();
 //                Transaction newPost = new Transaction(getUid(), getUserName(), "descrip", 100);
 //
 //                FirebaseDatabase.getInstance().getReference().child("users").child(getUid())
-//                        .child("clumps").child(key).setValue(newPost);
+//                        .child("transactions").child(key).setValue(newPost);
 //
 //                Toast.makeText(NavDrawerActivity.this, "Transaction created", Toast.LENGTH_SHORT).show();
 //
@@ -136,7 +136,7 @@ public class NavDrawerActivity extends BaseActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_clump) {
+        if (id == R.id.nav_transaction) {
             showFragmentByTag(TransactionAndSummaryFragment.TAG, null);
             // Handle the camera action
         } else if (id == R.id.nav_friends) {
@@ -214,7 +214,7 @@ public class NavDrawerActivity extends BaseActivity
     }
 
     @Override
-    public void respondToCVClumpClick(Transaction transaction) {
+    public void respondToCVTransactionClick(Transaction transaction) {
         Bundle bundle = new Bundle();
         bundle.putString(SingleTransactionFragment.OWED_USER, transaction.getOwedUser());
         bundle.putString(SingleTransactionFragment.TITLE, transaction.getTitle());

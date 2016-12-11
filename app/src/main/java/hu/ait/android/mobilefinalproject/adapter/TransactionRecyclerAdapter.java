@@ -26,26 +26,26 @@ import hu.ait.android.mobilefinalproject.model.Transaction;
  * Created by Carolyn Ryan
  * 11/29/2016
  *
- * Recycler Adapter class for user's list of clumps
+ * Recycler Adapter class for user's list of transactions
  */
 public class TransactionRecyclerAdapter extends RecyclerView.Adapter<TransactionRecyclerAdapter.ViewHolder> {
 
     private List<Transaction> transactionList;
-    private List<String> clumpKeys;
+    private List<String> transactionKeys;
 
     private CanRespondToCVTransactionClick canRespondToCVTransactionClick;
     private Context context;
 
-    private DatabaseReference clumpsRef;
+    private DatabaseReference transactionsRef;
     private TransactionFragment parentFragment;
 
     public TransactionRecyclerAdapter(Context context, String uid, TransactionFragment parentFragment) {
         this.transactionList = new ArrayList<>();
-        this.clumpKeys = new ArrayList<>();
+        this.transactionKeys = new ArrayList<>();
         this.parentFragment = parentFragment;
         this.context = context;
-        clumpsRef = FirebaseDatabase.getInstance()
-                .getReference("users").child(uid).child("clumps");
+        transactionsRef = FirebaseDatabase.getInstance()
+                .getReference("users").child(uid).child("transactions");
         checkActivityImplementsResponseInterface();
     }
 
@@ -60,7 +60,7 @@ public class TransactionRecyclerAdapter extends RecyclerView.Adapter<Transaction
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.clump_row, viewGroup, false);
+                .inflate(R.layout.transaction_row, viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -75,8 +75,8 @@ public class TransactionRecyclerAdapter extends RecyclerView.Adapter<Transaction
     }
 
     private void setTitleAndIcon(ViewHolder viewHolder, Transaction tmpTransaction) {
-        viewHolder.tvClumpName.setText(tmpTransaction.getTitle());
-        viewHolder.ivClumpIcon.setImageResource(tmpTransaction.getType().getIconId());
+        viewHolder.tvTransactionName.setText(tmpTransaction.getTitle());
+        viewHolder.ivTransactionIcon.setImageResource(tmpTransaction.getType().getIconId());
     }
 
     private void setButtonClicks(final ViewHolder viewHolder, final Transaction tmpTransaction) {
@@ -88,7 +88,7 @@ public class TransactionRecyclerAdapter extends RecyclerView.Adapter<Transaction
         viewHolder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                removeClump(viewHolder.getAdapterPosition());
+                removeTransaction(viewHolder.getAdapterPosition());
             }
         });
     }
@@ -97,23 +97,23 @@ public class TransactionRecyclerAdapter extends RecyclerView.Adapter<Transaction
         viewHolder.btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String thisKey = clumpKeys.get(viewHolder.getAdapterPosition());
+                String thisKey = transactionKeys.get(viewHolder.getAdapterPosition());
                 showEditDialog(tmpTransaction, thisKey, viewHolder.getAdapterPosition());
             }
         });
     }
 
     private void setCardViewClick(final ViewHolder viewHolder) {
-        viewHolder.cvClump.setOnClickListener(new View.OnClickListener() {
+        viewHolder.cvTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                canRespondToCVTransactionClick.respondToCVClumpClick((transactionList.get(viewHolder.getAdapterPosition())));
+                canRespondToCVTransactionClick.respondToCVTransactionClick((transactionList.get(viewHolder.getAdapterPosition())));
             }
         });
     }
 
     public void showEditDialog(Transaction transactionToEdit, String key, int position) {
-        parentFragment.openAddClumpFragment(transactionToEdit, key);
+        parentFragment.openAddTransactionFragment(transactionToEdit, key);
         notifyItemChanged(position);
     }
 
@@ -122,48 +122,48 @@ public class TransactionRecyclerAdapter extends RecyclerView.Adapter<Transaction
         return transactionList.size();
     }
 
-    public void addClump(Transaction transaction, String key) {
-        if (!clumpKeys.contains(key)) {
+    public void addTransaction(Transaction transaction, String key) {
+        if (!transactionKeys.contains(key)) {
             transactionList.add(0, transaction);
-            clumpKeys.add(0, key);
+            transactionKeys.add(0, key);
             notifyDataSetChanged();
         }
     }
 
-    public void addClump(Transaction transaction, int index) {
+    public void addTransaction(Transaction transaction, int index) {
         transactionList.add(index, transaction);
         notifyDataSetChanged();
     }
 
-    public void removeClump(int index) {
-        clumpsRef.child(clumpKeys.get(index)).removeValue();
+    public void removeTransaction(int index) {
+        transactionsRef.child(transactionKeys.get(index)).removeValue();
         if (index != -1) {
             transactionList.remove(index);
-            clumpKeys.remove(index);
+            transactionKeys.remove(index);
             notifyItemRemoved(index);
         }
     }
 
-    public void editClump(Transaction transaction, String key) {
-        int idx = clumpKeys.indexOf(key);
+    public void editTransaction(Transaction transaction, String key) {
+        int idx = transactionKeys.indexOf(key);
         transactionList.set(idx, transaction);
         notifyDataSetChanged();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvClumpName;
+        public TextView tvTransactionName;
         public ImageButton btnDelete;
         public ImageButton btnEdit;
-        public CardView cvClump;
-        public ImageView ivClumpIcon;
+        public CardView cvTransaction;
+        public ImageView ivTransactionIcon;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            tvClumpName = (TextView) itemView.findViewById(R.id.tvClumpName);
+            tvTransactionName = (TextView) itemView.findViewById(R.id.tvTransactionName);
             btnDelete = (ImageButton) itemView.findViewById(R.id.btnDelete);
             btnEdit = (ImageButton) itemView.findViewById(R.id.btnEdit);
-            cvClump = (CardView) itemView.findViewById(R.id.cvClump);
-            ivClumpIcon = (ImageView) itemView.findViewById(R.id.ivClumpIcon);
+            cvTransaction = (CardView) itemView.findViewById(R.id.cvTransaction);
+            ivTransactionIcon = (ImageView) itemView.findViewById(R.id.ivTransactionIcon);
         }
     }
 }

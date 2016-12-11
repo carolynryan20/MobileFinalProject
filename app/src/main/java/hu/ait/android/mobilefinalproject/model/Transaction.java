@@ -59,17 +59,6 @@ public class Transaction {
         this.title = title;
     }
 
-//    @Exclude
-//    public Map<String, Object> toMap() {
-//        HashMap<String, Object> result = new HashMap<>();
-//        result.put("title", title);
-//        result.put("icon", type);
-//        result.put("owedUser", owedUser);
-//        result.put("debtUsers", debtUsers);
-//
-//        return result;
-//    }
-
     /**
      * ShoppingItemType to get icon corresponding to item categories
      * */

@@ -26,7 +26,7 @@ public class TransactionAndSummaryFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_clump_summary, container, false);
+        root = inflater.inflate(R.layout.fragment_transaction_summary, container, false);
 
         pager = (ViewPager) root.findViewById(R.id.pager);
         pager.setAdapter(new MainPagerAdapter(this.getChildFragmentManager(), getContext()));

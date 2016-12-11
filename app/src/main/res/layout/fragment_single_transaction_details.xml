@@ -110,14 +110,14 @@
     </ListView>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerClumpInteractions"
+        android:id="@+id/recyclerTransactionInteractions"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:scrollbars="vertical"/>
 
     <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/fabSingleClump"-->
+        <!--android:id="@+id/fabSingleTransaction"-->
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
         <!--android:layout_gravity="bottom|end"-->

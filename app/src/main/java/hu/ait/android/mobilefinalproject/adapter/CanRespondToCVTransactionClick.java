@@ -12,5 +12,5 @@ import hu.ait.android.mobilefinalproject.model.Transaction;
  * Particularly that it can respond to card view clicks
  */
 public interface CanRespondToCVTransactionClick {
-    public void respondToCVClumpClick(Transaction transaction);
+    public void respondToCVTransactionClick(Transaction transaction);
 }

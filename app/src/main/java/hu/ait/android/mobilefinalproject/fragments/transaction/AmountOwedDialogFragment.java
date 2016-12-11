@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import hu.ait.android.mobilefinalproject.R;
 
@@ -67,12 +66,9 @@ public class AmountOwedDialogFragment extends DialogFragment {
     }
 
     private void handleOnClickPositive() {
-        Toast.makeText(getContext(), "in on positive", Toast.LENGTH_SHORT).show();
         if (TextUtils.isEmpty(amt.getText())) {
             amt.setError("Required");
-            Toast.makeText(getContext(), "no text", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getContext(), "gave text", Toast.LENGTH_SHORT).show();
             String amtString = amt.getText().toString();
             if (! amtString.isEmpty()) {
                 int amtInt = Integer.parseInt(amtString);

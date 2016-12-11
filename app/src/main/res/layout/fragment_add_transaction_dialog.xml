@@ -4,13 +4,13 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/etClumpTitle"
-        android:hint="Clump Name"
+        android:id="@+id/etTransactionTitle"
+        android:hint="Transaction Name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <Spinner
-        android:id="@+id/spinnerClumpType"
+        android:id="@+id/spinnerTransactionType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></Spinner>
 

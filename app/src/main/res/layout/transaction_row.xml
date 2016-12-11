@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cvClump"
+    android:id="@+id/cvTransaction"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
@@ -23,7 +23,7 @@
             <!--android:layout_height="26dp"-->
             <!--android:layout_marginTop="2dp"-->
             <ImageView
-                android:id="@+id/ivClumpIcon"
+                android:id="@+id/ivTransactionIcon"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
@@ -40,7 +40,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvClumpName"
+                    android:id="@+id/tvTransactionName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/name"
@@ -50,14 +50,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvClumpDetails"
+                    android:layout_below="@+id/tvTransactionDetails"
                     android:text="details" />
 
             </LinearLayout>
 
 
             <!--<TextView-->
-            <!--android:id="@+id/tvClumpDetails"-->
+            <!--android:id="@+id/tvTransactionDetails"-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
             <!--android:textColor="#000000"-->

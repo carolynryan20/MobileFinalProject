@@ -33,7 +33,7 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
     public static final String TAG = "TransactionFragment";
     public static final String IS_EDIT = "IS_EDIT";
     public static final String TYPE = "TYPE";
-    public static final String CLUMP_TITLE = "CLUMP_TITLE";
+    public static final String TRANSACTION_TITLE = "TRANSACTION_TITLE";
     public static final String WHO_PAID = "WHO_PAID";
     public static final String EDIT_INDEX = "EDIT_INDEX";
     public static final String FRIEND_LIST = "FRIEND_LIST";
@@ -55,12 +55,12 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        root = inflater.inflate(R.layout.fragment_clump, container, false);
+        root = inflater.inflate(R.layout.fragment_transaction, container, false);
 
         setupRecyclerView();
         setFriendsList();
 
-//        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fabClumpFragment);
+//        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fabTransactionFragment);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -68,7 +68,7 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
 ////                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 ////                        .setAction("Action", null).show();
 //                // Create a new Transaction with the username as the title
-//                openAddClumpFragment();
+//                openAddTransactionFragment();
 //
 //            }
 //        });
@@ -81,7 +81,7 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
 
 
     private void setUpFab() {
-        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fabClumpFragment);
+        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fabTransactionFragment);
 
         fab.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -96,7 +96,7 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
                     case MotionEvent.ACTION_UP:
                         //we know action_down, action_up is a click action so:
                         if (lastAction == MotionEvent.ACTION_DOWN)
-                            openAddClumpFragment();
+                            openAddTransactionFragment();
                         break;
                     default:
                         return false;
@@ -118,7 +118,7 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
         lastAction = MotionEvent.ACTION_MOVE;
     }
 
-    private void openAddClumpFragment() {
+    private void openAddTransactionFragment() {
         AddTransactionDialogFragment addTransactionDialogFragment = new AddTransactionDialogFragment();
         addTransactionDialogFragment.setTargetFragment(this, 1);
         Bundle bundle = new Bundle();
@@ -129,11 +129,11 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
     }
 
     //    }
-    public void openAddClumpFragment(Transaction transaction, String key) {
+    public void openAddTransactionFragment(Transaction transaction, String key) {
         AddTransactionDialogFragment addTransactionDialogFragment = new AddTransactionDialogFragment();
         addTransactionDialogFragment.setTargetFragment(this, 1);
         Bundle bundle = new Bundle();
-        bundle.putString(CLUMP_TITLE, transaction.getTitle());
+        bundle.putString(TRANSACTION_TITLE, transaction.getTitle());
         bundle.putString(WHO_PAID, transaction.getOwedUser());
         bundle.putInt(TYPE, transaction.getType().getValue());
         bundle.putBoolean(IS_EDIT, true);
@@ -189,7 +189,7 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
     }
 
     private void setupRecyclerView() {
-        recyclerView = (RecyclerView) root.findViewById(R.id.recyclerClump);
+        recyclerView = (RecyclerView) root.findViewById(R.id.recyclerTransaction);
         recyclerView.setHasFixedSize(true);
         final LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -202,16 +202,16 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
     private void initPostListener() {
         // update list
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users")
-                .child(getUid()).child("clumps");
+                .child(getUid()).child("transactions");
 
-        //final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("clumps");
+        //final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("transactions");
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Transaction newTransaction = dataSnapshot.getValue(Transaction.class);
                 //ref.child(dataSnapshot.getKey()).setValue(newTransaction);
-                transactionRecyclerAdapter.addClump(newTransaction, dataSnapshot.getKey());
-                // when you add a clump, add it to all users in that clump
+                transactionRecyclerAdapter.addTransaction(newTransaction, dataSnapshot.getKey());
+                // when you add a transaction, add it to all users in that transaction
             }
 
             @Override
@@ -237,11 +237,11 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
     }
 
     @Override
-    public void addClump(final Transaction transaction) {
+    public void addTransaction(final Transaction transaction) {
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users");
 
-        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();
-        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").child(key).setValue(transaction);
+        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("transactions").push().getKey();
+        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("transactions").child(key).setValue(transaction);
 
         addToAllContainedUsers(transaction, ref);
         Toast.makeText(getContext(), "Transaction created", Toast.LENGTH_SHORT).show();
@@ -249,11 +249,11 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
 
     private void addToAllContainedUsers(final Transaction transaction, final DatabaseReference ref) {
         // add to all other users in that transaction:
-        Map<String, Integer> clumpUsers = transaction.getDebtUsers();
-        if (clumpUsers == null) {
+        Map<String, Integer> transactionUsers = transaction.getDebtUsers();
+        if (transactionUsers == null) {
             Toast.makeText(getContext(), "friends list in transaction is empty", Toast.LENGTH_SHORT).show();
         } else {
-            for (final Map.Entry<String, Integer> entry : clumpUsers.entrySet()) {
+            for (final Map.Entry<String, Integer> entry : transactionUsers.entrySet()) {
                 // find this user in snapshot:
                 final Query user = ref.orderByChild("username").equalTo(entry.getKey());
                 user.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -263,8 +263,8 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
                             String username = (String) user.child("username").getValue();
                             if (!username.equals(getUserName())) {
                                 String userKey = user.getKey();
-                                String newClumpKey = ref.child(userKey).child("clumps").push().getKey();
-                                ref.child(userKey).child("clumps").child(newClumpKey).setValue(transaction);
+                                String newTransactionKey = ref.child(userKey).child("transactions").push().getKey();
+                                ref.child(userKey).child("transactions").child(newTransactionKey).setValue(transaction);
                             }
                         }
                     }
@@ -279,12 +279,12 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
     }
 
     @Override
-    public void addEditClump(Transaction transaction, String key) {
-//        transactionRecyclerAdapter.editClump(transaction, index);
-//        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();
-        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").child(key).setValue(transaction);
+    public void addEditTransaction(Transaction transaction, String key) {
+//        transactionRecyclerAdapter.editTransaction(transaction, index);
+//        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("transactions").push().getKey();
+        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("transactions").child(key).setValue(transaction);
         Toast.makeText(getContext(), "Transaction edited", Toast.LENGTH_SHORT).show();
-        transactionRecyclerAdapter.editClump(transaction,key);
+        transactionRecyclerAdapter.editTransaction(transaction,key);
     }
 
 }

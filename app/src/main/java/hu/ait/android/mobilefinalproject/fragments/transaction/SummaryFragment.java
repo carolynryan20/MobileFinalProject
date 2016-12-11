@@ -33,7 +33,7 @@ public class SummaryFragment extends BaseFragment {
     private TextView tvOwed;
     private int debt;
     private int owed;
-    private RecyclerView recyclerClumpInteraction;
+    private RecyclerView recyclerTransactionInteraction;
 //    private BaseFragment baseFragment = new BaseFragment();
 //    private Button btnSeeFriends;
 
@@ -55,14 +55,14 @@ public class SummaryFragment extends BaseFragment {
         tvOwed = (TextView) root.findViewById(R.id.tvOwed);
 
         setDebtAndOwed();
-        recyclerClumpInteraction = (RecyclerView) root.findViewById(R.id.recyclerClumpInteractions);
+        recyclerTransactionInteraction = (RecyclerView) root.findViewById(R.id.recyclerTransactionInteractions);
 
     }
 
     private void setDebtAndOwed() {
         debt = 0;
         owed = 0;
-        DatabaseReference friendsRef = FirebaseDatabase.getInstance().getReference().child("users").child(FriendsFragment.getUid()).child("clumps");
+        DatabaseReference friendsRef = FirebaseDatabase.getInstance().getReference().child("users").child(FriendsFragment.getUid()).child("transactions");
         Query friendsQuery = friendsRef.orderByChild("owedUser");
         friendsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -75,7 +75,7 @@ public class SummaryFragment extends BaseFragment {
                         for (DataSnapshot debtUser : ss.child("debtUsers").getChildren()) {
 //                            owed+= Float.parseFloat(debtUser.getValue().toString());
                             owed+= Integer.parseInt(debtUser.getValue().toString());
-                            tvOwed.setText(String.valueOf(owed) + " Ft");
+                            tvOwed.setText(String.valueOf(owed));
                         }
                     } else {
                         for (DataSnapshot debtUser : ss.child("debtUsers").getChildren()) {
@@ -83,7 +83,7 @@ public class SummaryFragment extends BaseFragment {
                                 Log.d("TAGG", debtUser.getValue().toString());
 //                                debt += Float.parseFloat(debtUser.getValue().toString());
                                 debt+= Integer.parseInt(debtUser.getValue().toString());
-                                tvDepts.setText(String.valueOf(debt) + " Ft");
+                                tvDepts.setText(String.valueOf(debt));
                             }
                         }
                     }

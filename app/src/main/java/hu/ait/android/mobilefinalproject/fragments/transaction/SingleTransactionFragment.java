@@ -42,16 +42,16 @@ public class SingleTransactionFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_single_clump_details, container, false);
+        root = inflater.inflate(R.layout.fragment_single_transaction_details, container, false);
 
-//        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fabSingleClump);
+//        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fabSingleTransaction);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
 ////                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 ////                        .setAction("Action", null).show();
 //                // Create a new Transaction with the username as the title
-//                //openAddFriendToClumpFragment();
+//                //openAddFriendToTransactionFragment();
 //
 //            }
 //        });
@@ -59,13 +59,13 @@ public class SingleTransactionFragment extends BaseFragment {
         return root;
     }
 
-//    private void openAddFriendToClumpFragment() {
-//        AddFriendToClumpDialogFragment addFriendToClumpDialogFragment = new AddFriendToClumpDialogFragment();
-//        addFriendToClumpDialogFragment.setTargetFragment(this, 1);
+//    private void openAddFriendToTransactionFragment() {
+//        AddFriendToTransactionDialogFragment addFriendToTransactionDialogFragment = new AddFriendToTransactionDialogFragment();
+//        addFriendToTransactionDialogFragment.setTargetFragment(this, 1);
 //        Bundle bundle = new Bundle();
 ////        bundle.putBoolean(IS_EDIT, false);
-//        addFriendToClumpDialogFragment.setArguments(bundle);
-//        addFriendToClumpDialogFragment.show(getFragmentManager(), AddFriendToClumpDialogFragment.TAG);
+//        addFriendToTransactionDialogFragment.setArguments(bundle);
+//        addFriendToTransactionDialogFragment.show(getFragmentManager(), AddFriendToTransactionDialogFragment.TAG);
 //    }
 
 
@@ -128,10 +128,10 @@ public class SingleTransactionFragment extends BaseFragment {
     }
 
 //    @Override
-//    public void addFriendToClump(Friend friend) {
-////        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").push().getKey();
-////        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").child(key).setValue(clump);
-////        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("clumps").getKey();
+//    public void addFriendToTransaction(Friend friend) {
+////        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("transactions").push().getKey();
+////        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("transactions").child(key).setValue(transaction);
+////        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("transactions").getKey();
 //        Toast.makeText(getContext(), "Friend Added to Transaction", Toast.LENGTH_SHORT).show();
 //
 //    }

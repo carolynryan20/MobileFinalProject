@@ -49,7 +49,6 @@
                 android:layout_below="@+id/tvYoureOwed"
                 android:textColor="@color/mediumBlue"
                 android:textSize="18sp" />
-
         </RelativeLayout>
 
         <RelativeLayout

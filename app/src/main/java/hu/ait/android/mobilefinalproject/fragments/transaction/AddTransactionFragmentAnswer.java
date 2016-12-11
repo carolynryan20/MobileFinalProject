@@ -7,9 +7,9 @@ import hu.ait.android.mobilefinalproject.model.Transaction;
  */
 
 public interface AddTransactionFragmentAnswer {
-    public void addClump(Transaction transaction);
+    public void addTransaction(Transaction transaction);
 
-//    public void addEditClump(Transaction transaction, int index);
-      public void addEditClump(Transaction transaction, String key);
+//    public void addEditTransaction(Transaction transaction, int index);
+      public void addEditTransaction(Transaction transaction, String key);
 
 }

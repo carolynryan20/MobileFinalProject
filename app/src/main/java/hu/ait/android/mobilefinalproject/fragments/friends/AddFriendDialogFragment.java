@@ -36,7 +36,7 @@ public class AddFriendDialogFragment extends DialogFragment {
         addFriendFragmentAnswer = (AddFriendFragmentAnswer) getTargetFragment();
     }
 
-    private void checkParentImplementsAddClumpFragmentAnswer() {
+    private void checkParentImplementsAddTransactionFragmentAnswer() {
         if (getFragmentManager().findFragmentByTag(FriendsFragment.TAG) instanceof AddFriendFragmentAnswer) {
             addFriendFragmentAnswer = (AddFriendFragmentAnswer) getFragmentManager().findFragmentByTag(FriendsFragment.TAG);
         } else {
@@ -96,7 +96,7 @@ public class AddFriendDialogFragment extends DialogFragment {
             positiveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    handleAddFriendToClumpButtonClick();
+                    handleAddFriendToTransactionButtonClick();
                 }
             });
         }
@@ -105,14 +105,14 @@ public class AddFriendDialogFragment extends DialogFragment {
 //    private void setSpinnerChoices() {
 //        String[] items = new String[]{"Food", "Drinks", "Rent", "Travel", "Other"};
 //        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, items);
-//        spinnerClumpType.setAdapter(adapter);
+//        spinnerTransactionType.setAdapter(adapter);
 //    }
 
-    private void handleAddFriendToClumpButtonClick() {
+    private void handleAddFriendToTransactionButtonClick() {
         if (TextUtils.isEmpty(etFriendUsername.getText())) {
             etFriendUsername.setError("Required");
         } else {
-            String clumpName = etFriendUsername.getText().toString();
+            String transactionName = etFriendUsername.getText().toString();
 
             addFriendFragmentAnswer.addFriend(new Friend(
                     etFriendUsername.getText().toString(), 100, 500, User.UserIcon.CAROLYN2

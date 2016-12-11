@@ -67,7 +67,6 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAd
         setupBackCard(holder, currentUsername);
         setupFrontCard(holder, currentUsername);
 
-
     }
 
     private void setupFrontCard(final ViewHolder holder, final String currentUsername) {
@@ -93,7 +92,7 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAd
 
     private void setupBackCard(final ViewHolder holder, final String currentUsername) {
         DatabaseReference friendsRef = FirebaseDatabase.getInstance().getReference().child("users")
-                .child(FriendsFragment.getUid()).child("clumps");
+                .child(FriendsFragment.getUid()).child("transactions");
         Query friendsQuery = friendsRef.orderByChild("owedUser");
         friendsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -121,7 +120,7 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAd
 
                 int prevDebt = Integer.parseInt(holder.tvFriendDebt.getText().toString());
 //                holder.tvFriendDebt.setText(String.format("%1$.2f", (prevDebt+debtUserDouble)));
-                holder.tvFriendDebt.setText(prevDebt+debtUserDouble + " Ft");
+                holder.tvFriendDebt.setText(prevDebt+debtUserDouble);
             }
         }
     }
@@ -133,8 +132,8 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAd
                 int debtUserDouble = Integer.parseInt(debtUserValue);
 
                 int prevDebt = Integer.parseInt(holder.tvFriendOwed.getText().toString());
-//                holder.tvFriendOwed.setText(String.format("%1$.2f", (prevDebt+debtUserDouble)));
-                holder.tvFriendOwed.setText(prevDebt+debtUserDouble + " Ft");
+
+                holder.tvFriendOwed.setText(prevDebt+debtUserDouble);
             }
         }
     }

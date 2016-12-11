@@ -34,11 +34,6 @@ import hu.ait.android.mobilefinalproject.model.User;
 
 public class UserFragment extends BaseFragment {
 
-
-//    // TODO: Rename and change types of parameters
-//    private String mParam1;
-//    private String mParam2;
-
     private ImageView accountIcon;
     public static final String TAG = "UserFragment";
     private View root;
@@ -198,7 +193,7 @@ public class UserFragment extends BaseFragment {
     private void setDebtAndOwed() {
         debt = 0;
         owed = 0;
-        DatabaseReference friendsRef = FirebaseDatabase.getInstance().getReference().child("users").child(FriendsFragment.getUid()).child("clumps");
+        DatabaseReference friendsRef = FirebaseDatabase.getInstance().getReference().child("users").child(FriendsFragment.getUid()).child("transactions");
         Query friendsQuery = friendsRef.orderByChild("owedUser");
         friendsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -211,7 +206,7 @@ public class UserFragment extends BaseFragment {
                         for (DataSnapshot debtUser : ss.child("debtUsers").getChildren()) {
 //                            owed += Float.parseFloat(debtUser.getValue().toString());
                             owed += Integer.parseInt(debtUser.getValue().toString());
-                            tvUserMoneyOwedAmount.setText(String.valueOf(owed) + " Ft");
+                            tvUserMoneyOwedAmount.setText(String.valueOf(owed));
                         }
                     } else {
                         for (DataSnapshot debtUser : ss.child("debtUsers").getChildren()) {
@@ -219,7 +214,7 @@ public class UserFragment extends BaseFragment {
                                 Log.d("TAGG", debtUser.getValue().toString());
 //                                debt += Float.parseFloat(debtUser.getValue().toString());
                                 debt += Integer.parseInt(debtUser.getValue().toString());
-                                tvUserMoneyDebtAmount.setText(String.valueOf(debt) + " Ft");
+                                tvUserMoneyDebtAmount.setText(String.valueOf(debt));
                             }
                         }
                     }

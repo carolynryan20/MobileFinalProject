@@ -151,7 +151,7 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                //clumpRecyclerAdapter.removeClumpB(dataSnapshot.getKey());
+                //transactionRecyclerAdapter.removeTransactionB(dataSnapshot.getKey());
             }
 
             @Override

@@ -27,7 +27,7 @@ public class SetLocationDialogFragment extends DialogFragment {
 
     public static final String TAG = "SetLocationFragment";
     private Context context;
-//    private AddTransactionFragmentAnswer addClumpFragmentAnswer = null;
+//    private AddTransactionFragmentAnswer addTransactionFragmentAnswer = null;
     private EditText etLocation;
     private LoginActivity loginActivity;
     private SetLocationDialogFragment setLocationDialogFragment;
@@ -39,7 +39,7 @@ public class SetLocationDialogFragment extends DialogFragment {
 
         super.onAttach(context);
 
-//        addClumpFragmentAnswer = (TransactionFragment) getTargetFragment();
+//        addTransactionFragmentAnswer = (TransactionFragment) getTargetFragment();
 //        friendsWhoOwe = new HashMap<String, Float>();
 //        friendsList = getArguments().getStringArrayList(FRIEND_LIST);
         setLocationDialogFragment = this;
