@@ -215,35 +215,54 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
 
     @Override
     public void addFriend(final Friend friend) {
-        //clumpRecyclerAdapter.addClump(clump, getUid());
-
-        // check if that friend is a user in firebase!
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users");
+
         Query usernameMatch = ref.orderByChild("username").equalTo(friend.getUsername());
         usernameMatch.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot user : dataSnapshot.getChildren()) {
-                    if (user.exists()) {
-                        String newKey = ref.child(getUid()).child("friends").push().getKey();
-                        ref.child(getUid()).child("friends").child(newKey).setValue(friend);
-                        Toast.makeText(getContext(), "Friend Added", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                    }
-                }
+                                                         @Override
+                                                         public void onDataChange(DataSnapshot dataSnapshot) {
+                                                             if (dataSnapshot.getChildrenCount() == 0) {
+                                                                 Toast.makeText(getContext(), "User '" + friend.getUsername() + "' does not exist!", Toast.LENGTH_SHORT).show();
+                                                             } else {
+                                                                 for (DataSnapshot user : dataSnapshot.getChildren()) {
+                                                                     // check if that username already exists in your friends list:
+                                                                     DatabaseReference friendRef = ref.child(getUid()).child("friends");
+                                                                     Query friendQuery = friendRef.orderByChild("username").equalTo(friend.getUsername());
+                                                                     friendQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                         @Override
+                                                                         public void onDataChange(DataSnapshot dataSnapshot) {
+                                                                             if (dataSnapshot.getChildrenCount() == 0) {
+                                                                                 //Toast.makeText(getContext(), "You are not yet friends with " + friend.getUsername(),
+                                                                                 //        Toast.LENGTH_SHORT).show();
+                                                                                 // add this user as a friend
+                                                                                 String newKey = ref.child(getUid()).child("friends").push().getKey();
+                                                                                 ref.child(getUid()).child("friends").child(newKey).setValue(friend);
+                                                                                 Toast.makeText(getContext(), "Friend Added", Toast.LENGTH_SHORT).show();
+                                                                             }
+                                                                             else {
+                                                                                 Toast.makeText(getContext(), "You are already friends with " + friend.getUsername() + "!",
+                                                                                         Toast.LENGTH_SHORT).show();
+                                                                             }
+                                                                         }
 
-            }
+                                                                         @Override
+                                                                         public void onCancelled(DatabaseError databaseError) {
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                                                                         }
+                                                                     });
+                                                                 }
+                                                             }
+                                                         }
 
-            }
-        });
 
-//        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("friends").push().getKey();
-//        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("friends").child(key).setValue(friend);
-        //Toast.makeText(getContext(), "Friend added", Toast.LENGTH_SHORT).show();
+                                                         @Override
+                                                         public void onCancelled(DatabaseError databaseError) {
+
+                                                         }
+                                                     }
+
+        );
+
     }
 
     public interface OnFragmentInteractionListener {
