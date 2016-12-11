@@ -8,32 +8,41 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.HashMap;
 
+import hu.ait.android.mobilefinalproject.LoginActivity;
 import hu.ait.android.mobilefinalproject.R;
 
 /**
- * Created by Carolyn on 12/6/16.
+ * Created by ssheppe on 12/10/16.
  */
 
-public class FragmentAskFloat extends DialogFragment {
+public class SetLocationDialogFragment extends DialogFragment {
+
+    public static final String TAG = "SetLocationFragment";
     private Context context;
-    private EditText amt;
-    private Bundle args;
-    private AddClumpDialogFragment addClumpDialogFragment;
+//    private AddClumpFragmentAnswer addClumpFragmentAnswer = null;
+    private EditText etLocation;
+    private LoginActivity loginActivity;
+    private SetLocationDialogFragment setLocationDialogFragment;
 
     @Override
     public void onAttach(Context context) {
         this.context = context;
-        this.addClumpDialogFragment = (AddClumpDialogFragment) getTargetFragment();
-        this.args = getArguments();
+        this.loginActivity = (LoginActivity) getActivity();
+
         super.onAttach(context);
+
+//        addClumpFragmentAnswer = (ClumpFragment) getTargetFragment();
+//        friendsWhoOwe = new HashMap<String, Float>();
+//        friendsList = getArguments().getStringArrayList(FRIEND_LIST);
+        setLocationDialogFragment = this;
     }
 
     @NonNull
@@ -41,7 +50,7 @@ public class FragmentAskFloat extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = LayoutInflater.from(context);
-        View dialogLayout = inflater.inflate(R.layout.fragment_ask_float, null);
+        View dialogLayout = inflater.inflate(R.layout.fragment_ask_location, null);
 
         setUpAlertDialogBuilder(alertDialogBuilder, dialogLayout);
 
@@ -52,7 +61,7 @@ public class FragmentAskFloat extends DialogFragment {
         alertDialogBuilder.setView(dialogLayout);
         alertDialogBuilder.setTitle("Add amount this user owes");
 
-        amt = (EditText) dialogLayout.findViewById(R.id.etAmt);
+        etLocation = (EditText) dialogLayout.findViewById(R.id.etLocation);
 
         alertDialogBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
             @Override
@@ -69,19 +78,21 @@ public class FragmentAskFloat extends DialogFragment {
     }
 
     private void handleOnClickPositive() {
-        Toast.makeText(getContext(), "in on positive", Toast.LENGTH_SHORT).show();
-        if (TextUtils.isEmpty(amt.getText())) {
-            amt.setError("Required");
-            Toast.makeText(getContext(), "no text", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "in on positive", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(etLocation.getText())) {
+            etLocation.setError("Required");
+//            Toast.makeText(getContext(), "no text", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getContext(), "gave text", Toast.LENGTH_SHORT).show();
-            String amtString = amt.getText().toString();
-            if (! amtString.isEmpty()) {
-                Float amtFloat = Float.parseFloat(amtString);
-                addClumpDialogFragment.addFriendWhoOwes(args.getString("USER"), amtFloat);
+//            Toast.makeText(getContext(), "gave text", Toast.LENGTH_SHORT).show();
+            String location = etLocation.getText().toString();
+            if (! location.isEmpty()) {
+                String amtFloat = location; // want to send back to loginActivity
+                loginActivity.addUserLocation(location);
+
+//                setLocationDialogFragment.addFriendWhoOwes(args.getString("USER"), amtFloat);
             }
 
-            addClumpDialogFragment.addFriendWhoOwes(args.getString("USER"),Float.parseFloat(amt.getText().toString()) );
+//            setLocationDialogFragment.addFriendWhoOwes(args.getString("USER"),Float.parseFloat(amt.getText().toString()) );
             dismiss();
         }
     }
@@ -104,5 +115,4 @@ public class FragmentAskFloat extends DialogFragment {
             });
         }
     }
-
 }

@@ -10,16 +10,16 @@ public class User {
     private String email;
     private String username;
     private UserIcon userIcon;
-//    private String location;
+    private String location;
 
     public User() {
     }
 
-    public User(String email, String username, UserIcon userIcon) {
+    public User(String email, String username, UserIcon userIcon, String location) {
         this.email = email;
         this.username = username;
         this.userIcon = userIcon;
-//        this.location = location;
+        this.location = location;
     }
 
     public String getEmail() {
@@ -38,10 +38,9 @@ public class User {
         this.username = username;
     }
 
-//    public String getLocation() { return location; }
-//
-//    public void setLocation(String location) { th
-// is.location = location; }
+    public String getLocation() { return location; }
+
+    public void setLocation(String location) { this.location = location; }
 
     public UserIcon getIcon() {
         return userIcon;

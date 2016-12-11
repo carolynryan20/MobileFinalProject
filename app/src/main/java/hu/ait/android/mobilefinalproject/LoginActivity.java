@@ -1,10 +1,13 @@
 package hu.ait.android.mobilefinalproject;
 
 import android.app.Dialog;
+import android.support.v4.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -28,7 +31,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import hu.ait.android.mobilefinalproject.adapter.ImageAdapter;
+import hu.ait.android.mobilefinalproject.fragments.AddClumpDialogFragment;
 import hu.ait.android.mobilefinalproject.fragments.BaseFragment;
+import hu.ait.android.mobilefinalproject.fragments.FragmentAskFloat;
+import hu.ait.android.mobilefinalproject.fragments.SetLocationDialogFragment;
 import hu.ait.android.mobilefinalproject.model.User;
 
 import static java.util.logging.Logger.global;
@@ -45,6 +51,7 @@ public class LoginActivity extends BaseActivity {
     private ImageAdapter imageAdapter;
     ImageView accountIcon;
     private int icon;
+    //private String location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +91,7 @@ public class LoginActivity extends BaseActivity {
                             //then make thing that asks for location, in on finish call the on grid dialog
 
 
-                            User user = new User(fbUser.getEmail(), usernameFromEmail(fbUser.getEmail()), userIcon);
+                            User user = new User(fbUser.getEmail(), usernameFromEmail(fbUser.getEmail()), userIcon, "Budapest");
                             databaseReference.child("users").child(fbUser.getUid()).setValue(user);
 
                             Toast.makeText(LoginActivity.this, "User created", Toast.LENGTH_SHORT).show();
@@ -131,15 +138,24 @@ public class LoginActivity extends BaseActivity {
                 accountIcon.setImageResource(icon);
 
                 DatabaseReference iconRef = FirebaseDatabase.getInstance().getReference().child("users").child(BaseFragment.getUid()).child("icon");
-                iconRef.setValue(User.UserIcon.valueOf(iconID));
+                iconRef.setValue(iconID);
 
                 userIconDialog.dismiss();
+                showLocationDialog();
             }
         });
 
         userIconDialog.show();
-
         return icon;
+
+
+    }
+
+    private void showLocationDialog() {
+
+        SetLocationDialogFragment setLoc = new SetLocationDialogFragment();
+        setLoc.show(getSupportFragmentManager(), SetLocationDialogFragment.TAG);
+
     }
 
     @OnClick(R.id.btnLogin)
@@ -190,5 +206,14 @@ public class LoginActivity extends BaseActivity {
         }
 
         return true;
+    }
+
+    public void addUserLocation(String location) {
+//        this.location = location;
+        DatabaseReference iconRef = FirebaseDatabase.getInstance().getReference().child("users").child(BaseFragment.getUid()).child("location");
+        iconRef.setValue(location);
+
+//        Toast.makeText(this, "location getting set", Toast.LENGTH_SHORT).show();
+        //this.location = "New Location";
     }
 }

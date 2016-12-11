@@ -47,6 +47,7 @@ public class UserFragment extends BaseFragment {
     private UserFragment.OnFragmentInteractionListener mListener;
     private TextView tvUserMoneyDebtAmount;
     private TextView tvUserMoneyOwedAmount;
+    private TextView tvLocation;
     private ImageAdapter imageAdapter;
     private int friendCounter = 0;
 
@@ -82,6 +83,7 @@ public class UserFragment extends BaseFragment {
         accountIcon = (ImageView) root.findViewById(R.id.ivAccountIcon);
         tvUserMoneyDebtAmount = (TextView) root.findViewById(R.id.tvUserMoneyDebtAmount);
         tvUserMoneyOwedAmount = (TextView) root.findViewById(R.id.tvUserMoneyOwedAmount);
+        tvLocation = (TextView) root.findViewById(R.id.tvUserLocation);
 
         String userNameString = getUserName();
 
@@ -120,6 +122,23 @@ public class UserFragment extends BaseFragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User.UserIcon iconInt = User.UserIcon.valueOf(dataSnapshot.getValue().toString());
                 accountIcon.setImageResource(iconInt.getIconId());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+        DatabaseReference locRef = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("location");
+
+        Query locQuery = locRef.orderByValue();
+        locQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String location = dataSnapshot.getValue().toString();
+                tvLocation.setText(location);
             }
 
             @Override
