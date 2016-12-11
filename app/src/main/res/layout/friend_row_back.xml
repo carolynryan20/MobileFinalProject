@@ -35,7 +35,7 @@
                 android:id="@+id/tvYoureOwed$"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="HUF"
+                android:text=" FT"
                 android:layout_toRightOf="@+id/tvFriendOwed"
                 android:layout_below="@+id/tvYoureOwed"
                 android:textColor="@color/mediumBlue"
@@ -77,7 +77,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tvYouOwe"
-                android:text="HUF"
+                android:text=" Ft"
                 android:layout_toRightOf="@+id/tvFriendDebt"
                 android:textColor="@color/orange"
                 android:textSize="18sp"/>

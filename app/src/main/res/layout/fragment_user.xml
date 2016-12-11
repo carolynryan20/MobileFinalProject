@@ -75,7 +75,7 @@
                         android:id="@+id/tvUserMoneyOwedAmount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text=""
+                        android:text="0 Ft"
                         android:textSize="23sp" />
 
                 </LinearLayout>
@@ -100,7 +100,7 @@
                         android:id="@+id/tvUserMoneyDebtAmount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text=""
+                        android:text="0 Ft"
                         android:textSize="23sp" />
 
                 </LinearLayout>

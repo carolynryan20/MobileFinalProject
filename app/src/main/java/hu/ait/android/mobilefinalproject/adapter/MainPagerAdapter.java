@@ -16,7 +16,7 @@ import hu.ait.android.mobilefinalproject.model.Clump;
  * Created by Carolyn Ryan
  * 11/29/2016
  *
- * A class to define interactions of the pager adapter, handle weather fragments
+ * A class define interactions of the pager adapter, handle weather fragments
  */
 
 public class MainPagerAdapter extends FragmentPagerAdapter {

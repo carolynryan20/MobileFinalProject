@@ -59,7 +59,7 @@ public class SetLocationDialogFragment extends DialogFragment {
 
     private void setUpAlertDialogBuilder(AlertDialog.Builder alertDialogBuilder, View dialogLayout) {
         alertDialogBuilder.setView(dialogLayout);
-        alertDialogBuilder.setTitle("Add amount this user owes");
+//        alertDialogBuilder.setTitle("Where are you from?");
 
         etLocation = (EditText) dialogLayout.findViewById(R.id.etLocation);
 
@@ -86,7 +86,7 @@ public class SetLocationDialogFragment extends DialogFragment {
 //            Toast.makeText(getContext(), "gave text", Toast.LENGTH_SHORT).show();
             String location = etLocation.getText().toString();
             if (! location.isEmpty()) {
-                String amtFloat = location; // want to send back to loginActivity
+//                String amtFloat = location; // want to send back to loginActivity
                 loginActivity.addUserLocation(location);
 
 //                setLocationDialogFragment.addFriendWhoOwes(args.getString("USER"), amtFloat);

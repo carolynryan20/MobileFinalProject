@@ -46,7 +46,7 @@ public class AddClumpDialogFragment extends DialogFragment {
     private ListView lvFriendsToAdd;
     private Spinner spinnerClumpType;
     private Context context;
-    private Map<String, Float> friendsWhoOwe;
+    private Map<String, Integer> friendsWhoOwe;
     private AddClumpDialogFragment addClumpDialogFragment;
     private ArrayList<String> friendsList;
     private TextView currentLVClick;
@@ -58,7 +58,7 @@ public class AddClumpDialogFragment extends DialogFragment {
         super.onAttach(context);
 
         addClumpFragmentAnswer = (ClumpFragment) getTargetFragment();
-        friendsWhoOwe = new HashMap<String, Float>();
+        friendsWhoOwe = new HashMap<String, Integer>();
         friendsList = getArguments().getStringArrayList(FRIEND_LIST);
         addClumpDialogFragment = this;
     }
@@ -178,9 +178,10 @@ public class AddClumpDialogFragment extends DialogFragment {
         }
     }
 
-    public void addFriendWhoOwes(String friend, Float amt) {
+    public void addFriendWhoOwes(String friend, Integer amt) {
+//        int amtInt = Math.round(amt);
         friendsWhoOwe.put(friend, amt);
-        currentLVClick.setText(friend+" owes $"+amt);
+        currentLVClick.setText(friend+" owes "+amt + " Ft");
     }
 
     private void setNegativeButton(AlertDialog.Builder alertDialogBuilder) {

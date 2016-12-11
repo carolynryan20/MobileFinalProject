@@ -121,7 +121,7 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
 //                    Toast.makeText(getContext(), users.getRef().getKey(), Toast.LENGTH_SHORT).show();
 //                }
 //                if (users.getRef() == null) {
-                if(users.getRef().getKey() == null) {
+                if (users.getRef().getKey() == null) {
                     isUnique[0] = true;
                 }
 
@@ -238,8 +238,7 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
                                                                                  String newKey = ref.child(getUid()).child("friends").push().getKey();
                                                                                  ref.child(getUid()).child("friends").child(newKey).setValue(friend);
                                                                                  Toast.makeText(getContext(), "Friend Added", Toast.LENGTH_SHORT).show();
-                                                                             }
-                                                                             else {
+                                                                             } else {
                                                                                  Toast.makeText(getContext(), "You are already friends with " + friend.getUsername() + "!",
                                                                                          Toast.LENGTH_SHORT).show();
                                                                              }
@@ -292,7 +291,6 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
 
         recyclerView.setAdapter(friendRecyclerAdapter);
     }
-
 
 
 }

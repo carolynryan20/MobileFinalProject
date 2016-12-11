@@ -81,10 +81,10 @@ public class SingleClumpFragment extends BaseFragment {
         tvUserWhoPaid.setText(args.get(OWED_USER) + " Paid");
 
         listViewUsersWhoOwe = (ListView) root.findViewById(R.id.listViewUsersWhoOwe);
-        HashMap<String, Float> debtUsersMap = (HashMap<String, Float>) args.getSerializable(DEBT_USERS);
+        HashMap<String, Integer> debtUsersMap = (HashMap<String, Integer>) args.getSerializable(DEBT_USERS);
 
-        float userDebt = 0;
-        float userOwed = 0;
+        int userDebt = 0;
+        int userOwed = 0;
         if ((debtUsersMap != null) && (!debtUsersMap.isEmpty())) {
             boolean owedUserIsCurrentUser = false;
 
@@ -93,15 +93,15 @@ public class SingleClumpFragment extends BaseFragment {
             }
 
             List<String> userList = new ArrayList<>();
-            for (Map.Entry<String, Float> entry : debtUsersMap.entrySet()) {
+            for (Map.Entry<String, Integer> entry : debtUsersMap.entrySet()) {
                 String user = entry.getKey();
-                Float owed = entry.getValue();
+                int owed = entry.getValue();
                 if (user.equals(getUserName())) { //if user is currentUser
                     userDebt += owed;
                 } else if (owedUserIsCurrentUser) {
                     userOwed += owed;
                 }
-                userList.add(user + " owes $" + owed);
+                userList.add(user + " owes " + owed + " Ft");
             }
 
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
@@ -119,10 +119,10 @@ public class SingleClumpFragment extends BaseFragment {
             Toast.makeText(getContext(), "No users were inputed as having debts", Toast.LENGTH_SHORT).show();
         }
         tvDebts = (TextView) root.findViewById(R.id.tvDepts);
-        tvDebts.setText("$" + userDebt);
+        tvDebts.setText(userDebt + " Ft");
 
         tvOwed = (TextView) root.findViewById(R.id.tvOwed);
-        tvOwed.setText("$" + userOwed);
+        tvOwed.setText(userOwed + " Ft");
 
     }
 

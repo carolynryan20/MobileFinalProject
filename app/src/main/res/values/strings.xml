@@ -12,7 +12,7 @@
 
     <string name="title_activity_account">AccountActivity</string>
     <string name="owed"><b>owed: </b></string>
-    <string name="debt"><b>debt: </b></string>
+    <string name="debt"><b>owe: </b></string>
     <string name="friends"><i>friends: </i></string>
 
 

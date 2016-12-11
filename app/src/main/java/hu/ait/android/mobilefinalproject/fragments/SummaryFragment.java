@@ -37,8 +37,8 @@ public class SummaryFragment extends BaseFragment {
     private View root;
     private TextView tvDepts;
     private TextView tvOwed;
-    private float debt;
-    private float owed;
+    private int debt;
+    private int owed;
     private RecyclerView recyclerClumpInteraction;
 //    private BaseFragment baseFragment = new BaseFragment();
 //    private Button btnSeeFriends;
@@ -79,15 +79,17 @@ public class SummaryFragment extends BaseFragment {
                     if (owedUser.equals(getUserName())){
                         //TODO add to owes
                         for (DataSnapshot debtUser : ss.child("debtUsers").getChildren()) {
-                            owed+= Float.parseFloat(debtUser.getValue().toString());
-                            tvOwed.setText(String.valueOf(owed));
+//                            owed+= Float.parseFloat(debtUser.getValue().toString());
+                            owed+= Integer.parseInt(debtUser.getValue().toString());
+                            tvOwed.setText(String.valueOf(owed) + " Ft");
                         }
                     } else {
                         for (DataSnapshot debtUser : ss.child("debtUsers").getChildren()) {
                             if (debtUser.getKey().equals(getUserName())) {
                                 Log.d("TAGG", debtUser.getValue().toString());
-                                debt += Float.parseFloat(debtUser.getValue().toString());
-                                tvDepts.setText(String.valueOf(debt));
+//                                debt += Float.parseFloat(debtUser.getValue().toString());
+                                debt+= Integer.parseInt(debtUser.getValue().toString());
+                                tvDepts.setText(String.valueOf(debt) + " Ft");
                             }
                         }
                     }
