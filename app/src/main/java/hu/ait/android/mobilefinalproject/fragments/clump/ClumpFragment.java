@@ -1,11 +1,7 @@
-package hu.ait.android.mobilefinalproject.fragments;
+package hu.ait.android.mobilefinalproject.fragments.clump;
 
-import android.content.ClipData;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,16 +19,15 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import hu.ait.android.mobilefinalproject.R;
 import hu.ait.android.mobilefinalproject.adapter.ClumpRecyclerAdapter;
-import hu.ait.android.mobilefinalproject.data.Friend;
+import hu.ait.android.mobilefinalproject.fragments.BaseFragment;
+import hu.ait.android.mobilefinalproject.fragments.clump.AddClumpDialogFragment;
+import hu.ait.android.mobilefinalproject.fragments.clump.AddClumpFragmentAnswer;
 import hu.ait.android.mobilefinalproject.model.Clump;
-import hu.ait.android.mobilefinalproject.model.User;
 
 
 public class ClumpFragment extends BaseFragment implements AddClumpFragmentAnswer {

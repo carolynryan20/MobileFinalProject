@@ -1,4 +1,4 @@
-package hu.ait.android.mobilefinalproject.fragments;
+package hu.ait.android.mobilefinalproject.fragments.user;
 
 
 import android.app.Dialog;
@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -25,13 +24,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import hu.ait.android.mobilefinalproject.LoginActivity;
 import hu.ait.android.mobilefinalproject.NavDrawerActivity;
 import hu.ait.android.mobilefinalproject.R;
 import hu.ait.android.mobilefinalproject.adapter.ImageAdapter;
+import hu.ait.android.mobilefinalproject.fragments.BaseFragment;
+import hu.ait.android.mobilefinalproject.fragments.friends.FriendsFragment;
 import hu.ait.android.mobilefinalproject.model.User;
 
 public class UserFragment extends BaseFragment {

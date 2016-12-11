@@ -1,13 +1,11 @@
-package hu.ait.android.mobilefinalproject.fragments;
+package hu.ait.android.mobilefinalproject.fragments.friends;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -23,14 +21,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.List;
-
-import hu.ait.android.mobilefinalproject.BaseActivity;
-import hu.ait.android.mobilefinalproject.NavDrawerActivity;
 import hu.ait.android.mobilefinalproject.R;
 import hu.ait.android.mobilefinalproject.adapter.FriendRecyclerAdapter;
 import hu.ait.android.mobilefinalproject.data.Friend;
-import hu.ait.android.mobilefinalproject.model.Clump;
+import hu.ait.android.mobilefinalproject.fragments.BaseFragment;
 
 
 public class FriendsFragment extends BaseFragment implements AddFriendFragmentAnswer {
@@ -219,50 +213,49 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
 
         Query usernameMatch = ref.orderByChild("username").equalTo(friend.getUsername());
         usernameMatch.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                         @Override
-                                                         public void onDataChange(DataSnapshot dataSnapshot) {
-                                                             if (dataSnapshot.getChildrenCount() == 0) {
-                                                                 Toast.makeText(getContext(), "User '" + friend.getUsername() + "' does not exist!", Toast.LENGTH_SHORT).show();
-                                                             } else {
-                                                                 for (DataSnapshot user : dataSnapshot.getChildren()) {
-                                                                     // check if that username already exists in your friends list:
-                                                                     DatabaseReference friendRef = ref.child(getUid()).child("friends");
-                                                                     Query friendQuery = friendRef.orderByChild("username").equalTo(friend.getUsername());
-                                                                     friendQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                                         @Override
-                                                                         public void onDataChange(DataSnapshot dataSnapshot) {
-                                                                             if (dataSnapshot.getChildrenCount() == 0) {
-                                                                                 //Toast.makeText(getContext(), "You are not yet friends with " + friend.getUsername(),
-                                                                                 //        Toast.LENGTH_SHORT).show();
-                                                                                 // add this user as a friend
-                                                                                 String newKey = ref.child(getUid()).child("friends").push().getKey();
-                                                                                 ref.child(getUid()).child("friends").child(newKey).setValue(friend);
-                                                                                 Toast.makeText(getContext(), "Friend Added", Toast.LENGTH_SHORT).show();
-                                                                             }
-                                                                             else {
-                                                                                 Toast.makeText(getContext(), "You are already friends with " + friend.getUsername() + "!",
-                                                                                         Toast.LENGTH_SHORT).show();
-                                                                             }
-                                                                         }
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getChildrenCount() == 0) {
+                    Toast.makeText(getContext(), "User '" + friend.getUsername() + "' does not exist!", Toast.LENGTH_SHORT).show();
+                } else {
+                    for (DataSnapshot user : dataSnapshot.getChildren()) {
+                        // check if that username already exists in your friends list:
+                        DatabaseReference friendRef = ref.child(getUid()).child("friends");
+                        Query friendQuery = friendRef.orderByChild("username").equalTo(friend.getUsername());
+                        friendQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.getChildrenCount() == 0) {
+                                    //Toast.makeText(getContext(), "You are not yet friends with " + friend.getUsername(),
+                                    //        Toast.LENGTH_SHORT).show();
+                                    // add this user as a friend
+                                    String newKey = ref.child(getUid()).child("friends").push().getKey();
+                                    ref.child(getUid()).child("friends").child(newKey).setValue(friend);
+                                    Toast.makeText(getContext(), "Friend Added", Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    Toast.makeText(getContext(), "You are already friends with " + friend.getUsername() + "!",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
 
-                                                                         @Override
-                                                                         public void onCancelled(DatabaseError databaseError) {
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
 
-                                                                         }
-                                                                     });
-                                                                 }
-                                                             }
-                                                         }
+                            }
+                        });
 
 
-                                                         @Override
-                                                         public void onCancelled(DatabaseError databaseError) {
+                    }
+                }
+            }
 
-                                                         }
-                                                     }
 
-        );
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
     }
 
     public interface OnFragmentInteractionListener {

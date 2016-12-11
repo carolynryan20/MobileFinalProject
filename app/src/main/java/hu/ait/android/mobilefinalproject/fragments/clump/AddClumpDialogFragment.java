@@ -1,4 +1,4 @@
-package hu.ait.android.mobilefinalproject.fragments;
+package hu.ait.android.mobilefinalproject.fragments.clump;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,18 +19,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import hu.ait.android.mobilefinalproject.R;
-import hu.ait.android.mobilefinalproject.data.Friend;
 import hu.ait.android.mobilefinalproject.model.Clump;
 
-import static hu.ait.android.mobilefinalproject.fragments.ClumpFragment.FRIEND_LIST;
+import static hu.ait.android.mobilefinalproject.fragments.clump.ClumpFragment.FRIEND_LIST;
 
 /**
  * Created by Carolyn on 12/4/16.
@@ -159,14 +155,14 @@ public class AddClumpDialogFragment extends DialogFragment {
                     int itemPosition = position;
                     String itemValue = (String) lvFriendsToAdd.getItemAtPosition(position);
 
-                    FragmentAskFloat fragmentAskFloat = new FragmentAskFloat();
-                    fragmentAskFloat.setTargetFragment(addClumpDialogFragment, 1);
+                    AmountOwedDialogFragment amountOwedDialogFragment = new AmountOwedDialogFragment();
+                    amountOwedDialogFragment.setTargetFragment(addClumpDialogFragment, 1);
 
                     Bundle bundle = new Bundle();
                     bundle.putString("USER", itemValue);
-                    fragmentAskFloat.setArguments(bundle);
+                    amountOwedDialogFragment.setArguments(bundle);
 
-                    fragmentAskFloat.show(getFragmentManager(), AddClumpDialogFragment.TAG);
+                    amountOwedDialogFragment.show(getFragmentManager(), AddClumpDialogFragment.TAG);
 
                     currentLVClick = (TextView) view;
 

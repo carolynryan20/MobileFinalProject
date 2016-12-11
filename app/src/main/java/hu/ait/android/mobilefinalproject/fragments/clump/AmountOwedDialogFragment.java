@@ -1,4 +1,4 @@
-package hu.ait.android.mobilefinalproject.fragments;
+package hu.ait.android.mobilefinalproject.fragments.clump;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -14,15 +14,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.HashMap;
-
 import hu.ait.android.mobilefinalproject.R;
+import hu.ait.android.mobilefinalproject.fragments.clump.AddClumpDialogFragment;
 
 /**
  * Created by Carolyn on 12/6/16.
  */
 
-public class FragmentAskFloat extends DialogFragment {
+public class AmountOwedDialogFragment extends DialogFragment {
     private Context context;
     private EditText amt;
     private Bundle args;

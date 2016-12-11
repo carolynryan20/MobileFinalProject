@@ -6,7 +6,7 @@
     android:background="@color/lightBlue"
     android:padding="0dp"
     android:layout_margin="0dp"
-    tools:context="hu.ait.android.mobilefinalproject.fragments.FriendsFragment">
+    tools:context="hu.ait.android.mobilefinalproject.fragments.friends.FriendsFragment">
 
     <!-- TODO: Update blank fragment layout -->
 

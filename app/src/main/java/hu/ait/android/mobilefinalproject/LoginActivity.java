@@ -1,15 +1,10 @@
 package hu.ait.android.mobilefinalproject;
 
 import android.app.Dialog;
-import android.support.v4.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -31,13 +26,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import hu.ait.android.mobilefinalproject.adapter.ImageAdapter;
-import hu.ait.android.mobilefinalproject.fragments.AddClumpDialogFragment;
 import hu.ait.android.mobilefinalproject.fragments.BaseFragment;
-import hu.ait.android.mobilefinalproject.fragments.FragmentAskFloat;
 import hu.ait.android.mobilefinalproject.fragments.SetLocationDialogFragment;
 import hu.ait.android.mobilefinalproject.model.User;
-
-import static java.util.logging.Logger.global;
 
 public class LoginActivity extends BaseActivity {
 

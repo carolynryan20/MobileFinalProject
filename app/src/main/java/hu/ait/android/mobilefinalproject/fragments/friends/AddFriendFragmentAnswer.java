@@ -1,4 +1,4 @@
-package hu.ait.android.mobilefinalproject.fragments;
+package hu.ait.android.mobilefinalproject.fragments.friends;
 
 import hu.ait.android.mobilefinalproject.data.Friend;
 

@@ -1,4 +1,4 @@
-package hu.ait.android.mobilefinalproject.fragments;
+package hu.ait.android.mobilefinalproject.fragments.clump;
 
 import android.content.Context;
 import android.net.Uri;

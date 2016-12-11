@@ -20,7 +20,7 @@ import java.util.List;
 
 import hu.ait.android.mobilefinalproject.R;
 import hu.ait.android.mobilefinalproject.data.Friend;
-import hu.ait.android.mobilefinalproject.fragments.FriendsFragment;
+import hu.ait.android.mobilefinalproject.fragments.friends.FriendsFragment;
 import hu.ait.android.mobilefinalproject.model.User;
 
 /**

@@ -4,11 +4,9 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
 
-import hu.ait.android.mobilefinalproject.fragments.ClumpFragment;
-import hu.ait.android.mobilefinalproject.fragments.SummaryFragment;
-import hu.ait.android.mobilefinalproject.model.Clump;
+import hu.ait.android.mobilefinalproject.fragments.clump.ClumpFragment;
+import hu.ait.android.mobilefinalproject.fragments.clump.SummaryFragment;
 
 /**
  * MainPagerAdapter.java

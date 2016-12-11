@@ -1,14 +1,11 @@
 package hu.ait.android.mobilefinalproject.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,59 +16,36 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import hu.ait.android.mobilefinalproject.NavDrawerActivity;
 import hu.ait.android.mobilefinalproject.R;
-import hu.ait.android.mobilefinalproject.fragments.ClumpFragment;
+import hu.ait.android.mobilefinalproject.fragments.clump.ClumpFragment;
 import hu.ait.android.mobilefinalproject.model.Clump;
 
 /**
- * Created by Carolyn on 12/1/16.
+ * ClumpRecyclerAdapter.java
+ *
+ * Created by Carolyn Ryan
+ * 11/29/2016
+ *
+ * Recycler Adapter class for user's list of clumps
  */
-
 public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdapter.ViewHolder> {
 
     private List<Clump> clumpList;
     private List<String> clumpKeys;
-    private String uid;
+
     private CanRespondToCVClumpClick canRespondToCVClumpClick;
     private Context context;
-    private int lastPosition = -1;
+
     private DatabaseReference clumpsRef;
     private ClumpFragment parentFragment;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvClumpName;
-        public ImageButton btnDelete;
-        public ImageButton btnEdit;
-        public CardView cvClump;
-        public ImageView ivClumpIcon;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            tvClumpName = (TextView) itemView.findViewById(R.id.tvClumpName);
-            btnDelete = (ImageButton) itemView.findViewById(R.id.btnDelete);
-            btnEdit = (ImageButton) itemView.findViewById(R.id.btnEdit);
-            cvClump = (CardView) itemView.findViewById(R.id.cvClump);
-            ivClumpIcon = (ImageView) itemView.findViewById(R.id.ivClumpIcon);
-        }
-    }
-
     public ClumpRecyclerAdapter(Context context, String uid, ClumpFragment parentFragment) {
-        //this.clumpList = myUser.getClumps();
-
-
         this.clumpList = new ArrayList<>();
         this.clumpKeys = new ArrayList<>();
-        this.uid = uid;
         this.parentFragment = parentFragment;
-
         this.context = context;
-
-//        clumpsRef = FirebaseDatabase.getInstance().getReference("clumps");
-        clumpsRef = FirebaseDatabase.getInstance().getReference("users")
-                .child(uid).child("clumps");
-
-
+        clumpsRef = FirebaseDatabase.getInstance()
+                .getReference("users").child(uid).child("clumps");
         checkActivityImplementsResponseInterface();
     }
 
@@ -109,7 +83,6 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
             @Override
             public void onClick(View v) {
                 String thisKey = clumpKeys.get(viewHolder.getAdapterPosition());
-//                showEditDialog(tmpClump, viewHolder.getAdapterPosition());
                 showEditDialog(tmpClump, thisKey, viewHolder.getAdapterPosition());
             }
         });
@@ -120,27 +93,11 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
                 canRespondToCVClumpClick.respondToCVClumpClick((clumpList.get(viewHolder.getAdapterPosition())));
             }
         });
-
-        setAnimation(viewHolder.itemView, viewHolder.getAdapterPosition());
     }
 
-//    public void showEditDialog(Clump clumpToEdit, int position) {
-//
-//        parentFragment.openAddClumpFragment(clumpToEdit, position);
-//    }
     public void showEditDialog(Clump clumpToEdit, String key, int position) {
         parentFragment.openAddClumpFragment(clumpToEdit, key);
         notifyItemChanged(position);
-    }
-
-
-    private void setAnimation(View viewToAnimate, int position) {
-        // If the bound view wasn't previously displayed on screen, it's animated
-        if (position > lastPosition) {
-            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
-            viewToAnimate.startAnimation(animation);
-            lastPosition = position;
-        }
     }
 
     @Override
@@ -195,4 +152,20 @@ public class ClumpRecyclerAdapter extends RecyclerView.Adapter<ClumpRecyclerAdap
         return clumpList.get(i);
     }
 
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView tvClumpName;
+        public ImageButton btnDelete;
+        public ImageButton btnEdit;
+        public CardView cvClump;
+        public ImageView ivClumpIcon;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            tvClumpName = (TextView) itemView.findViewById(R.id.tvClumpName);
+            btnDelete = (ImageButton) itemView.findViewById(R.id.btnDelete);
+            btnEdit = (ImageButton) itemView.findViewById(R.id.btnEdit);
+            cvClump = (CardView) itemView.findViewById(R.id.cvClump);
+            ivClumpIcon = (ImageView) itemView.findViewById(R.id.ivClumpIcon);
+        }
+    }
 }

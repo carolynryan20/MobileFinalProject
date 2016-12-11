@@ -7,44 +7,33 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 
-import android.content.Intent;
-
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import hu.ait.android.mobilefinalproject.adapter.CanRespondToCVClumpClick;
 
-import hu.ait.android.mobilefinalproject.fragments.FriendsFragment;
-import hu.ait.android.mobilefinalproject.fragments.ClumpSummaryFragment;
-import hu.ait.android.mobilefinalproject.fragments.FriendsInClumpFragment;
-import hu.ait.android.mobilefinalproject.fragments.SingleClumpFragment;
-import hu.ait.android.mobilefinalproject.fragments.UserFragment;
+import hu.ait.android.mobilefinalproject.fragments.friends.FriendsFragment;
+import hu.ait.android.mobilefinalproject.fragments.clump.ClumpSummaryFragment;
+import hu.ait.android.mobilefinalproject.fragments.clump.SingleClumpFragment;
+import hu.ait.android.mobilefinalproject.fragments.user.UserFragment;
 import hu.ait.android.mobilefinalproject.model.Clump;
 
 
 import android.support.v4.app.Fragment;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.Serializable;
-import java.util.Dictionary;
 
 
 public class NavDrawerActivity extends BaseActivity

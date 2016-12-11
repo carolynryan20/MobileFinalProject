@@ -1,4 +1,4 @@
-package hu.ait.android.mobilefinalproject.fragments;
+package hu.ait.android.mobilefinalproject.fragments.clump;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import hu.ait.android.mobilefinalproject.R;
+import hu.ait.android.mobilefinalproject.fragments.BaseFragment;
 
 /**
  * Created by Carolyn on 12/4/16.
