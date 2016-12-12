@@ -4,20 +4,15 @@ import java.util.Map;
 
 import hu.ait.android.mobilefinalproject.R;
 
-/**
- * Created by Morgan on 12/3/2016.
- */
 public class Transaction {
     private String title;
     private TransactionType type;
     private String owedUser;
 
-//    private Dictionary<String, Float> debtUsers;
     private Map<String, Integer> debtUsers;
 
     public Transaction() {
     }
-
 
     public Transaction(String title, TransactionType type, String owedUser, Map<String, Integer> debtUsers) {
         this.title = title;
@@ -33,7 +28,6 @@ public class Transaction {
     public void setOwedUser(String owedUser) {
         this.owedUser = owedUser;
     }
-
 
     public Map<String, Integer> getDebtUsers() {
         return debtUsers;

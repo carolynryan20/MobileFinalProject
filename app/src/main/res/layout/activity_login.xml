@@ -1,82 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#A8DADC"
-    android:orientation="vertical"
     android:fitsSystemWindows="true"
+    android:orientation="vertical"
     android:paddingLeft="24dp"
     android:paddingRight="24dp">
 
-    <!--<LinearLayout-->
-        <!--android:orientation="vertical"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:paddingTop="56dp"-->
-        <!--android:paddingLeft="24dp"-->
-        <!--android:paddingRight="24dp">-->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/applogo" />
 
-        <ImageView android:src="@drawable/applogo"
-            android:layout_width="wrap_content"
-            android:layout_height="150dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="20dp"/>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:textColorHint="#1D3557">
 
-        <android.support.design.widget.TextInputLayout
+        <EditText
+            android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorHint="#1D3557"
-            android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/etEmail"
-                android:textColor="#1D3557"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:text="wildgoosechase@yahoo.com"
+            android:textColor="#1D3557" />
+    </android.support.design.widget.TextInputLayout>
 
-                android:hint="email"/>
-        </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:textColorHint="#1D3557">
 
-    <!--android:text="carolynuser@gmail.com"-->
-
-        <android.support.design.widget.TextInputLayout
+        <EditText
+            android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textColorHint="#1D3557"
-            android:layout_marginBottom="8dp">
-            <EditText android:id="@+id/etPassword"
-                android:textColor="#1D3557"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:text="iluvalex"
+            android:textColor="#1D3557" />
+    </android.support.design.widget.TextInputLayout>
 
-                android:hint="Password"/>
-        </android.support.design.widget.TextInputLayout>
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="24dp"
+        android:background="#FFB86F"
+        android:padding="12dp"
+        android:text="@string/login"
+        android:textColor="#1D3557"
+        android:textSize="20sp" />
 
-    <!--android:text="qwerty"-->
+    <Button
+        android:id="@+id/btnRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#457B9D"
+        android:padding="12dp"
+        android:text="@string/register"
+        android:textColor="#1D3557"
+        android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="12dp"
-            android:padding="12dp"
-            android:background="#FFB86F"
-            android:textSize="20sp"
-            android:textColor="#1D3557"
-            android:text="Login"/>
-
-        <Button
-            android:id="@+id/btnRegister"
-            android:layout_width="match_parent"
-            android:background="#457B9D"
-            android:textSize="20sp"
-            android:textColor="#1D3557"
-            android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:text="Register"/>
-
-    <!--</LinearLayout>-->
 </LinearLayout>

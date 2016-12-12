@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<hu.ait.android.mobilefinalproject.view.FlipLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<hu.ait.android.mobilefinalproject.view.FlipLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
 
-    <include layout="@layout/friend_row_front"/>
-    <include layout="@layout/friend_row_back"/>
+    <include layout="@layout/friend_row_front" />
 
+    <include layout="@layout/friend_row_back" />
 
 </hu.ait.android.mobilefinalproject.view.FlipLayout>

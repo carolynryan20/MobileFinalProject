@@ -40,7 +40,7 @@ public class AddFriendDialogFragment extends DialogFragment {
         if (getFragmentManager().findFragmentByTag(FriendsFragment.TAG) instanceof AddFriendFragmentAnswer) {
             addFriendFragmentAnswer = (AddFriendFragmentAnswer) getFragmentManager().findFragmentByTag(FriendsFragment.TAG);
         } else {
-            throw new RuntimeException("Not implementing addFriendFragmentAnswer");
+            throw new RuntimeException(context.getString(R.string.noImplementFriendFragAns));
         }
     }
 
@@ -58,7 +58,7 @@ public class AddFriendDialogFragment extends DialogFragment {
 
     private void setUpAlertDialogBuilder(AlertDialog.Builder alertDialogBuilder, View dialogLayout) {
         alertDialogBuilder.setView(dialogLayout);
-        alertDialogBuilder.setTitle("Add a friend");
+        alertDialogBuilder.setTitle(context.getString(R.string.addAFriend));
         setPositiveButton(alertDialogBuilder, dialogLayout);
         setNegativeButton(alertDialogBuilder);
     }
@@ -66,7 +66,7 @@ public class AddFriendDialogFragment extends DialogFragment {
     private void setPositiveButton(AlertDialog.Builder alertDialogBuilder, View dialogLayout) {
         etFriendUsername = (EditText) dialogLayout.findViewById(R.id.etAddFriendUsername);
 
-        alertDialogBuilder.setPositiveButton("Add Friend", new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setPositiveButton(context.getString(R.string.addFriend), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 //Do nothing because the button is overridden in onStart()
@@ -75,7 +75,7 @@ public class AddFriendDialogFragment extends DialogFragment {
     }
 
     private void setNegativeButton(AlertDialog.Builder alertDialogBuilder) {
-        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setNegativeButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
@@ -89,37 +89,28 @@ public class AddFriendDialogFragment extends DialogFragment {
 
         AlertDialog alertDialog = (AlertDialog) getDialog();
         if (alertDialog != null) {
-            /* I override here because otherwise an error of required city couldn't be set as the dialog
-             * fragment exits automatically upon click of positive button, but now it will not
-             */
-            Button positiveButton = (Button) alertDialog.getButton(Dialog.BUTTON_POSITIVE);
-            positiveButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    handleAddFriendToTransactionButtonClick();
-                }
-            });
+            setupPositiveButton(alertDialog);
         }
     }
 
-//    private void setSpinnerChoices() {
-//        String[] items = new String[]{"Food", "Drinks", "Rent", "Travel", "Other"};
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, items);
-//        spinnerTransactionType.setAdapter(adapter);
-//    }
+    private void setupPositiveButton(AlertDialog alertDialog) {
+        Button positiveButton = (Button) alertDialog.getButton(Dialog.BUTTON_POSITIVE);
+        positiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleAddFriendToTransactionButtonClick();
+            }
+        });
+    }
 
     private void handleAddFriendToTransactionButtonClick() {
         if (TextUtils.isEmpty(etFriendUsername.getText())) {
-            etFriendUsername.setError("Required");
+            etFriendUsername.setError(context.getString(R.string.required));
         } else {
-            String transactionName = etFriendUsername.getText().toString();
-
             addFriendFragmentAnswer.addFriend(new Friend(
                     etFriendUsername.getText().toString(), 100, 500, User.UserIcon.CAROLYN2
             ));
             dismiss();
         }
     }
-
-
 }

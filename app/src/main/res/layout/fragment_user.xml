@@ -2,8 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/lightGreen"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/lightGreen">
 
     <LinearLayout
         android:id="@+id/activity_account"
@@ -27,7 +27,6 @@
                 android:background="@drawable/rectangle_background_account_top"
                 android:orientation="vertical">
 
-                <!--android:layout_height="100dp"-->
                 <ImageView
                     android:id="@+id/ivAccountIcon"
                     android:layout_width="100dp"
@@ -37,7 +36,6 @@
                     android:layout_weight="3"
                     android:clickable="true" />
 
-                <!--android:layout_height="wrap_content"-->
                 <TextView
                     android:id="@+id/tvUsername"
                     android:layout_width="match_parent"
@@ -49,13 +47,11 @@
             </LinearLayout>
 
 
-            <!--android:layout_marginTop="30dp"-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!--android:layout_height="wrap_content"-->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
@@ -75,12 +71,17 @@
                         android:id="@+id/tvUserMoneyOwedAmount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="0 Ft"
+                        android:text="@string/zero"
                         android:textSize="23sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="23sp"
+                        android:text="@string/ft"/>
 
                 </LinearLayout>
 
-                <!--android:layout_height="wrap_content"-->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
@@ -100,19 +101,23 @@
                         android:id="@+id/tvUserMoneyDebtAmount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="0 Ft"
+                        android:text="@string/zero"
                         android:textSize="23sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="23sp"
+                        android:text="@string/ft"/>
 
                 </LinearLayout>
 
 
-                <!--android:layout_height="wrap_content"-->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="2" />
 
-                <!--android:layout_height="wrap_content"-->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
@@ -131,18 +136,16 @@
                         android:id="@+id/tvUserLocation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Budapest"
+                        android:text="@string/buda_location"
                         android:textSize="23sp" />
 
                 </LinearLayout>
 
-                <!--android:layout_height="wrap_content"-->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="2" />
 
-                <!--android:layout_height="35dp"-->
                 <TextView
                     android:id="@+id/tvUserFriendsAmount"
                     android:layout_width="300dp"
@@ -152,17 +155,15 @@
                     android:background="@drawable/rectangle_background_account_items"
                     android:clickable="true"
                     android:gravity="center"
-                    android:text="friends"
+                    android:text="@string/friends_2"
                     android:textSize="20sp" />
-                <!--android:layout_marginTop="15dp"-->
 
-                <!--android:layout_height="wrap_content"-->
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="2" />
 
-                <!--android:layout_height="35dp"-->
                 <TextView
                     android:id="@+id/tvEditPassword"
                     android:layout_width="300dp"
@@ -172,10 +173,10 @@
                     android:background="@drawable/rectangle_background_account_items"
                     android:clickable="true"
                     android:gravity="center"
-                    android:text="change password"
+                    android:text="@string/change_password"
                     android:textSize="20sp" />
 
-                <!--android:layout_height="35dp"-->
+
                 <TextView
                     android:id="@+id/tvEditIcon"
                     android:layout_width="300dp"
@@ -186,17 +187,16 @@
                     android:background="@drawable/rectangle_background_account_items"
                     android:clickable="true"
                     android:gravity="center"
-                    android:text="change icon"
+                    android:text="@string/change_icon"
                     android:textSize="20sp" />
 
 
-                <!--android:layout_height="wrap_content"-->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="2" />
 
-                <!--android:layout_height="35dp"-->
+
                 <TextView
                     android:id="@+id/tvLogout"
                     android:layout_width="300dp"
@@ -207,10 +207,8 @@
                     android:background="@drawable/rectangle_background_account_items"
                     android:clickable="true"
                     android:gravity="center"
-                    android:text="Logout"
+                    android:text="@string/logout"
                     android:textSize="20sp" />
-
-                <!--android:layout_marginTop="20dp"-->
 
 
             </LinearLayout>

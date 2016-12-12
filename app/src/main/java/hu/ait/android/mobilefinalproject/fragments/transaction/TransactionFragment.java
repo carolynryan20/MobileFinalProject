@@ -233,6 +233,7 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
 
         addToAllContainedUsers(transaction, ref);
         Toast.makeText(getContext(), getContext().getString(R.string.transaction_created), Toast.LENGTH_SHORT).show();
+
     }
 
     private void addToAllContainedUsers(final Transaction transaction, final DatabaseReference ref) {

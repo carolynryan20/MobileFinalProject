@@ -2,61 +2,78 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="4"
     android:background="@color/lightGreen"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="4">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:gravity="center_horizontal"
         android:layout_weight="1"
+        android:gravity="center_horizontal"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:text="@string/you_owe"
             android:textColor="@color/orange"
-            android:textStyle="bold"
-            android:text="@string/you_owe"/>
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/tvDepts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:text="@string/zero"
             android:textColor="@color/orange"
-            android:id="@+id/tvDebts"
-            android:text="0 Ft"/>
+            android:textSize="25sp" />
 
+        <TextView
+            android:id="@+id/tvDebts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ft"
+            android:textColor="@color/orange"
+            android:textSize="25sp"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:gravity="center"
         android:layout_weight="1"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:textStyle="bold"
+            android:text="@string/you_re_owed"
             android:textColor="@color/mediumBlue"
-            android:text="@string/you_re_owed"/>
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvOwed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:text="@string/zero"
             android:textColor="@color/mediumBlue"
-            android:text="0 Ft"/>
+            android:textSize="25sp" />
+        <!--android:text="@string/zero_ft"-->
+
+        <TextView
+            android:id="@+id/forintOwe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ft"
+            android:textColor="@color/mediumBlue"
+            android:textSize="25sp"/>
 
     </LinearLayout>
 
@@ -64,89 +81,5 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1" />
-
-
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:weightSum="2">-->
-
-        <!--<LinearLayout-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center"-->
-            <!--android:orientation="vertical">-->
-
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:gravity="center_horizontal"-->
-                <!--android:text="Your Debts"-->
-                <!--android:textSize="22sp" />-->
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="horizontal"-->
-                <!--android:gravity="center_horizontal"-->
-                <!--android:padding="10dp">-->
-
-                <!--<ImageView-->
-                    <!--android:id="@+id/ivDepts"-->
-                    <!--android:layout_width="20dp"-->
-                    <!--android:layout_height="20dp"-->
-                    <!--android:scaleType="fitXY"-->
-                    <!--android:src="@drawable/ic_debt_sum" />-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/tvDepts"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:gravity="center_horizontal"-->
-                    <!--android:textSize="20sp" />-->
-            <!--</LinearLayout>-->
-        <!--</LinearLayout>-->
-
-        <!--<LinearLayout-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="center"-->
-            <!--android:orientation="vertical">-->
-
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:gravity="center_horizontal"-->
-                <!--android:text="You're Owed"-->
-                <!--android:textSize="22sp" />-->
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="horizontal"-->
-                <!--android:gravity="center_horizontal"-->
-                <!--android:padding="10dp">-->
-
-                <!--<ImageView-->
-                    <!--android:id="@+id/ivOwed"-->
-                    <!--android:layout_width="20dp"-->
-                    <!--android:layout_height="20dp"-->
-                    <!--android:scaleType="fitXY"-->
-                    <!--android:src="@drawable/ic_owed_sum" />-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/tvOwed"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:gravity="center_horizontal"-->
-                    <!--android:textSize="20sp" />-->
-            <!--</LinearLayout>-->
-
-        <!--</LinearLayout>-->
-    <!--</LinearLayout>-->
 
 </LinearLayout>

@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/lightGreen"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:background="@color/lightGreen"
     tools:context="hu.ait.android.mobilefinalproject.fragments.transaction.SingleTransactionFragment">
 
     <LinearLayout
@@ -27,23 +27,16 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:paddingTop="10dp"
-                android:text="You Owe"
+                android:text="@string/you_owe_large"
                 android:textColor="@color/orange"
                 android:textSize="22sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_horizontal"
+                android:orientation="horizontal"
                 android:padding="10dp">
-
-                <!--<ImageView-->
-                    <!--android:id="@+id/ivDepts"-->
-                    <!--android:layout_width="20dp"-->
-                    <!--android:layout_height="20dp"-->
-                    <!--android:scaleType="fitXY"-->
-                    <!--android:src="@drawable/ic_debt_sum" />-->
 
                 <TextView
                     android:id="@+id/tvDebts"
@@ -66,23 +59,16 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:paddingTop="10dp"
-                android:text="You're Owed"
+                android:text="@string/youre_owed"
                 android:textColor="@color/mediumBlue"
                 android:textSize="22sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_horizontal"
+                android:orientation="horizontal"
                 android:padding="10dp">
-
-                <!--<ImageView-->
-                    <!--android:id="@+id/ivOwed"-->
-                    <!--android:layout_width="20dp"-->
-                    <!--android:layout_height="20dp"-->
-                    <!--android:scaleType="fitXY"-->
-                    <!--android:src="@drawable/ic_owed_sum" />-->
 
                 <TextView
                     android:id="@+id/tvOwed"
@@ -97,33 +83,23 @@
 
     <TextView
         android:id="@+id/tvUserWhoPaid"
-        android:textSize="22sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:textStyle="bold"/>
+        android:textSize="22sp"
+        android:textStyle="bold" />
 
     <ListView
         android:id="@+id/listViewUsersWhoOwe"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </ListView>
+        android:layout_height="wrap_content"></ListView>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerTransactionInteractions"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:scrollbars="vertical"/>
-
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/fabSingleTransaction"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom|end"-->
-        <!--android:layout_margin="@dimen/fab_margin"-->
-        <!--android:tint="#000000"-->
-        <!--app:fabSize="auto"-->
-        <!--app:srcCompat="@android:drawable/ic_input_add" />-->
+        android:scrollbars="vertical" />
+    
 
 </LinearLayout>

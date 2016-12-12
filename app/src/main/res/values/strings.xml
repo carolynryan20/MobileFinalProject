@@ -21,8 +21,6 @@
     <string name="location"><b>location: </b></string>
     <string name="title_activity_nav_drawer">Lickety Split</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title">Title</string>
     <string name="name"><b>Name</b></string>
     <string name="you_owe"><b>You owe: </b></string>
@@ -54,6 +52,46 @@
     <string name="transaction_edited">Transaction edited</string>
     <string name="paid">" Paid"</string>
     <string name="no_users_have_debt">No users were inputed as having debts</string>
-    <string name="ft">" Ft"</string>
     <string name="implement_on_frag_interaction_listener">" must implement OnFragmentInteractionListener"</string>
+    <string name="about_text"><![CDATA[This app was created by Mo, Carolyn & Sam\n\nCreated for AIT Mobile Development\n\nFall 2016 Final Project]]></string>
+    <string name="email">email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="friend_username">Friend\'s Username</string>
+    <string name="transaction_name">Transaction Name</string>
+    <string name="user_owe_question">How much does this user owe?</string>
+    <string name="location_question">Where are you from?</string>
+    <string name="you_owe_large">You Owe</string>
+    <string name="youre_owed">You\'re Owed</string>
+    <string name="zero_ft">0 Ft</string>
+    <string name="buda_location">Budapest</string>
+    <string name="friends_2">friends</string>
+    <string name="change_password">change password</string>
+    <string name="change_icon">change icon</string>
+    <string name="logout">Logout</string>
+    <string name="ft">&#160; Ft</string>
+    <string name="zero">0</string>
+    <string name="grid">grid</string>
+    <string name="contact_us_message">Want to send us an email? \n\ncoorlyn@myson.edu</string>
+    <string name="details">details</string>
+    <string name="delete_button">Delete Button</string>
+    <string name="edit_button">Edit Button</string>
+    <string name="transactions">Transactions</string>
+    <string name="friends_nav_drawer">Friends</string>
+    <string name="user">User</string>
+    <string name="communicate">Communicate</string>
+    <string name="about">About</string>
+    <string name="contact">Contact</string>
+    <string name="noImplementFriendFragAns">Not implementing addFriendFragmentAnswer</string>
+    <string name="addAFriend">Add a friend</string>
+    <string name="addFriend">Add friend</string>
+    <string name="friendAdded">Friend Added</string>
+    <string name="mustImplOnFragInteraction">%1s must implement OnFragmentInteractionListener</string>
+    <string name="userDoesNotExist">User %1s does not exist!</string>
+    <string name="alreadyFriends">You are already friends with %1s!</string>
+    <string name="chooseIcon">Choose icon</string>
+    <string name="loading_message">Loading...</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="flipOnlyHostsTwoChildren">FlipLayout can host only two direct children</string>
 </resources>

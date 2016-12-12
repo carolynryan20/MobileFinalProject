@@ -11,11 +11,11 @@ import android.view.animation.Interpolator;
 import android.view.animation.Transformation;
 import android.widget.FrameLayout;
 
-/**
- * Created by ssheppe on 12/8/16.
- */
+import hu.ait.android.mobilefinalproject.R;
+
 public class FlipLayout extends FrameLayout
         implements Animation.AnimationListener, View.OnClickListener {
+
     public static final int ANIM_DURATION_MILLIS = 500;
     private static final Interpolator fDefaultInterpolator = new DecelerateInterpolator();
     private OnFlipListener listener;
@@ -53,7 +53,7 @@ public class FlipLayout extends FrameLayout
         super.onFinishInflate();
 
         if (getChildCount() > 2) {
-            throw new IllegalStateException("FlipLayout can host only two direct children");
+            throw new IllegalStateException(getContext().getString(R.string.flipOnlyHostsTwoChildren));
         }
 
         frontView = getChildAt(0);
@@ -79,20 +79,11 @@ public class FlipLayout extends FrameLayout
         isFlipped = !isFlipped;
     }
 
-    public void setOnFlipListener(OnFlipListener listener) {
-        this.listener = listener;
-    }
-
     public void reset() {
         isFlipped = false;
         direction = Direction.DOWN;
         frontView.setVisibility(View.VISIBLE);
         backView.setVisibility(View.GONE);
-    }
-
-    public void toggleUp() {
-        direction = Direction.UP;
-        startAnimation();
     }
 
     public void toggleDown() {
@@ -124,10 +115,6 @@ public class FlipLayout extends FrameLayout
     public void onAnimationRepeat(Animation animation) {
     }
 
-    public void setAnimationListener(Animation.AnimationListener listener) {
-        animator.setAnimationListener(listener);
-    }
-
     @Override
     public void onClick(View view) {
         toggleDown();
@@ -138,9 +125,7 @@ public class FlipLayout extends FrameLayout
     }
 
     public interface OnFlipListener {
-
         void onFlipStart(FlipLayout view);
-
         void onFlipEnd(FlipLayout view);
     }
 
@@ -170,50 +155,47 @@ public class FlipLayout extends FrameLayout
 
         @Override
         protected void applyTransformation(float interpolatedTime, Transformation t) {
-            // Angle around the y-axis of the rotation at the given time. It is
-            // calculated both in radians and in the equivalent degrees.
             final double radians = Math.PI * interpolatedTime;
-
             float degrees = (float) (180.0 * radians / Math.PI);
-
             if (direction == Direction.UP) {
                 degrees = -degrees;
             }
-
-            // Once we reach the midpoint in the animation, we need to hide the
-            // source view and show the destination view. We also need to change
-            // the angle by 180 degrees so that the destination does not come in
-            // flipped around. This is the main problem with SDK sample, it does
-            // not
-            // do this.
             if (interpolatedTime >= 0.5f) {
-                if (direction == Direction.UP) {
-                    degrees += 180.f;
-                }
-
-                if (direction == Direction.DOWN) {
-                    degrees -= 180.f;
-                }
-
-                if (!visibilitySwapped) {
-                    toggleView();
-                    visibilitySwapped = true;
-                }
+                degrees = getDegrees(degrees);
             }
 
             final Matrix matrix = t.getMatrix();
 
+            setCamera(radians, degrees, matrix);
+
+            matrix.preTranslate(-centerX, -centerY);
+            matrix.postTranslate(centerX, centerY);
+        }
+
+        private void setCamera(double radians, float degrees, Matrix matrix) {
             camera.save();
-            //you can delete this line, it move camera a little far from view and get back
             camera.translate(0.0f, 0.0f, (float) (EXPERIMENTAL_VALUE * Math.sin(radians)));
             camera.rotateX(degrees);
             camera.rotateY(0);
             camera.rotateZ(0);
             camera.getMatrix(matrix);
             camera.restore();
+        }
 
-            matrix.preTranslate(-centerX, -centerY);
-            matrix.postTranslate(centerX, centerY);
+        private float getDegrees(float degrees) {
+            if (direction == Direction.UP) {
+                degrees += 180.f;
+            }
+
+            if (direction == Direction.DOWN) {
+                degrees -= 180.f;
+            }
+
+            if (!visibilitySwapped) {
+                toggleView();
+                visibilitySwapped = true;
+            }
+            return degrees;
         }
     }
 }

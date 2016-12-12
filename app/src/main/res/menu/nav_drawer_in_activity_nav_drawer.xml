@@ -2,36 +2,35 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-        <item
-            android:id="@+id/nav_transaction"
-            android:icon="@drawable/ic_clump"
-            android:title="Transactions" />
-        <item
-            android:id="@+id/nav_friends"
-            android:icon="@drawable/ic_friends"
-            android:title="Friends" />
-        <item
-            android:id="@+id/nav_user"
-            android:icon="@drawable/ic_user"
-            android:title="User" />
+    <item
+        android:id="@+id/nav_transaction"
+        android:icon="@drawable/ic_clump"
+        android:title="@string/transactions" />
+    <item
+        android:id="@+id/nav_friends"
+        android:icon="@drawable/ic_friends"
+        android:title="@string/friends_nav_drawer" />
+    <item
+        android:id="@+id/nav_user"
+        android:icon="@drawable/ic_user"
+        android:title="@string/user" />
 
-        <item
-            android:id="@+id/nav_logout"
-            android:icon="@drawable/logout"
-            android:title="Logout" />
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/logout"
+        android:title="@string/logout" />
 
 
-
-    <item android:title="Communicate">
+    <item android:title="@string/communicate">
         <menu>
             <item
                 android:id="@+id/nav_about"
                 android:icon="@drawable/information_outline"
-                android:title="About" />
+                android:title="@string/about" />
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/email"
-                android:title="Contact" />
+                android:title="@string/contact" />
         </menu>
     </item>
 
