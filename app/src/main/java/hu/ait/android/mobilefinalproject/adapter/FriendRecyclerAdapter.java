@@ -120,7 +120,7 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAd
 
                 int prevDebt = Integer.parseInt(holder.tvFriendDebt.getText().toString());
 //                holder.tvFriendDebt.setText(String.format("%1$.2f", (prevDebt+debtUserDouble)));
-                holder.tvFriendDebt.setText(prevDebt+debtUserDouble);
+                holder.tvFriendDebt.setText("" + (prevDebt+debtUserDouble));
             }
         }
     }
@@ -132,8 +132,8 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAd
                 int debtUserDouble = Integer.parseInt(debtUserValue);
 
                 int prevDebt = Integer.parseInt(holder.tvFriendOwed.getText().toString());
-
-                holder.tvFriendOwed.setText(prevDebt+debtUserDouble);
+//                holder.tvFriendOwed.setText(String.format("%1$.2f", (prevDebt+debtUserDouble)));
+                holder.tvFriendOwed.setText("" + (prevDebt+debtUserDouble));
             }
         }
     }

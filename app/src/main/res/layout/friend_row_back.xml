@@ -35,7 +35,7 @@
                 android:id="@+id/tvYoureOwed$"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" FT"
+                android:text=" Ft"
                 android:layout_toRightOf="@+id/tvFriendOwed"
                 android:layout_below="@+id/tvYoureOwed"
                 android:textColor="@color/mediumBlue"
