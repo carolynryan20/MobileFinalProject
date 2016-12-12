@@ -24,32 +24,23 @@ import hu.ait.android.mobilefinalproject.fragments.friends.FriendsFragment;
 import hu.ait.android.mobilefinalproject.model.User;
 
 /**
- * Created by Morgan on 12/1/2016.
+ * TransactionRecyclerAdapter.java
+ *
+ * Created by Morgan Rozman
+ * 11/29/2016
+ *
+ * Recycler Adapter class for user's list of friends
  */
-
-
 public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAdapter.ViewHolder> {
 
     private List<Friend> friendList;
     private List<String> friendKeys;
-
     private Context context;
-    private CanRespondToCVTransactionClick canRespondToCVTransactionClick;
 
     public FriendRecyclerAdapter(Context context) {
-        friendList = new ArrayList<Friend>();
-        this.friendKeys = new ArrayList<String>();
+        friendList = new ArrayList<>();
+        this.friendKeys = new ArrayList<>();
         this.context = context;
-
-        checkActivityImplementsResponseInterface();
-    }
-
-    private void checkActivityImplementsResponseInterface() {
-        if (context instanceof CanRespondToCVTransactionClick) {
-            this.canRespondToCVTransactionClick = (CanRespondToCVTransactionClick) context;
-        } else {
-            throw new RuntimeException("Activity does not implement CanRespondToCVTransactionClick interface");
-        }
     }
 
     @Override
@@ -72,17 +63,15 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAd
     private void setupFrontCard(final ViewHolder holder, final String currentUsername) {
         DatabaseReference iconRef = FirebaseDatabase.getInstance().getReference().child("users");
         Query iconQuery = iconRef.orderByChild("username");
+        addIconQueryListener(holder, currentUsername, iconQuery);
+    }
+
+    private void addIconQueryListener(final ViewHolder holder, final String currentUsername, Query iconQuery) {
         iconQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot ss : dataSnapshot.getChildren()) {
-                    if (ss.child("username").getValue().toString().equals(currentUsername)) {
-                        User.UserIcon iconInt = User.UserIcon.valueOf(ss.child("icon").getValue().toString());
-                        holder.ivFriendIcon.setImageResource(iconInt.getIconId());
-                    }
-                }
+                setFriendIconIVs(dataSnapshot, currentUsername, holder);
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
@@ -90,52 +79,83 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<FriendRecyclerAd
         });
     }
 
+    private void setFriendIconIVs(DataSnapshot dataSnapshot, String currentUsername, ViewHolder holder) {
+        for (DataSnapshot ss : dataSnapshot.getChildren()) {
+            String dataUser = ss.child("username").getValue().toString();
+            if (dataUser.equals(currentUsername)) {
+                setFriendIcon(holder, ss);
+            }
+        }
+    }
+
+    private void setFriendIcon(ViewHolder holder, DataSnapshot ss) {
+        User.UserIcon iconInt = User.UserIcon.valueOf(ss.child("icon").getValue().toString());
+        holder.ivFriendIcon.setImageResource(iconInt.getIconId());
+    }
+
+
     private void setupBackCard(final ViewHolder holder, final String currentUsername) {
-        DatabaseReference friendsRef = FirebaseDatabase.getInstance().getReference().child("users")
-                .child(FriendsFragment.getUid()).child("transactions");
+        DatabaseReference friendsRef = FirebaseDatabase.getInstance().getReference().child("users").child(FriendsFragment.getUid()).child("transactions");
         Query friendsQuery = friendsRef.orderByChild("owedUser");
+        addFriendsDebtOwedQueryListener(holder, currentUsername, friendsQuery);
+    }
+
+    private void addFriendsDebtOwedQueryListener(final ViewHolder holder, final String currentUsername, Query friendsQuery) {
         friendsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot ss : dataSnapshot.getChildren()) {
-                    String owedUser = (String) ss.child("owedUser").getValue();
-                    if(owedUser.equals(FriendsFragment.getUserName())) {
-                        getFriendOwed(ss, currentUsername, holder);
-                    }
-                    else if (owedUser.equals(currentUsername)){
-                        getFriendDebt(ss, holder);
-                    }
-                }
+                setFriendDebtAndOwedTVs(dataSnapshot, currentUsername, holder);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
     }
 
+    private void setFriendDebtAndOwedTVs(DataSnapshot dataSnapshot, String currentUsername, ViewHolder holder) {
+        for (DataSnapshot ss : dataSnapshot.getChildren()) {
+            String owedUser = (String) ss.child("owedUser").getValue();
+            checkDebtOrOwed(currentUsername, holder, ss, owedUser);
+        }
+    }
+
+    private void checkDebtOrOwed(String currentUsername, ViewHolder holder, DataSnapshot ss, String owedUser) {
+        if(owedUser.equals(FriendsFragment.getUserName())) {
+            getFriendOwed(ss, currentUsername, holder);
+        } else if (owedUser.equals(currentUsername)){
+            getFriendDebt(ss, holder);
+        }
+    }
+
     private void getFriendDebt(DataSnapshot ss, ViewHolder holder) {
         for (DataSnapshot debtUser : ss.child("debtUsers").getChildren()) {
-            if (debtUser.getKey().toString().equals(FriendsFragment.getUserName())) {
-                String debtUserValue = debtUser.getValue().toString();
-                int debtUserDouble = Integer.parseInt(debtUserValue);
-
-                int prevDebt = Integer.parseInt(holder.tvFriendDebt.getText().toString());
-//                holder.tvFriendDebt.setText(String.format("%1$.2f", (prevDebt+debtUserDouble)));
-                holder.tvFriendDebt.setText("" + (prevDebt+debtUserDouble));
+            String dataUser = debtUser.getKey();
+            if (dataUser.equals(FriendsFragment.getUserName())) {
+                addDebtTV(holder, debtUser);
             }
         }
     }
 
+    private void addDebtTV(ViewHolder holder, DataSnapshot debtUser) {
+        String debtUserValue = debtUser.getValue().toString();
+        int debtUserInt = Integer.parseInt(debtUserValue);
+        int prevDebt = Integer.parseInt(holder.tvFriendDebt.getText().toString());
+        holder.tvFriendDebt.setText("" + (prevDebt+debtUserInt));
+    }
+
     private void getFriendOwed(DataSnapshot ss, String currentUsername, ViewHolder holder) {
         for (DataSnapshot debtUser : ss.child("debtUsers").getChildren()) {
-            if (debtUser.getKey().toString().equals(currentUsername)) {
-                String debtUserValue = debtUser.getValue().toString();
-                int debtUserDouble = Integer.parseInt(debtUserValue);
-
-                int prevDebt = Integer.parseInt(holder.tvFriendOwed.getText().toString());
-//                holder.tvFriendOwed.setText(String.format("%1$.2f", (prevDebt+debtUserDouble)));
-                holder.tvFriendOwed.setText("" + (prevDebt+debtUserDouble));
+            String dataUser = debtUser.getKey();
+            if (dataUser.equals(currentUsername)) {
+                addOwedTV(holder, debtUser);
             }
         }
+    }
+
+    private void addOwedTV(ViewHolder holder, DataSnapshot debtUser) {
+        String debtUserValue = debtUser.getValue().toString();
+        int debtUserInt = Integer.parseInt(debtUserValue);
+        int prevDebt = Integer.parseInt(holder.tvFriendOwed.getText().toString());
+        holder.tvFriendOwed.setText(context.getString(R.string.empty) + (prevDebt+debtUserInt));
     }
 
     @Override

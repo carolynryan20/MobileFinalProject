@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import hu.ait.android.mobilefinalproject.R;
 import hu.ait.android.mobilefinalproject.fragments.transaction.TransactionFragment;
 import hu.ait.android.mobilefinalproject.fragments.transaction.SummaryFragment;
 
@@ -52,11 +53,11 @@ public class MainPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "Your Transactions";
+                return context.getString(R.string.your_transactions);
             case 1:
-                return "Summary";
+                return context.getString(R.string.summary);
         }
-        return "";
+        return context.getString(R.string.empty);
     }
 
     @Override

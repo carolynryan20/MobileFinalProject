@@ -27,15 +27,23 @@ import java.util.Map;
 import hu.ait.android.mobilefinalproject.R;
 import hu.ait.android.mobilefinalproject.model.Transaction;
 
+import static hu.ait.android.mobilefinalproject.fragments.transaction.TransactionFragment.EDIT_INDEX;
 import static hu.ait.android.mobilefinalproject.fragments.transaction.TransactionFragment.FRIEND_LIST;
+import static hu.ait.android.mobilefinalproject.fragments.transaction.TransactionFragment.IS_EDIT;
+
 
 /**
- * Created by Carolyn on 12/4/16.
+ * AddTransactionDialogFragment.java
+ *
+ * Created by Carolyn Ryan
+ * 11/29/2016
+ *
+ * Dialog Fragment for adding individual transactions
  */
-
 public class AddTransactionDialogFragment extends DialogFragment {
 
     public static final String TAG = "AddCityFragment";
+    public static final String USER = "USER";
 
     private AddTransactionFragmentAnswer addTransactionFragmentAnswer = null;
     private EditText etTransactionName;
@@ -50,41 +58,13 @@ public class AddTransactionDialogFragment extends DialogFragment {
 
     @Override
     public void onAttach(Context context) {
-        this.context = context;
         super.onAttach(context);
+        this.context = context;
 
         addTransactionFragmentAnswer = (TransactionFragment) getTargetFragment();
-        friendsWhoOwe = new HashMap<String, Integer>();
+        friendsWhoOwe = new HashMap<>();
         friendsList = getArguments().getStringArrayList(FRIEND_LIST);
         addTransactionDialogFragment = this;
-    }
-
-    private boolean itemIsEditItem() {
-        return (boolean) getArguments().get("IS_EDIT");
-    }
-
-    private void setFieldsForEditItem() {
-
-        spinnerTransactionType.setSelection((int) getArguments().get(TransactionFragment.TYPE));
-
-        int payerPosition = 0;
-        for (int i = 0; i < friendsList.size(); i++) {
-            if (friendsList.get(i).equals(getArguments().get(TransactionFragment.WHO_PAID))){
-                payerPosition = i;
-            }
-        }
-
-        etTransactionName.setText((String) getArguments().get(TransactionFragment.TRANSACTION_TITLE));
-        //// TODO: 12/8/16 set Friends who owe upon edit
-        //lvFriendsToAdd.set(itemToEdit.getEstimatedPriceString());
-    }
-
-    private void checkParentImplementsAddTransactionFragmentAnswer() {
-        if (getFragmentManager().findFragmentByTag(TransactionFragment.TAG) instanceof AddTransactionFragmentAnswer) {
-            addTransactionFragmentAnswer = (TransactionFragment) getFragmentManager().findFragmentByTag(TransactionFragment.TAG);
-        } else {
-            throw new RuntimeException("Not implementing addTransactionFragmentAnswer");
-        }
     }
 
     @NonNull
@@ -100,37 +80,23 @@ public class AddTransactionDialogFragment extends DialogFragment {
     }
 
     private void setUpAlertDialogBuilder(AlertDialog.Builder alertDialogBuilder, View dialogLayout) {
-        alertDialogBuilder.setView(dialogLayout);
-        alertDialogBuilder.setTitle("Add a transaction");
+        setUpDialogView(alertDialogBuilder, dialogLayout);
         setPositiveButton(alertDialogBuilder, dialogLayout);
         setNegativeButton(alertDialogBuilder);
     }
 
-    private void setPositiveButton(AlertDialog.Builder alertDialogBuilder, View dialogLayout) {
+    private void setUpDialogView(AlertDialog.Builder alertDialogBuilder, View dialogLayout) {
+        alertDialogBuilder.setView(dialogLayout);
+        alertDialogBuilder.setTitle(R.string.add_a_transaction);
+
         etTransactionName = (EditText) dialogLayout.findViewById(R.id.etTransactionTitle);
         setUpAddingOwes(dialogLayout);
+        setTransactionTypeSpinner(dialogLayout);
+    }
 
-
-        spinnerTransactionType = (Spinner) dialogLayout.findViewById(R.id.spinnerTransactionType);
-        ArrayList<String> typesOfTransaction = new ArrayList<String>() {{
-            add("Food");
-            add("Drinks");
-            add("Rent");
-            add("Travel");
-            add("Other");
-        }};
-
-        ArrayAdapter<String> adapterTransaction = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, typesOfTransaction);
-        spinnerTransactionType.setAdapter(adapterTransaction);
-
-        String positiveButton = "Add transaction";
-
-        if (itemIsEditItem()) {
-            setFieldsForEditItem();
-            positiveButton = "Save";
-        }
-
-
+    private void setPositiveButton(AlertDialog.Builder alertDialogBuilder, View dialogLayout) {
+        String positiveButton = getString(R.string.add_transaction);
+        positiveButton = checkItemIsEditItem(positiveButton);
         alertDialogBuilder.setPositiveButton(positiveButton, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -139,49 +105,79 @@ public class AddTransactionDialogFragment extends DialogFragment {
         });
     }
 
+    private String checkItemIsEditItem(String positiveButton) {
+        if (itemIsEditItem()) {
+            spinnerTransactionType.setSelection((int) getArguments().get(TransactionFragment.TYPE));
+            positiveButton = getString(R.string.save);
+        }
+        return positiveButton;
+    }
+
+    private boolean itemIsEditItem() {
+        return getArguments().getBoolean(IS_EDIT);
+    }
+
+    private void setTransactionTypeSpinner(View dialogLayout) {
+        spinnerTransactionType = (Spinner) dialogLayout.findViewById(R.id.spinnerTransactionType);
+        ArrayList<String> typesOfTransaction = new ArrayList<String>() {{
+            add(getString(R.string.food));
+            add(getString(R.string.drink));
+            add(getString(R.string.rent));
+            add(getString(R.string.travel));
+            add(getString(R.string.other));
+        }};
+
+        ArrayAdapter<String> adapterTransaction = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, typesOfTransaction);
+        spinnerTransactionType.setAdapter(adapterTransaction);
+    }
+
     private void setUpAddingOwes(View dialogLayout) {
         lvFriendsToAdd = (ListView) dialogLayout.findViewById(R.id.lvFriendsToAdd);
-
-        List<String> friendsList = getArguments().getStringArrayList(FRIEND_LIST);
         if ((friendsList != null) && (!friendsList.isEmpty())) {
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                    android.R.layout.simple_list_item_1, android.R.id.text1, friendsList);
-
-
-            lvFriendsToAdd.setAdapter(adapter);
-            lvFriendsToAdd.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    int itemPosition = position;
-                    String itemValue = (String) lvFriendsToAdd.getItemAtPosition(position);
-
-                    AmountOwedDialogFragment amountOwedDialogFragment = new AmountOwedDialogFragment();
-                    amountOwedDialogFragment.setTargetFragment(addTransactionDialogFragment, 1);
-
-                    Bundle bundle = new Bundle();
-                    bundle.putString("USER", itemValue);
-                    amountOwedDialogFragment.setArguments(bundle);
-
-                    amountOwedDialogFragment.show(getFragmentManager(), AddTransactionDialogFragment.TAG);
-
-                    currentLVClick = (TextView) view;
-
-                }
-            });
-
+            setArrayAdapterUsingFriends(friendsList);
         } else {
-            Toast.makeText(getContext(), "You have no friends.  Loser.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.no_friends, Toast.LENGTH_SHORT).show();
         }
     }
 
+    private void setArrayAdapterUsingFriends(List<String> friendsList) {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_list_item_1, android.R.id.text1, friendsList);
+        setUpFriendsToAdd(adapter);
+    }
+
+    private void setUpFriendsToAdd(ArrayAdapter<String> adapter) {
+        lvFriendsToAdd.setAdapter(adapter);
+        lvFriendsToAdd.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                currentLVClick = (TextView) view;
+                String itemValue = (String) lvFriendsToAdd.getItemAtPosition(position);
+                openAmountOwedDialogFragment(itemValue);
+            }
+        });
+    }
+
+    private void openAmountOwedDialogFragment(String itemValue) {
+        AmountOwedDialogFragment amountOwedDialogFragment = new AmountOwedDialogFragment();
+        addBundleToAmtOwed(itemValue, amountOwedDialogFragment);
+        amountOwedDialogFragment.show(getFragmentManager(), AddTransactionDialogFragment.TAG);
+    }
+
+    private void addBundleToAmtOwed(String itemValue, AmountOwedDialogFragment amountOwedDialogFragment) {
+        amountOwedDialogFragment.setTargetFragment(addTransactionDialogFragment, 1);
+        Bundle bundle = new Bundle();
+        bundle.putString(USER, itemValue);
+        amountOwedDialogFragment.setArguments(bundle);
+    }
+
     public void addFriendWhoOwes(String friend, Integer amt) {
-//        int amtInt = Math.round(amt);
         friendsWhoOwe.put(friend, amt);
-        currentLVClick.setText(friend+" owes "+amt + " Ft");
+        currentLVClick.setText(friend+" owes "+amt + " Ft"); //Todo
     }
 
     private void setNegativeButton(AlertDialog.Builder alertDialogBuilder) {
-        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
@@ -210,7 +206,7 @@ public class AddTransactionDialogFragment extends DialogFragment {
 
     private void handleAddTransactionButtonClick() {
         if (TextUtils.isEmpty(etTransactionName.getText())) {
-            etTransactionName.setError("Required");
+            etTransactionName.setError(getString(R.string.required));
         } else {
             String transactionName = etTransactionName.getText().toString();
             Transaction.TransactionType transactionType = Transaction.TransactionType.fromInt(spinnerTransactionType.getSelectedItemPosition());
@@ -218,7 +214,7 @@ public class AddTransactionDialogFragment extends DialogFragment {
             Transaction toAdd = new Transaction(transactionName, transactionType, friendsList.get(0), friendsWhoOwe);
 
             if (itemIsEditItem()) {
-                addTransactionFragmentAnswer.addEditTransaction(toAdd, (String) getArguments().get("EDIT_INDEX"));
+                addTransactionFragmentAnswer.addEditTransaction(toAdd, (String) getArguments().get(EDIT_INDEX));
                 dismiss();
             } else {
                 addTransactionFragmentAnswer.addTransaction(toAdd);

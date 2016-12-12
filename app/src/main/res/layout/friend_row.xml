@@ -8,6 +8,4 @@
 
     <include layout="@layout/friend_row_back" />
 
-
 </hu.ait.android.mobilefinalproject.view.FlipLayout>
-

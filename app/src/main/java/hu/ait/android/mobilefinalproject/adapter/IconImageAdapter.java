@@ -10,14 +10,19 @@ import android.widget.ImageView;
 import hu.ait.android.mobilefinalproject.R;
 
 /**
- * Created by ssheppe on 12/8/16.
+ * IconImageAdapter.java
+ *
+ * Created by Samantha Sheppe
+ * 11/29/2016
+ *
+ * Image Adapter class for user icons
  */
 
-public class ImageAdapter extends BaseAdapter {
+public class IconImageAdapter extends BaseAdapter {
 
     private Context mContext;
 
-    public ImageAdapter(Context c) {
+    public IconImageAdapter(Context c) {
         mContext = c;
     }
 

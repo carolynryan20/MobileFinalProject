@@ -28,7 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import hu.ait.android.mobilefinalproject.LoginActivity;
 import hu.ait.android.mobilefinalproject.NavDrawerActivity;
 import hu.ait.android.mobilefinalproject.R;
-import hu.ait.android.mobilefinalproject.adapter.ImageAdapter;
+import hu.ait.android.mobilefinalproject.adapter.IconImageAdapter;
 import hu.ait.android.mobilefinalproject.fragments.BaseFragment;
 import hu.ait.android.mobilefinalproject.fragments.friends.FriendsFragment;
 import hu.ait.android.mobilefinalproject.model.User;
@@ -42,7 +42,7 @@ public class UserFragment extends BaseFragment {
     private TextView tvUserMoneyDebtAmount;
     private TextView tvUserMoneyOwedAmount;
     private TextView tvLocation;
-    private ImageAdapter imageAdapter;
+    private IconImageAdapter iconImageAdapter;
     private int friendCounter = 0;
 
     private int debt;
@@ -257,8 +257,8 @@ public class UserFragment extends BaseFragment {
 
         GridView iconGridView = (GridView) userIconDialog.findViewById(R.id.grid);
 
-        imageAdapter = new ImageAdapter(getContext());
-        iconGridView.setAdapter(imageAdapter);
+        iconImageAdapter = new IconImageAdapter(getContext());
+        iconGridView.setAdapter(iconImageAdapter);
         iconGridView.setNumColumns(3);
         iconGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -271,7 +271,7 @@ public class UserFragment extends BaseFragment {
     }
 
     private void setUserIcon(AdapterView<?> parent, View view, int position, Dialog userIconDialog) {
-        int editedIcon = imageAdapter.getDrawableID(position, view, parent);
+        int editedIcon = iconImageAdapter.getDrawableID(position, view, parent);
         String iconID = User.UserIcon.fromIconId(editedIcon);
 
         accountIcon.setImageResource(editedIcon);

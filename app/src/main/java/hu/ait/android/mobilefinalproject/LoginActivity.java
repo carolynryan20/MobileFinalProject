@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -22,124 +23,172 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import hu.ait.android.mobilefinalproject.adapter.ImageAdapter;
+import hu.ait.android.mobilefinalproject.adapter.IconImageAdapter;
 import hu.ait.android.mobilefinalproject.fragments.BaseFragment;
 import hu.ait.android.mobilefinalproject.fragments.SetLocationDialogFragment;
 import hu.ait.android.mobilefinalproject.model.User;
 
+
+/**
+ * LoginActivity.java
+ *
+ * Created by Carolyn Ryan
+ * 11/29/2016
+ *
+ * LoginActivity for user login, uses firebase
+ */
 public class LoginActivity extends BaseActivity {
 
-    @BindView(R.id.etEmail)
-    EditText etEmail;
-    @BindView(R.id.etPassword)
-    EditText etPassword;
-
-    DatabaseReference databaseReference;
-    FirebaseAuth firebaseAuth;
-    private ImageAdapter imageAdapter;
-    ImageView accountIcon;
+    private EditText etEmail;
+    private EditText etPassword;
+    private Button btnRegister;
+    private Button btnLogin;
+    private ImageView accountIcon;
     private int icon;
-    //private String location;
+
+    private IconImageAdapter iconImageAdapter;
+
+    private DatabaseReference databaseReference;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        ButterKnife.bind(this);
-
         databaseReference = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
 
-        accountIcon = (ImageView) findViewById(R.id.ivAccountIcon);
+        findViewsByIDs();
+
     }
 
-    @OnClick(R.id.btnRegister)
-    void registerClick() {
+    private void findViewsByIDs() {
+        accountIcon = (ImageView) findViewById(R.id.ivAccountIcon);
+        etEmail = (EditText) findViewById(R.id.etEmail);
+        etPassword = (EditText) findViewById(R.id.etPassword);
+        findBtnRegister();
+        findBtnLogin();
+    }
+
+    private void findBtnLogin() {
+        btnLogin = (Button) findViewById(R.id.btnLogin);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnLoginClick();
+            }
+        });
+    }
+
+    private void findBtnRegister() {
+        btnRegister = (Button) findViewById(R.id.btnRegister);
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnRegisterClick();
+            }
+        });
+    }
+
+    public void btnRegisterClick() {
         if (!isFormValid()) {
             return;
         }
         showProgressDialog();
-        firebaseAuth.createUserWithEmailAndPassword(etEmail.getText().toString(), etPassword.getText().toString())
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        hideProgressDialog();
-
-                        if (task.isSuccessful()) {
-                            FirebaseUser fbUser = task.getResult().getUser();
-
-                            fbUser.updateProfile(new UserProfileChangeRequest.Builder().
-                                    setDisplayName(usernameFromEmail(fbUser.getEmail())).build());
-
-                            int onRegisterIcon = showGridDialog();
-                            User.UserIcon userIcon = User.UserIcon.toUserIconFromId(onRegisterIcon);
-
-
-                            //then make thing that asks for location, in on finish call the on grid dialog
-
-
-                            User user = new User(fbUser.getEmail(), usernameFromEmail(fbUser.getEmail()), userIcon, "Budapest");
-                            databaseReference.child("users").child(fbUser.getUid()).setValue(user);
-
-//                            Toast.makeText(LoginActivity.this, "User created", Toast.LENGTH_SHORT).show();
-
-
-                        } else {
-                            Toast.makeText(LoginActivity.this, task.getException().getLocalizedMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                })
-                .addOnFailureListener(this, new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        hideProgressDialog();
-//                        Toast.makeText(LoginActivity.this, "Wasn't able to make new user from input", Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
-                    }
-                });
+        firebaseCreateUser();
     }
 
-    private int showGridDialog() {
+    private void firebaseCreateUser() {
+        firebaseAuth.createUserWithEmailAndPassword(etEmail.getText().toString(), etPassword.getText().toString())
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                hideProgressDialog();
+                if (task.isSuccessful()) {
+                    createUser(task);
+                }
+            }
+        }).addOnFailureListener(this, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                actionsOnFailure(e);
+            }
+        });
+    }
 
-        final Dialog userIconDialog = new Dialog(this);
-        userIconDialog.setContentView(R.layout.icon_grid_dialog);
-        userIconDialog.setTitle("Choose icon");
+    private void actionsOnFailure(@NonNull Exception e) {
+        hideProgressDialog();
+        Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        e.printStackTrace();
+    }
 
+    private void createUser(@NonNull Task<AuthResult> task) {
+        FirebaseUser fbUser = getFirebaseUser(task);
+        User.UserIcon userIcon = getUserIcon();
+
+        User user = new User(fbUser.getEmail(), usernameFromEmail(fbUser.getEmail()), userIcon, getString(R.string.budapest));
+
+        databaseReference.child("users").child(fbUser.getUid()).setValue(user);
+        Toast.makeText(LoginActivity.this, getString(R.string.user_created), Toast.LENGTH_SHORT).show();
+    }
+
+    private User.UserIcon getUserIcon() {
+        int onRegisterIcon = showChooseIconGridDialog();
+        return User.UserIcon.toUserIconFromId(onRegisterIcon);
+    }
+
+    @NonNull
+    private FirebaseUser getFirebaseUser(@NonNull Task<AuthResult> task) {
+        FirebaseUser fbUser = task.getResult().getUser();
+        fbUser.updateProfile(new UserProfileChangeRequest.Builder()
+                .setDisplayName(usernameFromEmail(fbUser.getEmail())).build());
+        return fbUser;
+    }
+
+    private int showChooseIconGridDialog() {
+        final Dialog userIconDialog = getIconDialog();
+        setUpGridView(userIconDialog);
+        return icon;
+
+
+    }
+
+    private void setUpGridView(final Dialog userIconDialog) {
         GridView iconGridView= (GridView)userIconDialog.findViewById(R.id.grid);
 
-        imageAdapter = new ImageAdapter(this);
-        iconGridView.setAdapter(imageAdapter);
+        iconImageAdapter = new IconImageAdapter(this);
+        iconGridView.setAdapter(iconImageAdapter);
         iconGridView.setNumColumns(3);
         iconGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                accountIcon = (ImageView) imageAdapter.getView(position, view, parent);
-
-                icon = imageAdapter.getDrawableID(position, view, parent);
-                String iconID = User.UserIcon.fromIconId(icon);
-
-                iconID = User.UserIcon.fromIconId(icon);
-
-                accountIcon.setImageResource(icon);
-
-                DatabaseReference iconRef = FirebaseDatabase.getInstance().getReference().child("users").child(BaseFragment.getUid()).child("icon");
-                iconRef.setValue(iconID);
-
+                setUserIcon(parent, view, position);
                 userIconDialog.dismiss();
                 showLocationDialog();
             }
         });
+    }
 
+    private void setUserIcon(AdapterView<?> parent, View view, int position) {
+        icon = iconImageAdapter.getDrawableID(position, view, parent);
+        String iconID = User.UserIcon.fromIconId(icon);
+
+        accountIcon = (ImageView) iconImageAdapter.getView(position, view, parent);
+        accountIcon.setImageResource(icon);
+
+        DatabaseReference iconRef = FirebaseDatabase.getInstance().getReference()
+                .child("users").child(BaseFragment.getUid()).child("icon");
+        iconRef.setValue(iconID);
+    }
+
+    @NonNull
+    private Dialog getIconDialog() {
+        final Dialog userIconDialog = new Dialog(this);
+        userIconDialog.setContentView(R.layout.icon_grid_dialog);
+        userIconDialog.setTitle(getString(R.string.choose_icon));
         userIconDialog.show();
-        return icon;
-
-
+        return userIconDialog;
     }
 
     private void showLocationDialog() {
@@ -149,12 +198,10 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-    @OnClick(R.id.btnLogin)
-    void loginClick() {
+    public void btnLoginClick() {
         if (!isFormValid()) {
             return;
         }
-
         showProgressDialog();
         firebaseAuth.signInWithEmailAndPassword(
                 etEmail.getText().toString(),
@@ -163,22 +210,24 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 hideProgressDialog();
-
-                if (task.isSuccessful()) {
-                    //open new activity
-                    startActivity(new Intent(LoginActivity.this, NavDrawerActivity.class));
-                    finish();
-                } else {
-                    Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                }
+                handleFirebaseLogin(task);
             }
         });
 
     }
 
+    private void handleFirebaseLogin(@NonNull Task<AuthResult> task) {
+        if (task.isSuccessful()) {
+            startActivity(new Intent(LoginActivity.this, NavDrawerActivity.class));
+            finish();
+        } else {
+            Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private String usernameFromEmail(String email) {
-        if (email.contains("@")) {
-            return email.split("@")[0];
+        if (email.contains(getString(R.string.at))) {
+            return email.split(getString(R.string.at))[0];
         } else {
             return email;
         }
@@ -187,12 +236,12 @@ public class LoginActivity extends BaseActivity {
 
     private boolean isFormValid() {
         if (TextUtils.isEmpty(etEmail.getText().toString())) {
-            etEmail.setError("Required");
+            etEmail.setError(getString(R.string.required));
             return false;
         }
 
         if (TextUtils.isEmpty(etPassword.getText().toString())) {
-            etPassword.setError("Required");
+            etPassword.setError(getString(R.string.required));
             return false;
         }
 
@@ -200,11 +249,8 @@ public class LoginActivity extends BaseActivity {
     }
 
     public void addUserLocation(String location) {
-//        this.location = location;
-        DatabaseReference iconRef = FirebaseDatabase.getInstance().getReference().child("users").child(BaseFragment.getUid()).child("location");
+        DatabaseReference iconRef = FirebaseDatabase.getInstance()
+                .getReference().child("users").child(BaseFragment.getUid()).child("location");
         iconRef.setValue(location);
-
-//        Toast.makeText(this, "location getting set", Toast.LENGTH_SHORT).show();
-        //this.location = "New Location";
     }
 }

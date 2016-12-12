@@ -2,7 +2,6 @@ package hu.ait.android.mobilefinalproject.fragments.transaction;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,21 +20,22 @@ import hu.ait.android.mobilefinalproject.fragments.BaseFragment;
 import hu.ait.android.mobilefinalproject.fragments.friends.FriendsFragment;
 
 /**
- * Created by Carolyn on 12/1/16.
+ * SummaryFragment.java
+ * <p>
+ * Created by Carolyn Ryan
+ * 11/29/2016
+ * <p>
+ * Simple fragment shows owed and debt
  */
-
 public class SummaryFragment extends BaseFragment {
 
     public static final String TAG = "SummaryFragment";
 
     private View root;
-    private TextView tvDepts;
+    private TextView tvDebts;
     private TextView tvOwed;
     private int debt;
     private int owed;
-    private RecyclerView recyclerTransactionInteraction;
-//    private BaseFragment baseFragment = new BaseFragment();
-//    private Button btnSeeFriends;
 
     @Nullable
     @Override
@@ -51,11 +51,10 @@ public class SummaryFragment extends BaseFragment {
     }
 
     private void setTVs() {
-        tvDepts = (TextView) root.findViewById(R.id.tvDepts);
+        tvDebts = (TextView) root.findViewById(R.id.tvDebts);
         tvOwed = (TextView) root.findViewById(R.id.tvOwed);
 
         setDebtAndOwed();
-        recyclerTransactionInteraction = (RecyclerView) root.findViewById(R.id.recyclerTransactionInteractions);
 
     }
 
@@ -67,27 +66,7 @@ public class SummaryFragment extends BaseFragment {
         friendsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot ss : dataSnapshot.getChildren()) {
-                    String owedUser = (String) ss.child("owedUser").getValue();
-                    Log.d("TAGG_oweduseris", owedUser);
-                    if (owedUser.equals(getUserName())){
-                        //TODO add to owes
-                        for (DataSnapshot debtUser : ss.child("debtUsers").getChildren()) {
-//                            owed+= Float.parseFloat(debtUser.getValue().toString());
-                            owed+= Integer.parseInt(debtUser.getValue().toString());
-                            tvOwed.setText(String.valueOf(owed));
-                        }
-                    } else {
-                        for (DataSnapshot debtUser : ss.child("debtUsers").getChildren()) {
-                            if (debtUser.getKey().equals(getUserName())) {
-                                Log.d("TAGG", debtUser.getValue().toString());
-//                                debt += Float.parseFloat(debtUser.getValue().toString());
-                                debt+= Integer.parseInt(debtUser.getValue().toString());
-                                tvDepts.setText(String.valueOf(debt));
-                            }
-                        }
-                    }
-                }
+                addDebtAndOwedFromDB(dataSnapshot);
             }
 
             @Override
@@ -95,6 +74,25 @@ public class SummaryFragment extends BaseFragment {
             }
         });
 
+    }
+
+    private void addDebtAndOwedFromDB(DataSnapshot dataSnapshot) {
+        for (DataSnapshot ss : dataSnapshot.getChildren()) {
+            String owedUser = (String) ss.child("owedUser").getValue();
+            if (owedUser.equals(getUserName())) {
+                for (DataSnapshot debtUser : ss.child("debtUsers").getChildren()) {
+                    owed += Integer.parseInt(debtUser.getValue().toString());
+                    tvOwed.setText(String.valueOf(owed));
+                }
+            } else {
+                for (DataSnapshot debtUser : ss.child("debtUsers").getChildren()) {
+                    if (debtUser.getKey().equals(getUserName())) {
+                        debt += Integer.parseInt(debtUser.getValue().toString());
+                        tvDebts.setText(String.valueOf(debt));
+                    }
+                }
+            }
+        }
     }
 
 

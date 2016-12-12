@@ -15,10 +15,16 @@ import android.widget.EditText;
 
 import hu.ait.android.mobilefinalproject.R;
 
-/**
- * Created by Carolyn on 12/6/16.
- */
+import static hu.ait.android.mobilefinalproject.fragments.transaction.AddTransactionDialogFragment.USER;
 
+/**
+ * AmountOwedDialogFragment.java
+ *
+ * Created by Carolyn Ryan
+ * 11/29/2016
+ *
+ * Amoutn Owed Dialog Fragment for adding what individual friends owe
+ */
 public class AmountOwedDialogFragment extends DialogFragment {
     private Context context;
     private EditText amt;
@@ -47,17 +53,17 @@ public class AmountOwedDialogFragment extends DialogFragment {
 
     private void setUpAlertDialogBuilder(AlertDialog.Builder alertDialogBuilder, View dialogLayout) {
         alertDialogBuilder.setView(dialogLayout);
-        alertDialogBuilder.setTitle("Add amount this user owes");
+        alertDialogBuilder.setTitle(getString(R.string.add_amt_user_owes));
 
         amt = (EditText) dialogLayout.findViewById(R.id.etAmt);
 
-        alertDialogBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setPositiveButton(getString(R.string.okay), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 handleOnClickPositive();
             }
         });
-        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dismiss();
@@ -67,15 +73,15 @@ public class AmountOwedDialogFragment extends DialogFragment {
 
     private void handleOnClickPositive() {
         if (TextUtils.isEmpty(amt.getText())) {
-            amt.setError("Required");
+            amt.setError(getString(R.string.required));
         } else {
             String amtString = amt.getText().toString();
             if (! amtString.isEmpty()) {
                 int amtInt = Integer.parseInt(amtString);
-                addTransactionDialogFragment.addFriendWhoOwes(args.getString("USER"), amtInt);
+                addTransactionDialogFragment.addFriendWhoOwes(args.getString(USER), amtInt);
             }
 
-            addTransactionDialogFragment.addFriendWhoOwes(args.getString("USER"),Integer.parseInt(amt.getText().toString()) );
+            addTransactionDialogFragment.addFriendWhoOwes(args.getString(USER),Integer.parseInt(amt.getText().toString()) );
             dismiss();
         }
     }
