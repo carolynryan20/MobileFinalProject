@@ -21,10 +21,38 @@
     <string name="location"><b>location: </b></string>
     <string name="title_activity_nav_drawer">Lickety Split</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title">Title</string>
     <string name="name"><b>Name</b></string>
     <string name="you_owe"><b>You owe: </b></string>
     <string name="you_re_owed"><b>You\'re owed: </b></string>
+    <string name="about_text"><![CDATA[This app was created by Mo, Carolyn & Sam\n\nCreated for AIT Mobile Development\n\nFall 2016 Final Project]]></string>
+    <string name="email">email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="friend_username">Friend\'s Username</string>
+    <string name="transaction_name">Transaction Name</string>
+    <string name="user_owe_question">How much does this user owe?</string>
+    <string name="location_question">Where are you from?</string>
+    <string name="you_owe_large">You Owe</string>
+    <string name="youre_owed">You\'re Owed</string>
+    <string name="zero_ft">0 Ft</string>
+    <string name="buda_location">Budapest</string>
+    <string name="friends_2">friends</string>
+    <string name="change_password">change password</string>
+    <string name="change_icon">change icon</string>
+    <string name="logout">Logout</string>
+    <string name="ft">&#160; Ft</string>
+    <string name="zero">0</string>
+    <string name="grid">grid</string>
+    <string name="contact_us">Want to send us an email? \n\ncoorlyn@myson.edu</string>
+    <string name="details">details</string>
+    <string name="delete_button">Delete Button</string>
+    <string name="edit_button">Edit Button</string>
+    <string name="transactions">Transactions</string>
+    <string name="friends_nav_drawer">Friends</string>
+    <string name="user">User</string>
+    <string name="communicate">Communicate</string>
+    <string name="about">About</string>
+    <string name="contact">Contact</string>
 </resources>

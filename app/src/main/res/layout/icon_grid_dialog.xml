@@ -2,23 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
-
-    <!-- Any other view as per your need -->
+    android:orientation="vertical">
 
     <GridView
         android:id="@+id/grid"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:columnWidth="90dp"
-        android:numColumns="3"
-        android:verticalSpacing="10dip"
-        android:horizontalSpacing="10dip"
-        android:stretchMode="columnWidth"
         android:gravity="center"
-        android:text="grid" />
+        android:horizontalSpacing="10dip"
+        android:numColumns="3"
+        android:stretchMode="columnWidth"
+        android:text="@string/grid"
+        android:verticalSpacing="10dip" />
 
-    <!-- Any other view as per your need -->
 
 </LinearLayout>
 

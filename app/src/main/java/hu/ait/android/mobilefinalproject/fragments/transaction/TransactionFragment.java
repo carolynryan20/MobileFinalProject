@@ -244,7 +244,7 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
         FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("transactions").child(key).setValue(transaction);
 
         addToAllContainedUsers(transaction, ref);
-        Toast.makeText(getContext(), "Transaction created", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "Transaction created", Toast.LENGTH_SHORT).show();
     }
 
     private void addToAllContainedUsers(final Transaction transaction, final DatabaseReference ref) {
@@ -283,7 +283,7 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
 //        transactionRecyclerAdapter.editTransaction(transaction, index);
 //        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("transactions").push().getKey();
         FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("transactions").child(key).setValue(transaction);
-        Toast.makeText(getContext(), "Transaction edited", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "Transaction edited", Toast.LENGTH_SHORT).show();
         transactionRecyclerAdapter.editTransaction(transaction,key);
     }
 
