@@ -29,9 +29,6 @@ import hu.ait.android.mobilefinalproject.fragments.BaseFragment;
 
 public class FriendsFragment extends BaseFragment implements AddFriendFragmentAnswer {
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private RecyclerView recyclerView;
     private FriendRecyclerAdapter friendRecyclerAdapter;
 
@@ -48,11 +45,7 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_friends, container, false);
-//        setupRecyclerView();
-//        setUpFab();
-
         initPostListener();
-
         return root;
     }
 
@@ -62,24 +55,27 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
         fab.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                switch (motionEvent.getActionMasked()) {
-                    case MotionEvent.ACTION_DOWN:
-                        fabActionDown(view, motionEvent);
-                        break;
-                    case MotionEvent.ACTION_MOVE:
-                        fabActionMove(view, motionEvent);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        //we know action_down, action_up is a click action so:
-                        if (lastAction == MotionEvent.ACTION_DOWN)
-                            openAddFriendFragment();
-                        break;
-                    default:
-                        return false;
-                }
-                return true;
+                return getFabMotion(view, motionEvent);
             }
         });
+    }
+
+    private boolean getFabMotion(View view, MotionEvent motionEvent) {
+        switch (motionEvent.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN:
+                fabActionDown(view, motionEvent);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                fabActionMove(view, motionEvent);
+                break;
+            case MotionEvent.ACTION_UP:
+                if (lastAction == MotionEvent.ACTION_DOWN)
+                    openAddFriendFragment();
+                break;
+            default:
+                return false;
+        }
+        return true;
     }
 
     private void fabActionDown(View view, MotionEvent motionEvent) {
@@ -98,43 +94,11 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
         AddFriendDialogFragment addFriendDialogFragment = new AddFriendDialogFragment();
         addFriendDialogFragment.setTargetFragment(this, 1);
         Bundle bundle = new Bundle();
-//        bundle.putBoolean(IS_EDIT, false);
         addFriendDialogFragment.setArguments(bundle);
         addFriendDialogFragment.show(getFragmentManager(), AddFriendDialogFragment.TAG);
     }
 
-    private boolean isFriendUnique(final String username) {
-        final boolean[] isUnique = {false};
-        final DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference().child("users")
-                .child(getUid()).child("friends");
-        rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                Query users = rootRef.getDatabase().getReference().orderByChild("username").equalTo(username);
-//                if (users.getRef().getKey() == null) {
-//                    Toast.makeText(getContext(), users.getRef().getKey(), Toast.LENGTH_SHORT).show();
-//                }
-//                if (users.getRef() == null) {
-                if (users.getRef().getKey() == null) {
-                    isUnique[0] = true;
-                }
-
-//                if (snapshot.hasChild("name")) {
-//                    // run some code
-//                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        return isUnique[0];
-    }
-
     private void initPostListener() {
-        // update list
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users")
                 .child(getUid()).child("friends");
         ref.addChildEventListener(new ChildEventListener() {
@@ -145,24 +109,16 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
 
             @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                //transactionRecyclerAdapter.removeTransactionB(dataSnapshot.getKey());
-            }
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
 
             @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
     }
 
@@ -171,23 +127,6 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
         super.onResume();
         setupRecyclerView();
         setUpFab();
-
-
-//        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -196,8 +135,8 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
         if (context instanceof FriendsFragment.OnFragmentInteractionListener) {
             mListener = (FriendsFragment.OnFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+            throw new RuntimeException(String.format(getResources().
+                    getString(R.string.mustImplOnFragInteraction), context.toString()));
         }
     }
 
@@ -215,46 +154,51 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
         usernameMatch.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                addFriendOnRequirements(dataSnapshot, friend, ref);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
+
+    private void addFriendOnRequirements(DataSnapshot dataSnapshot, final Friend friend, final DatabaseReference ref) {
+        if (dataSnapshot.getChildrenCount() == 0) {
+            Toast.makeText(getContext(), String.format(getResources()
+                    .getString(R.string.userDoesNotExist), friend.getUsername()),
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            for (DataSnapshot user : dataSnapshot.getChildren()) {
+                isFriendUnique(friend, ref);
+            }
+        }
+    }
+
+    private void isFriendUnique(final Friend friend, final DatabaseReference ref) {
+        DatabaseReference friendRef = ref.child(getUid()).child("friends");
+        Query friendQuery = friendRef.orderByChild("username").equalTo(friend.getUsername());
+        friendQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getChildrenCount() == 0) {
-                    Toast.makeText(getContext(), "User '" + friend.getUsername() + "' does not exist!", Toast.LENGTH_SHORT).show();
-                } else {
-                    for (DataSnapshot user : dataSnapshot.getChildren()) {
-                        // check if that username already exists in your friends list:
-                        DatabaseReference friendRef = ref.child(getUid()).child("friends");
-                        Query friendQuery = friendRef.orderByChild("username").equalTo(friend.getUsername());
-                        friendQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                if (dataSnapshot.getChildrenCount() == 0) {
-                                    //Toast.makeText(getContext(), "You are not yet friends with " + friend.getUsername(),
-                                    //        Toast.LENGTH_SHORT).show();
-                                    // add this user as a friend
-                                    String newKey = ref.child(getUid()).child("friends").push().getKey();
-                                    ref.child(getUid()).child("friends").child(newKey).setValue(friend);
-                                    Toast.makeText(getContext(), "Friend Added", Toast.LENGTH_SHORT).show();
-                                }
-                                else {
-                                    Toast.makeText(getContext(), "You are already friends with " + friend.getUsername() + "!",
-                                            Toast.LENGTH_SHORT).show();
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-
-                            }
-                        });
-
-
-                    }
+                    addThisFriend(ref, friend);
+                }
+                else {
+                    Toast.makeText(getContext(), String.format(
+                            getResources().getString(R.string.alreadyFriends), friend.getUsername()),
+                            Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
+    }
+
+    private void addThisFriend(DatabaseReference ref, Friend friend) {
+        String newKey = ref.child(getUid()).child("friends").push().getKey();
+        ref.child(getUid()).child("friends").child(newKey).setValue(friend);
+        Toast.makeText(getContext(), R.string.friendAdded, Toast.LENGTH_SHORT).show();
     }
 
     public interface OnFragmentInteractionListener {
@@ -264,26 +208,12 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
 
     private void setupRecyclerView() {
         recyclerView = (RecyclerView) root.findViewById(R.id.recyclerFriends);
-//        recyclerView.setHasFixedSize(true);
-//        final LinearLayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-//        recyclerView.setLayoutManager(mLayoutManager);
-//
-//        friendRecyclerAdapter = new FriendRecyclerAdapter(getContext());
-
-
         lLayout = new GridLayoutManager(getContext(), 2);
         RecyclerView rview = (RecyclerView) root.findViewById(R.id.recyclerFriends);
-//        lLayout.setReverseLayout(true);
-//        lLayout.setStackFromEnd(true);
         rview.setHasFixedSize(true);
         rview.setLayoutManager(lLayout);
 
         friendRecyclerAdapter = new FriendRecyclerAdapter(getContext());
-
-        //List<Friend> rowListItem = friendRecyclerAdapter.getFriends();
-
         recyclerView.setAdapter(friendRecyclerAdapter);
     }
-
-
 }

@@ -27,4 +27,19 @@
     <string name="name"><b>Name</b></string>
     <string name="you_owe"><b>You owe: </b></string>
     <string name="you_re_owed"><b>You\'re owed: </b></string>
+    <string name="noImplementFriendFragAns">Not implementing addFriendFragmentAnswer</string>
+    <string name="required">Required</string>
+    <string name="addAFriend">Add a friend</string>
+    <string name="addFriend">Add friend</string>
+    <string name="cancel">Cancel</string>
+    <string name="friendAdded">Friend Added</string>
+    <string name="mustImplOnFragInteraction">%1s must implement OnFragmentInteractionListener</string>
+    <string name="userDoesNotExist">User %1s does not exist!</string>
+    <string name="alreadyFriends">You are already friends with %1s!</string>
+    <string name="chooseIcon">Choose icon</string>
+    <string name="okay">Okay</string>
+    <string name="loading_message">Loading...</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="about">About</string>
+    <string name="flipOnlyHostsTwoChildren">FlipLayout can host only two direct children</string>
 </resources>

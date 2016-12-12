@@ -1,7 +1,5 @@
 package hu.ait.android.mobilefinalproject;
 
-
-
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -35,13 +33,11 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.Serializable;
 
-
 public class NavDrawerActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         TransactionAndSummaryFragment.OnFragmentInteractionListener, CanRespondToCVTransactionClick,
         FriendsFragment.OnFragmentInteractionListener,
         UserFragment.OnFragmentInteractionListener {
-
 
     public NavigationView navigationView;
 
@@ -51,37 +47,8 @@ public class NavDrawerActivity extends BaseActivity
         setContentView(R.layout.activity_nav_drawer);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//
-//        Fragment fragment = null;
-//        Class fragmentClass = null;
-//        fragmentClass = TransactionFragment.class;
-//        try {
-//            fragment = (Fragment) fragmentClass.newInstance();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-////                        .setAction("Action", null).show();
-//                // Create a new Transaction with the username as the title
-//                String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid())
-//                        .child("transactions").push().getKey();
-//                Transaction newPost = new Transaction(getUid(), getUserName(), "descrip", 100);
-//
-//                FirebaseDatabase.getInstance().getReference().child("users").child(getUid())
-//                        .child("transactions").child(key).setValue(newPost);
-//
-//                Toast.makeText(NavDrawerActivity.this, "Transaction created", Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
+//        FragmentManager fragmentManager = getSupportFragmentManager();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -91,14 +58,12 @@ public class NavDrawerActivity extends BaseActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-//        navigationView.getMenu().getItem(0).setChecked(true);
 
         showFragmentByTag(TransactionAndSummaryFragment.TAG, null);
     }
 
     @Override
     public void onBackPressed() {
-//        navigationView.getMenu().getItem(0).setChecked(true);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -109,23 +74,15 @@ public class NavDrawerActivity extends BaseActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.nav_drawer_in_activity_nav_drawer, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -133,12 +90,10 @@ public class NavDrawerActivity extends BaseActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_transaction) {
             showFragmentByTag(TransactionAndSummaryFragment.TAG, null);
-            // Handle the camera action
         } else if (id == R.id.nav_friends) {
             showFragmentByTag(FriendsFragment.TAG, null);
         } else if (id == R.id.nav_user) {
@@ -147,60 +102,50 @@ public class NavDrawerActivity extends BaseActivity
             showSendDialog();
         } else if (id == R.id.nav_about) {
             showAboutDialog();
-
         } else if (id == R.id.nav_logout) {
-            FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(this, LoginActivity.class));
-            finish();
-
+            handleSignout();
         }
-        //else if (id == R.id.nav_share) {
-//
-//        } else if (id == R.id.nav_send) {
-//    }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    private void handleSignout() {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
+    }
+
     private void showAboutDialog() {
 
         final Dialog aboutDialog = new Dialog(NavDrawerActivity.this);
         aboutDialog.setContentView(R.layout.about_dialog);
-        aboutDialog.setTitle("Choose icon");
+        aboutDialog.setTitle(R.string.about);
         aboutDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         aboutDialog.show();
-
     }
 
     private void showSendDialog() {
-
         final Dialog sendDialog = new Dialog(NavDrawerActivity.this);
         sendDialog.setContentView(R.layout.send_dialog);
-        sendDialog.setTitle("Choose icon");
+        sendDialog.setTitle(R.string.contact_us);
         sendDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         sendDialog.show();
-
     }
 
     public void showFragmentByTag(String tag, @Nullable Bundle bundle) {
         Fragment fragment = getSupportFragmentManager().findFragmentByTag(tag);
         if (fragment == null) {
-            if (tag.equals(TransactionAndSummaryFragment.TAG)){
-                fragment = new TransactionAndSummaryFragment();
-            } else if (tag.equals(FriendsFragment.TAG)){
-                fragment = new FriendsFragment();
-            } else if (tag.equals(UserFragment.TAG)){
-                fragment = new UserFragment();
-            } else if (tag.equals(SingleTransactionFragment.TAG)) {
-                fragment = new SingleTransactionFragment();
-            }
+            fragment = getFragment(tag, fragment);
         }
         if ((fragment != null) && (bundle != null)) {
             fragment.setArguments(bundle);
         }
+        openFragment(tag, fragment);
+    }
 
+    private void openFragment(String tag, Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         transaction.replace(R.id.layoutContainer, fragment, tag);
@@ -208,10 +153,21 @@ public class NavDrawerActivity extends BaseActivity
         transaction.commit();
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
+    private Fragment getFragment(String tag, Fragment fragment) {
+        if (tag.equals(TransactionAndSummaryFragment.TAG)){
+            fragment = new TransactionAndSummaryFragment();
+        } else if (tag.equals(FriendsFragment.TAG)){
+            fragment = new FriendsFragment();
+        } else if (tag.equals(UserFragment.TAG)){
+            fragment = new UserFragment();
+        } else if (tag.equals(SingleTransactionFragment.TAG)) {
+            fragment = new SingleTransactionFragment();
+        }
+        return fragment;
     }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {}
 
     @Override
     public void respondToCVTransactionClick(Transaction transaction) {
@@ -224,7 +180,4 @@ public class NavDrawerActivity extends BaseActivity
 
         showFragmentByTag(SingleTransactionFragment.TAG, bundle);
     }
-
-
-
 }

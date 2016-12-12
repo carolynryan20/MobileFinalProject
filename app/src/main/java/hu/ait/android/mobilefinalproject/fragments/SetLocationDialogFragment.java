@@ -27,7 +27,6 @@ public class SetLocationDialogFragment extends DialogFragment {
 
     public static final String TAG = "SetLocationFragment";
     private Context context;
-//    private AddTransactionFragmentAnswer addTransactionFragmentAnswer = null;
     private EditText etLocation;
     private LoginActivity loginActivity;
     private SetLocationDialogFragment setLocationDialogFragment;
@@ -36,12 +35,8 @@ public class SetLocationDialogFragment extends DialogFragment {
     public void onAttach(Context context) {
         this.context = context;
         this.loginActivity = (LoginActivity) getActivity();
-
         super.onAttach(context);
 
-//        addTransactionFragmentAnswer = (TransactionFragment) getTargetFragment();
-//        friendsWhoOwe = new HashMap<String, Float>();
-//        friendsList = getArguments().getStringArrayList(FRIEND_LIST);
         setLocationDialogFragment = this;
     }
 
@@ -59,17 +54,15 @@ public class SetLocationDialogFragment extends DialogFragment {
 
     private void setUpAlertDialogBuilder(AlertDialog.Builder alertDialogBuilder, View dialogLayout) {
         alertDialogBuilder.setView(dialogLayout);
-//        alertDialogBuilder.setTitle("Where are you from?");
-
         etLocation = (EditText) dialogLayout.findViewById(R.id.etLocation);
 
-        alertDialogBuilder.setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 handleOnClickPositive();
             }
         });
-        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dismiss();
@@ -78,21 +71,13 @@ public class SetLocationDialogFragment extends DialogFragment {
     }
 
     private void handleOnClickPositive() {
-//        Toast.makeText(getContext(), "in on positive", Toast.LENGTH_SHORT).show();
         if (TextUtils.isEmpty(etLocation.getText())) {
-            etLocation.setError("Required");
-//            Toast.makeText(getContext(), "no text", Toast.LENGTH_SHORT).show();
+            etLocation.setError(getString(R.string.required));
         } else {
-//            Toast.makeText(getContext(), "gave text", Toast.LENGTH_SHORT).show();
             String location = etLocation.getText().toString();
             if (! location.isEmpty()) {
-//                String amtFloat = location; // want to send back to loginActivity
                 loginActivity.addUserLocation(location);
-
-//                setLocationDialogFragment.addFriendWhoOwes(args.getString("USER"), amtFloat);
             }
-
-//            setLocationDialogFragment.addFriendWhoOwes(args.getString("USER"),Float.parseFloat(amt.getText().toString()) );
             dismiss();
         }
     }
@@ -103,9 +88,6 @@ public class SetLocationDialogFragment extends DialogFragment {
 
         AlertDialog alertDialog = (AlertDialog) getDialog();
         if (alertDialog != null) {
-            /* I override here because otherwise an error of required city couldn't be set as the dialog
-             * fragment exits automatically upon click of positive button, but now it will not
-             */
             Button positiveButton = (Button) alertDialog.getButton(Dialog.BUTTON_POSITIVE);
             positiveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
