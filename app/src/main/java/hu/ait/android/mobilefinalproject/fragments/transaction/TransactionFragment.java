@@ -188,18 +188,14 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
     }
 
     private void initPostListener() {
-        // update list
         final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users")
                 .child(getUid()).child("transactions");
 
-        //final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("transactions");
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Transaction newTransaction = dataSnapshot.getValue(Transaction.class);
-                //ref.child(dataSnapshot.getKey()).setValue(newTransaction);
                 transactionRecyclerAdapter.addTransaction(newTransaction, dataSnapshot.getKey());
-                // when you add a transaction, add it to all users in that transaction
             }
 
             @Override

@@ -84,7 +84,8 @@ public class SingleTransactionFragment extends BaseFragment {
                 } else if (owedUserIsCurrentUser) {
                     userOwed += owed;
                 }
-                userList.add(user + " owes " + owed + " Ft"); //todo
+
+                userList.add(user + getString(R.string.owes) + owed + getString(R.string.ft));
             }
 
             ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),

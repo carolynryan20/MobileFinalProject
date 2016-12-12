@@ -94,4 +94,8 @@
     <string name="loading_message">Loading...</string>
     <string name="contact_us">Contact Us</string>
     <string name="flipOnlyHostsTwoChildren">FlipLayout can host only two direct children</string>
+    <string name="friendCounted">%1f friends</string>
+    <string name="singleFriendCounted">%1f friend</string>
+    <string name="owes">" owes "</string>
+
 </resources>

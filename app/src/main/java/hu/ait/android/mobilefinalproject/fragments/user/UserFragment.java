@@ -197,9 +197,11 @@ public class UserFragment extends BaseFragment {
     private void setFriendCount() {
         TextView friendCount = (TextView) root.findViewById(R.id.tvUserFriendsAmount);
         if (1 == friendCounter) {
-            friendCount.setText("" + friendCounter + " friend");
+            friendCount.setText(String.format(getResources().
+                    getString(R.string.singleFriendCounted), friendCounter));
         } else {
-            friendCount.setText("" + friendCounter + " friends");
+            friendCount.setText(String.format(getResources().
+                    getString(R.string.friendCounted), friendCounter));
         }
     }
 
