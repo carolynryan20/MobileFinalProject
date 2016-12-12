@@ -11,66 +11,37 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:background="@color/lightGreen">
 
-
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tvYouOwe"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/relativeLayoutOwe"
+            android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:padding="10dp">
+            android:text="@string/you_owe"
+            android:textColor="@color/orange"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/llDebt"
+            android:layout_below="@+id/tvYouOwe"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
 
 
             <TextView
-                android:id="@+id/tvYoureOwed"
+                android:id="@+id/tvFriendDebt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/you_re_owed"
-                android:textColor="@color/mediumBlue"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvYoureOwed$"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvYoureOwed"
-                android:layout_toRightOf="@+id/tvFriendOwed"
-                android:text="@string/ft"
-                android:textColor="@color/mediumBlue"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/tvFriendOwed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvYoureOwed"
-                android:paddingLeft="34dp"
+                android:layout_below="@+id/tvYouOwe"
                 android:text="@string/zero"
-                android:textColor="@color/mediumBlue"
-                android:textSize="18sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/relativeLayoutOwe"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:gravity="center"
-            android:padding="10dp">
-
-            <TextView
-                android:id="@+id/tvYouOwe"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/you_owe"
                 android:textColor="@color/orange"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tvYouOwe$"
@@ -82,20 +53,90 @@
                 android:textColor="@color/orange"
                 android:textSize="18sp" />
 
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvYoureOwed"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/llDebt"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/you_re_owed"
+            android:textColor="@color/mediumBlue"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvYoureOwed"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+
             <TextView
-                android:id="@+id/tvFriendDebt"
+                android:id="@+id/tvFriendOwed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tvYouOwe"
                 android:text="@string/zero"
-                android:textColor="@color/orange"
+                android:textColor="@color/mediumBlue"
                 android:textSize="18sp" />
 
-        </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tvYoureOwed$"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="@string/ft"
+                android:textColor="@color/mediumBlue"
+                android:textSize="18sp" />
+
+
+        </LinearLayout>
 
 
     </RelativeLayout>
 
 
 </android.support.v7.widget.CardView>
+
+
+    <!--<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"--><!--xmlns:card_view="http://schemas.android.com/apk/res-auto"--><!--android:id="@+id/card_view"--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:layout_marginBottom="16dp"--><!--android:padding="5dp"--><!--card_view:cardCornerRadius="8dp"--><!--card_view:cardUseCompatPadding="true">-->
+
+    <!--<RelativeLayout--><!--android:layout_width="match_parent"--><!--android:layout_height="match_parent"--><!--android:background="@color/lightGreen">-->
+
+
+    <!--<RelativeLayout--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:layout_below="@+id/relativeLayoutOwe"--><!--android:gravity="center"--><!--android:padding="10dp">-->
+
+
+    <!--<TextView--><!--android:id="@+id/tvYoureOwed"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:text="@string/you_re_owed"--><!--android:textColor="@color/mediumBlue"--><!--android:textSize="18sp"--><!--android:textStyle="bold" />-->
+
+    <!--<LinearLayout--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_below="@+id/tvYoureOwed"--><!--android:layout_centerHorizontal="true"--><!--android:orientation="horizontal">-->
+
+    <!--<TextView--><!--android:id="@+id/tvYoureOwed$"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"-->
+
+    <!--android:text="@string/ft"--><!--android:textColor="@color/mediumBlue"--><!--android:textSize="18sp" />-->
+
+    <!--<TextView--><!--android:id="@+id/tvFriendOwed"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:text="@string/zero"--><!--android:textColor="@color/mediumBlue"--><!--android:textSize="18sp" />-->
+
+    <!--</LinearLayout>-->
+
+    <!--</RelativeLayout>-->
+
+    <!--<RelativeLayout--><!--android:id="@+id/relativeLayoutOwe"--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:layout_alignParentLeft="true"--><!--android:layout_alignParentStart="true"--><!--android:layout_alignParentTop="true"--><!--android:gravity="center"--><!--android:padding="10dp">-->
+
+    <!--<TextView--><!--android:id="@+id/tvYouOwe"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:gravity="center"--><!--android:text="@string/you_owe"--><!--android:textColor="@color/orange"--><!--android:textSize="18sp"--><!--android:textStyle="bold" />-->
+
+    <!--<TextView--><!--android:id="@+id/tvYouOwe$"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_below="@+id/tvYouOwe"--><!--android:layout_toRightOf="@+id/tvFriendDebt"--><!--android:text="@string/ft"--><!--android:textColor="@color/orange"--><!--android:textSize="18sp" />-->
+
+    <!--<TextView--><!--android:id="@+id/tvFriendDebt"--><!--android:layout_width="wrap_content"--><!--android:layout_height="wrap_content"--><!--android:layout_below="@+id/tvYouOwe"--><!--android:text="@string/zero"--><!--android:textColor="@color/orange"--><!--android:textSize="18sp" />-->
+
+    <!--</RelativeLayout>-->
+
+
+    <!--</RelativeLayout>-->
+
+
+    <!--</android.support.v7.widget.CardView>-->
 
