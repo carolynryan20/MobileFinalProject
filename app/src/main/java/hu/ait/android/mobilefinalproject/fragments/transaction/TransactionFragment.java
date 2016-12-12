@@ -138,9 +138,9 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
     private void setFriendsList() {
         friendList = new ArrayList<>(); //reinitialize friendlist because otherwise u will repeat
         //Get's users friends, currently has keys (sort of maybe )
-        DatabaseReference friendsRef = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("friends");
+        DatabaseReference friendsRef = FirebaseDatabase.getInstance().getReference().child(USERS).child(getUid()).child(FRIENDS);
 
-        friendsRef.orderByChild("username").addChildEventListener(new ChildEventListener() {
+        friendsRef.orderByChild(USERNAME).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 //Hashmap of username, debts, owed for each friend
@@ -148,7 +148,7 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
 
                 //Loop through that hashmap and get all usernames, to add to friend list
                 for (Object username : friendUserName.keySet()) {
-                    if (String.valueOf(username).equals("username")) {
+                    if (String.valueOf(username).equals(USERNAME)) {
                         friendList.add(String.valueOf(friendUserName.get(username)));
                     }
                 }
@@ -188,18 +188,14 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
     }
 
     private void initPostListener() {
-        // update list
-        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users")
-                .child(getUid()).child("transactions");
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference(USERS)
+                .child(getUid()).child(TRANSACTIONS);
 
-        //final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("transactions");
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Transaction newTransaction = dataSnapshot.getValue(Transaction.class);
-                //ref.child(dataSnapshot.getKey()).setValue(newTransaction);
                 transactionRecyclerAdapter.addTransaction(newTransaction, dataSnapshot.getKey());
-                // when you add a transaction, add it to all users in that transaction
             }
 
             @Override
@@ -226,10 +222,10 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
 
     @Override
     public void addTransaction(final Transaction transaction) {
-        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users");
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(USERS);
 
-        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("transactions").push().getKey();
-        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("transactions").child(key).setValue(transaction);
+        String key = FirebaseDatabase.getInstance().getReference().child(USERS).child(getUid()).child(TRANSACTIONS).push().getKey();
+        FirebaseDatabase.getInstance().getReference().child(USERS).child(getUid()).child(TRANSACTIONS).child(key).setValue(transaction);
 
         addToAllContainedUsers(transaction, ref);
         Toast.makeText(getContext(), getContext().getString(R.string.transaction_created), Toast.LENGTH_SHORT).show();
@@ -244,7 +240,7 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
         } else {
             for (final Map.Entry<String, Integer> entry : transactionUsers.entrySet()) {
                 // find this user in snapshot:
-                final Query user = ref.orderByChild("username").equalTo(entry.getKey());
+                final Query user = ref.orderByChild(USERNAME).equalTo(entry.getKey());
                 addTransactionToGivenUser(transaction, ref, user);
             }
         }
@@ -255,11 +251,11 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot user : dataSnapshot.getChildren()) {
-                    String username = (String) user.child("username").getValue();
+                    String username = (String) user.child(USERNAME).getValue();
                     if (!username.equals(getUserName())) {
                         String userKey = user.getKey();
-                        String newTransactionKey = ref.child(userKey).child("transactions").push().getKey();
-                        ref.child(userKey).child("transactions").child(newTransactionKey).setValue(transaction);
+                        String newTransactionKey = ref.child(userKey).child(TRANSACTIONS).push().getKey();
+                        ref.child(userKey).child(TRANSACTIONS).child(newTransactionKey).setValue(transaction);
                     }
                 }
             }
@@ -273,7 +269,7 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
 
     @Override
     public void addEditTransaction(Transaction transaction, String key) {
-        FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("transactions").child(key).setValue(transaction);
+        FirebaseDatabase.getInstance().getReference().child(USERS).child(getUid()).child(TRANSACTIONS).child(key).setValue(transaction);
         Toast.makeText(getContext(), getString(R.string.transaction_edited), Toast.LENGTH_SHORT).show();
         transactionRecyclerAdapter.editTransaction(transaction,key);
     }

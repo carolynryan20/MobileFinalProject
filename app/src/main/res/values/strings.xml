@@ -94,4 +94,16 @@
     <string name="loading_message">Loading...</string>
     <string name="contact_us">Contact Us</string>
     <string name="flipOnlyHostsTwoChildren">FlipLayout can host only two direct children</string>
+    <string name="alex">ALEX</string>
+    <string name="cal">CAL</string>
+    <string name="carolyn1">CAROLYN1</string>
+    <string name="carolyn2">CAROLYN2</string>
+    <string name="charlie">CHARLIE</string>
+    <string name="dylan">DYLAN</string>
+    <string name="sam">SAM</string>
+    <string name="farida">FARIDA</string>
+    <string name="keith">KEITH</string>
+    <string name="mo">MO</string>
+    <string name="nick">NICK</string>
+    <string name="oscar">OSCAR</string>
 </resources>

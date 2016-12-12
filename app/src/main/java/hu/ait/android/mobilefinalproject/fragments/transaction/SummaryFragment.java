@@ -61,8 +61,8 @@ public class SummaryFragment extends BaseFragment {
     private void setDebtAndOwed() {
         debt = 0;
         owed = 0;
-        DatabaseReference friendsRef = FirebaseDatabase.getInstance().getReference().child("users").child(FriendsFragment.getUid()).child("transactions");
-        Query friendsQuery = friendsRef.orderByChild("owedUser");
+        DatabaseReference friendsRef = FirebaseDatabase.getInstance().getReference().child(USERS).child(FriendsFragment.getUid()).child(TRANSACTIONS);
+        Query friendsQuery = friendsRef.orderByChild(OWEDUSER);
         friendsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -78,14 +78,14 @@ public class SummaryFragment extends BaseFragment {
 
     private void addDebtAndOwedFromDB(DataSnapshot dataSnapshot) {
         for (DataSnapshot ss : dataSnapshot.getChildren()) {
-            String owedUser = (String) ss.child("owedUser").getValue();
+            String owedUser = (String) ss.child(OWEDUSER).getValue();
             if (owedUser.equals(getUserName())) {
-                for (DataSnapshot debtUser : ss.child("debtUsers").getChildren()) {
+                for (DataSnapshot debtUser : ss.child(DEBTUSERS).getChildren()) {
                     owed += Integer.parseInt(debtUser.getValue().toString());
                     tvOwed.setText(String.valueOf(owed));
                 }
             } else {
-                for (DataSnapshot debtUser : ss.child("debtUsers").getChildren()) {
+                for (DataSnapshot debtUser : ss.child(DEBTUSERS).getChildren()) {
                     if (debtUser.getKey().equals(getUserName())) {
                         debt += Integer.parseInt(debtUser.getValue().toString());
                         tvDebts.setText(String.valueOf(debt));

@@ -1,5 +1,7 @@
 package hu.ait.android.mobilefinalproject.model;
 
+import android.content.res.Resources;
+
 import hu.ait.android.mobilefinalproject.R;
 
 /**
@@ -102,31 +104,31 @@ public class User {
         public static String fromIconId(int id) {
             switch (id) {
                 case R.drawable.circle_alex:
-                    return "ALEX";
+                    return Resources.getSystem().getString(R.string.alex);
                 case R.drawable.circle_cal:
-                    return "CAL";
+                    return Resources.getSystem().getString(R.string.cal);
                 case R.drawable.circle_carolyn1:
-                    return "CAROLYN1";
+                    return Resources.getSystem().getString(R.string.carolyn1);
                 case R.drawable.circle_carolyn2:
-                    return "CAROLYN2";
+                    return Resources.getSystem().getString(R.string.carolyn2);
                 case R.drawable.circle_charlie:
-                    return "CHARLIE";
+                    return Resources.getSystem().getString(R.string.charlie);
                 case R.drawable.circle_dylan:
-                    return "DYLAN";
+                    return Resources.getSystem().getString(R.string.dylan);
                 case R.drawable.circle_sam:
-                    return "SAM";
+                    return Resources.getSystem().getString(R.string.sam);
                 case R.drawable.circle_farida:
-                    return "FARIDA";
+                    return Resources.getSystem().getString(R.string.farida);
                 case R.drawable.circle_keith:
-                    return "KEITH";
+                    return Resources.getSystem().getString(R.string.keith);
                 case R.drawable.circle_mo:
-                    return "MO";
+                    return Resources.getSystem().getString(R.string.mo);
                 case R.drawable.circle_nick:
-                    return "NICK";
+                    return Resources.getSystem().getString(R.string.nick);
                 case R.drawable.circle_oscar:
-                    return "OSCAR";
+                    return Resources.getSystem().getString(R.string.oscar);
             }
-            return "FARIDA";
+            return Resources.getSystem().getString(R.string.farida);
         }
     }
 }
