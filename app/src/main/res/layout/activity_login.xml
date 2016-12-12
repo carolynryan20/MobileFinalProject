@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
-            android:text="wildgoosechase@yahoo.com"
+            android:text="@string/empty"
             android:textColor="#1D3557" />
     </android.support.design.widget.TextInputLayout>
 
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:text="iluvalex"
+            android:text="@string/empty"
             android:textColor="#1D3557" />
     </android.support.design.widget.TextInputLayout>
 

@@ -130,7 +130,7 @@ public class UserFragment extends BaseFragment {
     }
 
     private void setupLocation() {
-        DatabaseReference locRef = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("location");
+        DatabaseReference locRef = FirebaseDatabase.getInstance().getReference().child(USERS).child(getUid()).child(LOCATION);
 
         Query locQuery = locRef.orderByValue();
         locQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -147,7 +147,7 @@ public class UserFragment extends BaseFragment {
     }
 
     private void setupUserIcon() {
-        DatabaseReference iconRef = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("icon");
+        DatabaseReference iconRef = FirebaseDatabase.getInstance().getReference().child(USERS).child(getUid()).child(ICON);
 
         Query iconQuery = iconRef.orderByValue();
         iconQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -179,8 +179,8 @@ public class UserFragment extends BaseFragment {
     }
 
     private void getFriendCount() {
-        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("friends");
-        final Query friends = ref.orderByChild("username");
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(USERS).child(getUid()).child(FRIENDS);
+        final Query friends = ref.orderByChild(USERNAME);
         friends.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -208,8 +208,8 @@ public class UserFragment extends BaseFragment {
     private void setDebtAndOwed() {
         debt = 0;
         owed = 0;
-        DatabaseReference friendsRef = FirebaseDatabase.getInstance().getReference().child("users").child(FriendsFragment.getUid()).child("transactions");
-        Query friendsQuery = friendsRef.orderByChild("owedUser");
+        DatabaseReference friendsRef = FirebaseDatabase.getInstance().getReference().child(USERS).child(FriendsFragment.getUid()).child(TRANSACTIONS);
+        Query friendsQuery = friendsRef.orderByChild(OWEDUSER);
         friendsQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -226,9 +226,9 @@ public class UserFragment extends BaseFragment {
     }
 
     private void setDebtAndOwed(DataSnapshot ss) {
-        String owedUser = (String) ss.child("owedUser").getValue();
+        String owedUser = (String) ss.child(OWEDUSER).getValue();
         if (owedUser.equals(getUserName())) {
-            for (DataSnapshot debtUser : ss.child("debtUsers").getChildren()) {
+            for (DataSnapshot debtUser : ss.child(DEBTUSERS).getChildren()) {
                 calculateOwed(debtUser);
             }
         } else {
@@ -237,7 +237,7 @@ public class UserFragment extends BaseFragment {
     }
 
     private void calculateDebts(DataSnapshot ss) {
-        for (DataSnapshot debtUser : ss.child("debtUsers").getChildren()) {
+        for (DataSnapshot debtUser : ss.child(DEBTUSERS).getChildren()) {
             if (debtUser.getKey().equals(getUserName())) {
                 debt += Integer.parseInt(debtUser.getValue().toString());
                 tvUserMoneyDebtAmount.setText(String.valueOf(debt));
@@ -278,7 +278,7 @@ public class UserFragment extends BaseFragment {
 
         accountIcon.setImageResource(editedIcon);
 
-        DatabaseReference iconRef = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("icon");
+        DatabaseReference iconRef = FirebaseDatabase.getInstance().getReference().child(USERS).child(getUid()).child(ICON);
         iconRef.setValue(User.UserIcon.valueOf(iconID));
 
         userIconDialog.dismiss();

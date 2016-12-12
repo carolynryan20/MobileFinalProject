@@ -2,6 +2,7 @@ package hu.ait.android.mobilefinalproject.fragments.transaction;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +22,10 @@ import hu.ait.android.mobilefinalproject.fragments.BaseFragment;
 
 /**
  * SingleTransactionFragment.java
- *
+ * <p>
  * Created by Carolyn Ryan
  * 11/29/2016
- *
+ * <p>
  * Summary for a single transaction
  */
 public class SingleTransactionFragment extends BaseFragment {
@@ -69,6 +70,7 @@ public class SingleTransactionFragment extends BaseFragment {
     private void setTVDebtAndOwed() {
         listViewUsersWhoOwe = (ListView) root.findViewById(R.id.listViewUsersWhoOwe);
         HashMap<String, Integer> debtUsersMap = (HashMap<String, Integer>) args.getSerializable(DEBT_USERS);
+        String paidUser = args.getString(OWED_USER);
 
         int userDebt = 0;
         int userOwed = 0;
@@ -77,21 +79,22 @@ public class SingleTransactionFragment extends BaseFragment {
 
             List<String> userList = new ArrayList<>();
             for (Map.Entry<String, Integer> entry : debtUsersMap.entrySet()) {
-                String user = entry.getKey();
+                String user = entry.getKey().toString();
                 int owed = entry.getValue();
                 if (user.equals(getUserName())) {
-                    userDebt += owed;
-                } else if (owedUserIsCurrentUser) {
-                    userOwed += owed;
+                    if (user.equals(getUserName())) { //if user is currentUser
+                        userDebt += owed;
+                    } else if (owedUserIsCurrentUser) {
+                        userOwed += owed;
+                    }
+                    userList.add(user + " owes " + owed + " Ft");
                 }
 
-                userList.add(user + " owes " + owed + " Ft");
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                        android.R.layout.simple_list_item_1, android.R.id.text1, userList);
+
+                listViewUsersWhoOwe.setAdapter(adapter);
             }
-
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                    android.R.layout.simple_list_item_1, android.R.id.text1, userList);
-
-            listViewUsersWhoOwe.setAdapter(adapter);
         } else {
             Toast.makeText(getContext(), R.string.no_users_have_debt, Toast.LENGTH_SHORT).show();
         }

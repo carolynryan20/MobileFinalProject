@@ -99,8 +99,8 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
     }
 
     private void initPostListener() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("users")
-                .child(getUid()).child("friends");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(USERS)
+                .child(getUid()).child(FRIENDS);
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -148,9 +148,9 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
 
     @Override
     public void addFriend(final Friend friend) {
-        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users");
+        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child(USERS);
 
-        Query usernameMatch = ref.orderByChild("username").equalTo(friend.getUsername());
+        Query usernameMatch = ref.orderByChild(USERNAME).equalTo(friend.getUsername());
         usernameMatch.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -175,8 +175,8 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
     }
 
     private void isFriendUnique(final Friend friend, final DatabaseReference ref) {
-        DatabaseReference friendRef = ref.child(getUid()).child("friends");
-        Query friendQuery = friendRef.orderByChild("username").equalTo(friend.getUsername());
+        DatabaseReference friendRef = ref.child(getUid()).child(FRIENDS);
+        Query friendQuery = friendRef.orderByChild(USERNAME).equalTo(friend.getUsername());
         friendQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -196,8 +196,8 @@ public class FriendsFragment extends BaseFragment implements AddFriendFragmentAn
     }
 
     private void addThisFriend(DatabaseReference ref, Friend friend) {
-        String newKey = ref.child(getUid()).child("friends").push().getKey();
-        ref.child(getUid()).child("friends").child(newKey).setValue(friend);
+        String newKey = ref.child(getUid()).child(FRIENDS).push().getKey();
+        ref.child(getUid()).child(FRIENDS).child(newKey).setValue(friend);
         Toast.makeText(getContext(), R.string.friendAdded, Toast.LENGTH_SHORT).show();
     }
 
