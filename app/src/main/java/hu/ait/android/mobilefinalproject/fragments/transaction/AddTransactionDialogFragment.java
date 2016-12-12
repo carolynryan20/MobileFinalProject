@@ -173,7 +173,7 @@ public class AddTransactionDialogFragment extends DialogFragment {
 
     public void addFriendWhoOwes(String friend, Integer amt) {
         friendsWhoOwe.put(friend, amt);
-        currentLVClick.setText(friend+" owes "+amt + " Ft"); //Todo
+        currentLVClick.setText(friend + getString(R.string.owes) + amt  + getString(R.string.ft));
     }
 
     private void setNegativeButton(AlertDialog.Builder alertDialogBuilder) {
