@@ -2,6 +2,7 @@ package hu.ait.android.mobilefinalproject.fragments.transaction;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +70,7 @@ public class SingleTransactionFragment extends BaseFragment {
     private void setTVDebtAndOwed() {
         listViewUsersWhoOwe = (ListView) root.findViewById(R.id.listViewUsersWhoOwe);
         HashMap<String, Integer> debtUsersMap = (HashMap<String, Integer>) args.getSerializable(DEBT_USERS);
+        String paidUser = args.getString(OWED_USER);
 
         int userDebt = 0;
         int userOwed = 0;
@@ -77,12 +79,16 @@ public class SingleTransactionFragment extends BaseFragment {
 
             List<String> userList = new ArrayList<>();
             for (Map.Entry<String, Integer> entry : debtUsersMap.entrySet()) {
-                String user = entry.getKey();
+                String user = entry.getKey().toString();
                 int owed = entry.getValue();
+                Log.d("TAGG_GET", getUserName());
+                Log.d("TAGG_OTHER", user);
                 if (user.equals(getUserName())) { //if user is currentUser
                     userDebt += owed;
+                    Log.d("TAGG", String.valueOf(userDebt));
                 } else if (owedUserIsCurrentUser) {
                     userOwed += owed;
+                    Log.d("TAGG", String.valueOf(userOwed));
                 }
 
                 userList.add(user + getString(R.string.owes) + owed + getString(R.string.ft));

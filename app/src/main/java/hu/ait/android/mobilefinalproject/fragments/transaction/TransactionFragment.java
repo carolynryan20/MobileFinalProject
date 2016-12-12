@@ -137,6 +137,7 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
 
     private void setFriendsList() {
         friendList = new ArrayList<>(); //reinitialize friendlist because otherwise u will repeat
+        friendList.add(getUserName());
         //Get's users friends, currently has keys (sort of maybe )
         DatabaseReference friendsRef = FirebaseDatabase.getInstance().getReference().child(USERS).child(getUid()).child(FRIENDS);
 
