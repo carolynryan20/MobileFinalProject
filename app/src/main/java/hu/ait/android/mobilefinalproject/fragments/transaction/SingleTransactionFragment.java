@@ -79,13 +79,13 @@ public class SingleTransactionFragment extends BaseFragment {
             for (Map.Entry<String, Integer> entry : debtUsersMap.entrySet()) {
                 String user = entry.getKey();
                 int owed = entry.getValue();
-                if (user.equals(getUserName())) { //if user is currentUser
+                if (user.equals(getUserName())) {
                     userDebt += owed;
                 } else if (owedUserIsCurrentUser) {
                     userOwed += owed;
                 }
 
-                userList.add(user + getString(R.string.owes) + owed + getString(R.string.ft));
+                userList.add(user + " owes " + owed + " Ft");
             }
 
             ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
