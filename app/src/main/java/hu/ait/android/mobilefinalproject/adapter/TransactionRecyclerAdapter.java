@@ -53,7 +53,7 @@ public class TransactionRecyclerAdapter extends RecyclerView.Adapter<Transaction
         if (context instanceof CanRespondToCVTransactionClick) {
             this.canRespondToCVTransactionClick = (CanRespondToCVTransactionClick) context;
         } else {
-            throw new RuntimeException("Activity does not implement CanRespondToCVTransactionClick interface");
+            throw new RuntimeException(context.getString(R.string.cv_transaction_click_error));
         }
     }
 

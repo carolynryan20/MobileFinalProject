@@ -56,26 +56,10 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_transaction, container, false);
-
         setupRecyclerView();
         setFriendsList();
-
-//        FloatingActionButton fab = (FloatingActionButton) root.findViewById(R.id.fabTransactionFragment);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-////                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-////                        .setAction("Action", null).show();
-//                // Create a new Transaction with the username as the title
-//                openAddTransactionFragment();
-//
-//            }
-//        });
-
         setUpFab();
         initPostListener();
-
         return root;
     }
 
@@ -120,18 +104,27 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
 
     private void openAddTransactionFragment() {
         AddTransactionDialogFragment addTransactionDialogFragment = new AddTransactionDialogFragment();
+        setBundleForOpenAddTransaction(addTransactionDialogFragment);
+        addTransactionDialogFragment.show(getFragmentManager(), AddTransactionDialogFragment.TAG);
+    }
+
+    private void setBundleForOpenAddTransaction(AddTransactionDialogFragment addTransactionDialogFragment) {
         addTransactionDialogFragment.setTargetFragment(this, 1);
         Bundle bundle = new Bundle();
         bundle.putBoolean(IS_EDIT, false);
         bundle.putStringArrayList(FRIEND_LIST, friendList);
         addTransactionDialogFragment.setArguments(bundle);
-        addTransactionDialogFragment.show(getFragmentManager(), AddTransactionDialogFragment.TAG);
     }
 
-    //    }
+    //openAddTransaction when transaction is edit transaction
     public void openAddTransactionFragment(Transaction transaction, String key) {
         AddTransactionDialogFragment addTransactionDialogFragment = new AddTransactionDialogFragment();
         addTransactionDialogFragment.setTargetFragment(this, 1);
+        setBundleForOpenAddEdit(transaction, key, addTransactionDialogFragment);
+        addTransactionDialogFragment.show(getFragmentManager(), AddTransactionDialogFragment.TAG);
+    }
+
+    private void setBundleForOpenAddEdit(Transaction transaction, String key, AddTransactionDialogFragment addTransactionDialogFragment) {
         Bundle bundle = new Bundle();
         bundle.putString(TRANSACTION_TITLE, transaction.getTitle());
         bundle.putString(WHO_PAID, transaction.getOwedUser());
@@ -140,13 +133,10 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
         bundle.putStringArrayList(FRIEND_LIST, friendList);
         bundle.putString(EDIT_INDEX, key);
         addTransactionDialogFragment.setArguments(bundle);
-        addTransactionDialogFragment.show(getFragmentManager(), AddTransactionDialogFragment.TAG);
     }
 
     private void setFriendsList() {
         friendList = new ArrayList<>(); //reinitialize friendlist because otherwise u will repeat
-        //Add the current user to the friend list, as you really are your own best friend
-        friendList.add(getUserName());
         //Get's users friends, currently has keys (sort of maybe )
         DatabaseReference friendsRef = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("friends");
 
@@ -155,12 +145,10 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
             public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
                 //Hashmap of username, debts, owed for each friend
                 HashMap friendUserName = (HashMap) dataSnapshot.getValue();
-                //Log.d("TAGG", String.valueOf(friendUserName));
 
                 //Loop through that hashmap and get all usernames, to add to friend list
                 for (Object username : friendUserName.keySet()) {
                     if (String.valueOf(username).equals("username")) {
-//                        Log.d("TAGG", String.valueOf(friendUserName.get(username)));
                         friendList.add(String.valueOf(friendUserName.get(username)));
                     }
                 }
@@ -244,46 +232,48 @@ public class TransactionFragment extends BaseFragment implements AddTransactionF
         FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("transactions").child(key).setValue(transaction);
 
         addToAllContainedUsers(transaction, ref);
-        Toast.makeText(getContext(), "Transaction created", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), getContext().getString(R.string.transaction_created), Toast.LENGTH_SHORT).show();
     }
 
     private void addToAllContainedUsers(final Transaction transaction, final DatabaseReference ref) {
         // add to all other users in that transaction:
         Map<String, Integer> transactionUsers = transaction.getDebtUsers();
         if (transactionUsers == null) {
-            Toast.makeText(getContext(), "friends list in transaction is empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), getContext().getString(R.string.friends_list_transaction_is_empty), Toast.LENGTH_SHORT).show();
         } else {
             for (final Map.Entry<String, Integer> entry : transactionUsers.entrySet()) {
                 // find this user in snapshot:
                 final Query user = ref.orderByChild("username").equalTo(entry.getKey());
-                user.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot user : dataSnapshot.getChildren()) {
-                            String username = (String) user.child("username").getValue();
-                            if (!username.equals(getUserName())) {
-                                String userKey = user.getKey();
-                                String newTransactionKey = ref.child(userKey).child("transactions").push().getKey();
-                                ref.child(userKey).child("transactions").child(newTransactionKey).setValue(transaction);
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+                addTransactionToGivenUser(transaction, ref, user);
             }
         }
     }
 
+    private void addTransactionToGivenUser(final Transaction transaction, final DatabaseReference ref, Query user) {
+        user.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot user : dataSnapshot.getChildren()) {
+                    String username = (String) user.child("username").getValue();
+                    if (!username.equals(getUserName())) {
+                        String userKey = user.getKey();
+                        String newTransactionKey = ref.child(userKey).child("transactions").push().getKey();
+                        ref.child(userKey).child("transactions").child(newTransactionKey).setValue(transaction);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     @Override
     public void addEditTransaction(Transaction transaction, String key) {
-//        transactionRecyclerAdapter.editTransaction(transaction, index);
-//        String key = FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("transactions").push().getKey();
         FirebaseDatabase.getInstance().getReference().child("users").child(getUid()).child("transactions").child(key).setValue(transaction);
-        Toast.makeText(getContext(), "Transaction edited", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), getString(R.string.transaction_edited), Toast.LENGTH_SHORT).show();
         transactionRecyclerAdapter.editTransaction(transaction,key);
     }
 
