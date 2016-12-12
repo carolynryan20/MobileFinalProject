@@ -9,8 +9,8 @@ import com.google.firebase.auth.FirebaseAuth;
  */
 public class BaseFragment extends Fragment {
 
-    float debt;
-    static float owed;
+//    float debt;
+//    static float owed;
 
     public static String getUid() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();

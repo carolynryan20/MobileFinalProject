@@ -30,7 +30,7 @@ public class BaseActivity extends AppCompatActivity {
     public void showProgressDialog() {
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(this);
-            progressDialog.setMessage("Loading...");
+            progressDialog.setMessage(getString(R.string.loading_message));
         }
 
         progressDialog.show();

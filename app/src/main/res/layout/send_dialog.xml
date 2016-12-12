@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rectangle_orange_dialog"
         android:padding="10dp"
-        android:text="@string/contact_us"
+        android:text="@string/contact_us_message"
         android:textAlignment="center"
         android:textSize="22sp" />
 
