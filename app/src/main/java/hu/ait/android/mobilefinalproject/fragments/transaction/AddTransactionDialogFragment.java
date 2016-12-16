@@ -30,6 +30,7 @@ import hu.ait.android.mobilefinalproject.model.Transaction;
 import static hu.ait.android.mobilefinalproject.fragments.transaction.TransactionFragment.EDIT_INDEX;
 import static hu.ait.android.mobilefinalproject.fragments.transaction.TransactionFragment.FRIEND_LIST;
 import static hu.ait.android.mobilefinalproject.fragments.transaction.TransactionFragment.IS_EDIT;
+import static hu.ait.android.mobilefinalproject.fragments.transaction.TransactionFragment.TRANSACTION_TITLE;
 
 
 /**
@@ -108,6 +109,7 @@ public class AddTransactionDialogFragment extends DialogFragment {
     private String checkItemIsEditItem(String positiveButton) {
         if (itemIsEditItem()) {
             spinnerTransactionType.setSelection((int) getArguments().get(TransactionFragment.TYPE));
+            etTransactionName.setText(getArguments().getString(TRANSACTION_TITLE));
             positiveButton = getString(R.string.save);
         }
         return positiveButton;

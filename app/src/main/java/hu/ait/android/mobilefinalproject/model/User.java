@@ -104,29 +104,29 @@ public class User {
         public static String fromIconId(int id) {
             switch (id) {
                 case R.drawable.circle_alex:
-                    return Resources.getSystem().getString(R.string.alex);
+                    return "ALEX";
                 case R.drawable.circle_cal:
-                    return Resources.getSystem().getString(R.string.cal);
+                    return "CAL";
                 case R.drawable.circle_carolyn1:
-                    return Resources.getSystem().getString(R.string.carolyn1);
+                    return "CAROLYN1";
                 case R.drawable.circle_carolyn2:
-                    return Resources.getSystem().getString(R.string.carolyn2);
+                    return "CAROLYN2";
                 case R.drawable.circle_charlie:
-                    return Resources.getSystem().getString(R.string.charlie);
+                    return "CHARLIE";
                 case R.drawable.circle_dylan:
-                    return Resources.getSystem().getString(R.string.dylan);
+                    return "DYLAN";
                 case R.drawable.circle_sam:
-                    return Resources.getSystem().getString(R.string.sam);
+                    return "SAM";
                 case R.drawable.circle_farida:
-                    return Resources.getSystem().getString(R.string.farida);
+                    return "FARIDA";
                 case R.drawable.circle_keith:
-                    return Resources.getSystem().getString(R.string.keith);
+                    return "KEITH";
                 case R.drawable.circle_mo:
-                    return Resources.getSystem().getString(R.string.mo);
+                    return "MO";
                 case R.drawable.circle_nick:
-                    return Resources.getSystem().getString(R.string.nick);
+                    return "NICK";
                 case R.drawable.circle_oscar:
-                    return Resources.getSystem().getString(R.string.oscar);
+                    return "OSCAR";
             }
             return Resources.getSystem().getString(R.string.farida);
         }

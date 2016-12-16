@@ -22,10 +22,10 @@ import hu.ait.android.mobilefinalproject.fragments.BaseFragment;
 
 /**
  * SingleTransactionFragment.java
- * <p>
+ *
  * Created by Carolyn Ryan
  * 11/29/2016
- * <p>
+ *
  * Summary for a single transaction
  */
 public class SingleTransactionFragment extends BaseFragment {
@@ -79,22 +79,21 @@ public class SingleTransactionFragment extends BaseFragment {
 
             List<String> userList = new ArrayList<>();
             for (Map.Entry<String, Integer> entry : debtUsersMap.entrySet()) {
-                String user = entry.getKey().toString();
+                String user = entry.getKey();
                 int owed = entry.getValue();
-                if (user.equals(getUserName())) {
-                    if (user.equals(getUserName())) { //if user is currentUser
-                        userDebt += owed;
-                    } else if (owedUserIsCurrentUser) {
-                        userOwed += owed;
-                    }
-                    userList.add(user + " owes " + owed + " Ft");
+                if (user.equals(getUserName())) { //if user is currentUser
+                    userDebt += owed;
+                } else if (owedUserIsCurrentUser) {
+                    userOwed += owed;
                 }
 
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                        android.R.layout.simple_list_item_1, android.R.id.text1, userList);
-
-                listViewUsersWhoOwe.setAdapter(adapter);
+                userList.add(user + getString(R.string.owes) + owed + getString(R.string.ft));
             }
+
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                    android.R.layout.simple_list_item_1, android.R.id.text1, userList);
+
+            listViewUsersWhoOwe.setAdapter(adapter);
         } else {
             Toast.makeText(getContext(), R.string.no_users_have_debt, Toast.LENGTH_SHORT).show();
         }

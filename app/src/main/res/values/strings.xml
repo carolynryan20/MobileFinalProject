@@ -106,9 +106,5 @@
     <string name="mo">MO</string>
     <string name="nick">NICK</string>
     <string name="oscar">OSCAR</string>
-    <string name="friendCounted">%1f friends</string>
-    <string name="singleFriendCounted">%1f friend</string>
     <string name="owes">" owes "</string>
-
->>>>>>> origin/master
 </resources>
