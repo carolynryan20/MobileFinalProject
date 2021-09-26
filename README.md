@@ -9,6 +9,6 @@ TODO: Write usage instructions
 ## History
 TODO: Write history
 ## Credits
-Sam Sheppe, Morgan Rozman, and Carolyn Ryan
+[REDACTED], Morgan Rozman, and Carolyn Ryan
 ## License
 TODO: Write license
